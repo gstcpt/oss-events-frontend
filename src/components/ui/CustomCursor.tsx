@@ -12,138 +12,154 @@ interface CustomCursorProps {
 
 export default function CustomCursor({
     primaryColor = "#AAA999",
-    ringColor = "rgba(170, 169, 153, 0.4)",
     dotColor = "#ffffff",
-    ringSize = 40,
-    ringSizeHover = 60,
 }: CustomCursorProps) {
-    const [isHovering, setIsHovering] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+    const [isTextHovered, setIsTextHovered] = useState(false);
+    const [isImageHovered, setIsImageHovered] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
 
-    const cursorX = useMotionValue(-100);
-    const cursorY = useMotionValue(-100);
+    const mouseX = useMotionValue(-100);
+    const mouseY = useMotionValue(-100);
 
-    const springConfig = { damping: 25, stiffness: 700 };
-    const cursorXSpring = useSpring(cursorX, springConfig);
-    const cursorYSpring = useSpring(cursorY, springConfig);
+    const dotX = useSpring(mouseX, { stiffness: 1000, damping: 40 });
+    const dotY = useSpring(mouseY, { stiffness: 1000, damping: 40 });
+    const ringX = useSpring(mouseX, { stiffness: 150, damping: 20 });
+    const ringY = useSpring(mouseY, { stiffness: 150, damping: 20 });
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            cursorX.set(e.clientX);
-            cursorY.set(e.clientY);
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
             if (!isVisible) setIsVisible(true);
         };
 
+        const handleMouseDown = () => setIsClicked(true);
+        const handleMouseUp = () => setIsClicked(false);
         const handleMouseEnter = () => setIsVisible(true);
         const handleMouseLeave = () => setIsVisible(false);
 
-        const handleHoverStart = () => setIsHovering(true);
-        const handleHoverEnd = () => setIsHovering(false);
+        const handleHoverStart = (e: Event) => {
+            const target = e.target as HTMLElement;
+            setIsHovered(true);
+            if (target.tagName === "P" || target.tagName === "H1" || target.tagName === "H2" || target.tagName === "H3" || target.tagName === "SPAN") {
+                setIsTextHovered(true);
+            }
+            if (target.tagName === "IMG" || target.classList.contains("item-image")) {
+                setIsImageHovered(true);
+            }
+        };
+        const handleHoverEnd = () => {
+            setIsHovered(false);
+            setIsTextHovered(false);
+            setIsImageHovered(false);
+        };
 
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseenter", handleMouseEnter);
-        document.addEventListener("mouseleave", handleMouseLeave);
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mousedown", handleMouseDown);
+        window.addEventListener("mouseup", handleMouseUp);
+        window.addEventListener("mouseenter", handleMouseEnter);
+        window.addEventListener("mouseleave", handleMouseLeave);
 
-        const interactiveElements = document.querySelectorAll(
-            'a, button, input, textarea, select, [role="button"], .clickable, .hover-trigger'
-        );
-
-        interactiveElements.forEach((el) => {
-            el.addEventListener("mouseenter", handleHoverStart);
-            el.addEventListener("mouseleave", handleHoverEnd);
-        });
-
-        const observer = new MutationObserver(() => {
-            const newElements = document.querySelectorAll(
-                'a, button, input, textarea, select, [role="button"], .clickable, .hover-trigger'
+        const refreshSelectors = () => {
+            const interactiveElements = document.querySelectorAll(
+                'a, button, input, textarea, p, h1, h2, h3, h4, span, img, [role="button"], .interactive'
             );
-            newElements.forEach((el) => {
+            interactiveElements.forEach((el) => {
                 el.addEventListener("mouseenter", handleHoverStart);
                 el.addEventListener("mouseleave", handleHoverEnd);
             });
-        });
+        };
 
+        refreshSelectors();
+        const observer = new MutationObserver(refreshSelectors);
         observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseenter", handleMouseEnter);
-            document.removeEventListener("mouseleave", handleMouseLeave);
-            interactiveElements.forEach((el) => {
-                el.removeEventListener("mouseenter", handleHoverStart);
-                el.removeEventListener("mouseleave", handleHoverEnd);
-            });
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mousedown", handleMouseDown);
+            window.removeEventListener("mouseup", handleMouseUp);
+            window.removeEventListener("mouseenter", handleMouseEnter);
+            window.removeEventListener("mouseleave", handleMouseLeave);
             observer.disconnect();
         };
-    }, [cursorX, cursorY, isVisible]);
+    }, [mouseX, mouseY, isVisible]);
 
     if (!isVisible) return null;
 
     return (
         <>
-            {/* Core cursor dot */}
+            {/* Liquid Ring */}
             <motion.div
                 style={{
-                    translateX: cursorXSpring,
-                    translateY: cursorYSpring,
+                    translateX: ringX,
+                    translateY: ringY,
                     x: "-50%",
                     y: "-50%",
                 }}
-                className="fixed top-0 left-0 pointer-events-none z-[9999]"
-            >
-                <div
-                    className="rounded-full"
-                    style={{
-                        width: 12,
-                        height: 12,
-                        background: primaryColor,
-                        mixBlendMode: "difference",
-                    }}
-                />
-            </motion.div>
-
-            {/* Ring cursor */}
-            <motion.div
-                style={{
-                    translateX: cursorXSpring,
-                    translateY: cursorYSpring,
-                    x: "-50%",
-                    y: "-50%",
-                }}
-                className="fixed top-0 left-0 pointer-events-none z-[9998]"
+                className="fixed top-0 left-0 pointer-events-none z-[9998] flex items-center justify-center overflow-hidden rounded-full"
                 animate={{
-                    width: isHovering ? ringSizeHover : ringSize,
-                    height: isHovering ? ringSizeHover : ringSize,
+                    width: isHovered ? 80 : 32,
+                    height: isHovered ? 80 : 32,
+                    backgroundColor: isHovered ? "rgba(255, 255, 255, 0.1)" : "rgba(170, 169, 153, 0.15)",
+                    backdropFilter: isHovered ? "blur(4px)" : "blur(0px)",
+                    border: isHovered ? "1px solid rgba(255, 255, 255, 0.2)" : "1px solid rgba(170, 169, 153, 0.3)",
+                    scale: isClicked ? 0.8 : 1,
                 }}
-                transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                transition={{ type: "spring", damping: 20, stiffness: 200 }}
             >
-                <div
-                    className="w-full h-full rounded-full"
-                    style={{
-                        border: `1.5px solid ${isHovering ? primaryColor : ringColor}`,
-                        background: isHovering ? "rgba(170, 169, 153, 0.1)" : "transparent",
-                    }}
-                />
+                {isImageHovered && (
+                    <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-[10px] font-bold text-white uppercase tracking-widest"
+                    >
+                        View
+                    </motion.span>
+                )}
             </motion.div>
 
-            {/* Small white dot */}
+            {/* Core Dot */}
             <motion.div
                 style={{
-                    translateX: cursorXSpring,
-                    translateY: cursorYSpring,
+                    translateX: dotX,
+                    translateY: dotY,
                     x: "-50%",
                     y: "-50%",
                 }}
                 className="fixed top-0 left-0 pointer-events-none z-[9999]"
+                animate={{
+                    scale: isClicked ? 1.5 : isTextHovered ? 4 : isHovered ? 0.5 : 1,
+                }}
             >
                 <div
-                    className="rounded-full"
+                    className="rounded-full blur-[0.5px]"
                     style={{
-                        width: 4,
-                        height: 4,
-                        background: dotColor,
+                        width: 8,
+                        height: 8,
+                        background: isTextHovered ? "rgba(255,255,255,0.3)" : primaryColor,
+                        mixBlendMode: isTextHovered ? "difference" : "normal",
                     }}
                 />
+            </motion.div>
+
+            {/* Accent Shadow */}
+            <motion.div
+                style={{
+                    translateX: ringX,
+                    translateY: ringY,
+                    x: "-50%",
+                    y: "-50%",
+                }}
+                className="fixed top-0 left-0 pointer-events-none z-[9997]"
+                animate={{
+                    width: isHovered ? 120 : 0,
+                    height: isHovered ? 120 : 0,
+                    opacity: isHovered ? 0.1 : 0,
+                }}
+            >
+                <div className="w-full h-full rounded-full bg-white blur-2xl" />
             </motion.div>
         </>
     );
