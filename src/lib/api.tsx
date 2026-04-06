@@ -53,7 +53,7 @@ export async function apiFetch<T = any>(path: string, options?: RequestInit & { 
             '/media',
             '/companies'
         ];
-        const isPublicEndpoint = publicPaths.some(publicPath => 
+        const isPublicEndpoint = publicPaths.some(publicPath =>
             path === publicPath || path.startsWith(`${publicPath}/`) || path.startsWith(`${publicPath}?`)
         );
 
