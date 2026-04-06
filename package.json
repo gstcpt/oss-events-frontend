@@ -81,6 +81,7 @@
     "@react-google-maps/api": "^2.20.7",
     "@tabler/icons-react": "^3.37.1",
     "@tanstack/react-table": "^8.21.3",
+    "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.6.0",

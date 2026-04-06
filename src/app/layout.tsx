@@ -10,6 +10,7 @@ import { headers } from 'next/headers';
 import { CompanyProvider } from '@/context/CompanyContext';
 import { cache } from 'react';
 import CustomCursor from "@/components/ui/CustomCursor";
+import { Analytics } from "@vercel/analytics/next"
 
 const getCompanyId = cache(async () => {
     try {
@@ -50,23 +51,26 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     const companyId = await getCompanyId();
 
     return (
-        <AuthProvider>
-            <EventCartProvider>
-                <CompanyProvider companyId={companyId}>
-                    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${poppins.variable} ${cairo.variable} font-sans ${locale === 'ar' ? 'font-arabic' : ''}`}>
-                        <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" /></head>
-                        <body className="antialiased min-h-screen selection:bg-primary/30">
-                            <CustomCursor />
-                            <NextIntlClientProvider locale={locale} messages={messages}>
-                                <div className="flex flex-col min-h-screen">
-                                    {children}
-                                </div>
-                            </NextIntlClientProvider>
-                            <Toaster position="top-right" richColors />
-                        </body>
-                    </html>
-                </CompanyProvider>
-            </EventCartProvider>
-        </AuthProvider>
+        <>
+            <Analytics />
+            <AuthProvider>
+                <EventCartProvider>
+                    <CompanyProvider companyId={companyId}>
+                        <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${poppins.variable} ${cairo.variable} font-sans ${locale === 'ar' ? 'font-arabic' : ''}`}>
+                            <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" /></head>
+                            <body className="antialiased min-h-screen selection:bg-primary/30">
+                                <CustomCursor />
+                                <NextIntlClientProvider locale={locale} messages={messages}>
+                                    <div className="flex flex-col min-h-screen">
+                                        {children}
+                                    </div>
+                                </NextIntlClientProvider>
+                                <Toaster position="top-right" richColors />
+                            </body>
+                        </html>
+                    </CompanyProvider>
+                </EventCartProvider>
+            </AuthProvider>
+        </>
     );
 }
