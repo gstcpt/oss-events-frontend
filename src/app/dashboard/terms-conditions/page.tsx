@@ -107,7 +107,7 @@ export default function TermsConditionsPage() {
         ...(isRoot ? [{
             header: "Company",
             accessor: "companies",
-            cell: (row: any) => <span className="">{<span>{getCompanyName(row.company_id)}</span> || "System Core"}</span>
+            cell: (row: any) => <span className="">{getCompanyName(row.company_id) || "System Core"}</span>
         }] : []),
     ];
 
