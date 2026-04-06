@@ -14,10 +14,10 @@ import CustomCursor from "@/components/ui/CustomCursor";
 const getCompanyId = cache(async () => {
     try {
         const headersList = await headers();
-        const origin = headersList.get('host') || 'localhost';
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+        const origin = headersList.get('host') || 'oss-events.vercel.app';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://oss-events-backend.vercel.app/api';
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
         const res = await fetch(`${apiUrl}/public/home/company`, { headers: { origin }, next: { revalidate: 3600 }, signal: controller.signal });
         clearTimeout(timeoutId);
         if (res.ok) {
