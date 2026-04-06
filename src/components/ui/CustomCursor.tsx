@@ -1,40 +1,46 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { motion, useMotionValue, useSpring, useVelocity, useTransform, AnimatePresence } from "framer-motion";
 
-interface CustomCursorProps {
-    primaryColor?: string;
-    ringColor?: string;
-    dotColor?: string;
-    ringSize?: number;
-    ringSizeHover?: number;
-}
-
-export default function CustomCursor({
-    primaryColor = "#AAA999",
-    dotColor = "#ffffff",
-}: CustomCursorProps) {
+export default function CustomCursor() {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
     const [isTextHovered, setIsTextHovered] = useState(false);
     const [isImageHovered, setIsImageHovered] = useState(false);
+    const [isViewHovered, setIsViewHovered] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const [cursorText, setCursorText] = useState("");
 
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
 
-    const dotX = useSpring(mouseX, { stiffness: 1000, damping: 40 });
-    const dotY = useSpring(mouseY, { stiffness: 1000, damping: 40 });
-    const ringX = useSpring(mouseX, { stiffness: 150, damping: 20 });
-    const ringY = useSpring(mouseY, { stiffness: 150, damping: 20 });
+    // Velocity-based effects (liquid feel)
+    const xVelocity = useVelocity(mouseX);
+    const yVelocity = useVelocity(mouseY);
+    const velocity = useTransform([xVelocity, yVelocity], ([vx, vy]) => 
+        Math.sqrt(Math.pow(Number(vx), 2) + Math.pow(Number(vy), 2))
+    );
+    
+    const scaleX = useTransform(velocity, [0, 3000], [1, 1.5]);
+    const scaleY = useTransform(velocity, [0, 3000], [1, 0.5]);
+    const angle = useTransform([xVelocity, yVelocity], ([vx, vy]) => 
+        Math.atan2(Number(vy), Number(vx)) * (180 / Math.PI)
+    );
+
+    // Spring physics for smooth movement
+    const smoothMouseX = useSpring(mouseX, { stiffness: 450, damping: 45 });
+    const smoothMouseY = useSpring(mouseY, { stiffness: 450, damping: 45 });
+    
+    const dotX = useSpring(mouseX, { stiffness: 2000, damping: 90 });
+    const dotY = useSpring(mouseY, { stiffness: 2000, damping: 90 });
+
+    const updateMousePosition = useCallback((e: MouseEvent) => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+        if (!isVisible) setIsVisible(true);
+    }, [mouseX, mouseY, isVisible]);
 
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
-            if (!isVisible) setIsVisible(true);
-        };
-
         const handleMouseDown = () => setIsClicked(true);
         const handleMouseUp = () => setIsClicked(false);
         const handleMouseEnter = () => setIsVisible(true);
@@ -43,154 +49,184 @@ export default function CustomCursor({
         const handleHoverStart = (e: Event) => {
             const target = e.target as HTMLElement;
             setIsHovered(true);
-            if (target.tagName === "P" || target.tagName === "H1" || target.tagName === "H2" || target.tagName === "H3" || target.tagName === "SPAN") {
-                setIsTextHovered(true);
-            }
-            if (target.tagName === "IMG" || target.classList.contains("item-image")) {
+            
+            const isText = ["P", "H1", "H2", "H3", "H4", "H5", "H6", "SPAN", "LI"].includes(target.tagName);
+            if (isText) setIsTextHovered(true);
+            
+            if (target.tagName === "IMG" || target.closest(".item-image")) {
                 setIsImageHovered(true);
             }
+            
+            if (target.closest(".view-trigger")) {
+                setIsViewHovered(true);
+                setCursorText(target.getAttribute("data-cursor-text") || "View");
+            }
         };
+
         const handleHoverEnd = () => {
             setIsHovered(false);
             setIsTextHovered(false);
             setIsImageHovered(false);
+            setIsViewHovered(false);
+            setCursorText("");
         };
 
-        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mousemove", updateMousePosition);
         window.addEventListener("mousedown", handleMouseDown);
         window.addEventListener("mouseup", handleMouseUp);
         window.addEventListener("mouseenter", handleMouseEnter);
         window.addEventListener("mouseleave", handleMouseLeave);
 
-        const refreshSelectors = () => {
-            const interactiveElements = document.querySelectorAll(
-                'a, button, input, textarea, p, h1, h2, h3, h4, span, img, [role="button"], .interactive'
-            );
-            interactiveElements.forEach((el) => {
+        const setupInteractiveElements = () => {
+            const elements = document.querySelectorAll('a, button, input, textarea, p, h1, h2, h3, h4, h5, h6, span, img, [role="button"], .interactive, .item-image, .view-trigger');
+            elements.forEach(el => {
                 el.addEventListener("mouseenter", handleHoverStart);
                 el.addEventListener("mouseleave", handleHoverEnd);
             });
         };
 
-        refreshSelectors();
-        const observer = new MutationObserver(refreshSelectors);
+        setupInteractiveElements();
+        const observer = new MutationObserver(setupInteractiveElements);
         observer.observe(document.body, { childList: true, subtree: true });
 
+        // Hide default cursor globally
+        document.body.style.cursor = "none";
+        const allInteractive = document.querySelectorAll<HTMLElement>("a, button, input, .interactive");
+        allInteractive.forEach(el => (el.style.cursor = "none"));
+
         return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mousemove", updateMousePosition);
             window.removeEventListener("mousedown", handleMouseDown);
             window.removeEventListener("mouseup", handleMouseUp);
             window.removeEventListener("mouseenter", handleMouseEnter);
             window.removeEventListener("mouseleave", handleMouseLeave);
             observer.disconnect();
+            document.body.style.cursor = "auto";
         };
-    }, [mouseX, mouseY, isVisible]);
+    }, [updateMousePosition]);
 
-    if (!isVisible) return null;
+    if (typeof window === "undefined") return null;
 
     return (
-        <>
-            {/* Liquid Ring */}
-            <motion.div
-                style={{
-                    translateX: ringX,
-                    translateY: ringY,
-                    x: "-50%",
-                    y: "-50%",
-                }}
-                className="fixed top-0 left-0 pointer-events-none z-[9998] flex items-center justify-center overflow-hidden rounded-full"
-                animate={{
-                    width: isHovered ? 80 : 32,
-                    height: isHovered ? 80 : 32,
-                    backgroundColor: isHovered ? "rgba(255, 255, 255, 0.1)" : "rgba(170, 169, 153, 0.15)",
-                    backdropFilter: isHovered ? "blur(4px)" : "blur(0px)",
-                    border: isHovered ? "1px solid rgba(255, 255, 255, 0.2)" : "1px solid rgba(170, 169, 153, 0.3)",
-                    scale: isClicked ? 0.8 : 1,
-                }}
-                transition={{ type: "spring", damping: 20, stiffness: 200 }}
-            >
-                {isImageHovered && (
-                    <motion.span
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-[10px] font-bold text-white uppercase tracking-widest"
-                    >
-                        View
-                    </motion.span>
+        <div className="fixed inset-0 pointer-events-none z-[999999] overflow-hidden">
+            <AnimatePresence>
+                {isVisible && (
+                    <>
+                        {/* 1. LIQUID TRAIL / OUTER RING */}
+                        <motion.div
+                            style={{
+                                x: smoothMouseX,
+                                y: smoothMouseY,
+                                translateX: "-50%",
+                                translateY: "-50%",
+                                rotate: angle,
+                                scaleX,
+                                scaleY,
+                            }}
+                            className="fixed top-0 left-0 flex items-center justify-center rounded-full"
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{
+                                opacity: 1,
+                                width: isHovered ? (isTextHovered ? 120 : 90) : 40,
+                                height: isHovered ? (isTextHovered ? 120 : 90) : 40,
+                                backgroundColor: isHovered ? "rgba(170, 169, 153, 0.05)" : "rgba(170, 169, 153, 0.1)",
+                                border: isHovered ? "1px solid rgba(170, 169, 153, 0.4)" : "1px solid rgba(170, 169, 153, 0.2)",
+                                backdropFilter: isHovered ? "blur(8px)" : "blur(0px)",
+                                scale: isClicked ? 1.2 : 1,
+                            }}
+                            exit={{ opacity: 0, scale: 0 }}
+                        >
+                            {isViewHovered && (
+                                <motion.span
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary)] text-center w-full"
+                                >
+                                    {cursorText}
+                                </motion.span>
+                            )}
+                        </motion.div>
+
+                        {/* 2. CORE DOT - Dynamic size and blend mode */}
+                        <motion.div
+                            style={{
+                                x: dotX,
+                                y: dotY,
+                                translateX: "-50%",
+                                translateY: "-50%",
+                            }}
+                            className="fixed top-0 left-0 bg-[var(--primary)] rounded-full mix-blend-difference"
+                            initial={{ scale: 0 }}
+                            animate={{
+                                scale: isVisible ? 1 : 0,
+                                width: isClicked ? 12 : (isTextHovered ? 100 : (isHovered ? 10 : 8)),
+                                height: isClicked ? 12 : (isTextHovered ? 100 : (isHovered ? 10 : 8)),
+                                backgroundColor: isTextHovered ? "#ffffff" : "var(--primary)",
+                                opacity: isTextHovered ? 0.3 : 1,
+                            }}
+                            transition={{ type: "spring", damping: 35, stiffness: 400 }}
+                        />
+
+                        {/* 3. FLUID PARTICLES (Ambient trail) */}
+                        {[...Array(3)].map((_, i) => (
+                            <ParticleTrail key={i} index={i} mouseX={mouseX} mouseY={mouseY} />
+                        ))}
+                        
+                        {/* 4. CLICK RIPPLE */}
+                        <AnimatePresence>
+                            {isClicked && <Ripple key="ripple" x={mouseX} y={mouseY} />}
+                        </AnimatePresence>
+                    </>
                 )}
-            </motion.div>
-
-            {/* Core Dot */}
-            <motion.div
-                style={{
-                    translateX: dotX,
-                    translateY: dotY,
-                    x: "-50%",
-                    y: "-50%",
-                }}
-                className="fixed top-0 left-0 pointer-events-none z-[9999]"
-                animate={{
-                    scale: isClicked ? 1.5 : isTextHovered ? 4 : isHovered ? 0.5 : 1,
-                }}
-            >
-                <div
-                    className="rounded-full blur-[0.5px]"
-                    style={{
-                        width: 8,
-                        height: 8,
-                        background: isTextHovered ? "rgba(255,255,255,0.3)" : primaryColor,
-                        mixBlendMode: isTextHovered ? "difference" : "normal",
-                    }}
-                />
-            </motion.div>
-
-            {/* Accent Shadow */}
-            <motion.div
-                style={{
-                    translateX: ringX,
-                    translateY: ringY,
-                    x: "-50%",
-                    y: "-50%",
-                }}
-                className="fixed top-0 left-0 pointer-events-none z-[9997]"
-                animate={{
-                    width: isHovered ? 120 : 0,
-                    height: isHovered ? 120 : 0,
-                    opacity: isHovered ? 0.1 : 0,
-                }}
-            >
-                <div className="w-full h-full rounded-full bg-white blur-2xl" />
-            </motion.div>
-        </>
+            </AnimatePresence>
+        </div>
     );
 }
 
-export function MagneticButton({
-    children,
-    className = "",
-    onClick,
-}: {
-    children: React.ReactNode;
-    className?: string;
-    onClick?: () => void;
-}) {
-    const ref = React.useRef<HTMLButtonElement>(null);
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
+function ParticleTrail({ index, mouseX, mouseY }: { index: number; mouseX: any; mouseY: any }) {
+    const x = useSpring(mouseX, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
+    const y = useSpring(mouseY, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
+    
+    return (
+        <motion.div
+            style={{ x, y, translateX: "-50%", translateY: "-50%" }}
+            className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--primary)] opacity-10 blur-[1px]"
+        />
+    );
+}
+
+function Ripple({ x, y }: { x: any; y: any }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0.5, scale: 0 }}
+            animate={{ opacity: 0, scale: 4 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+                left: x.get(),
+                top: y.get(),
+                translateX: "-50%",
+                translateY: "-50%",
+            }}
+            className="fixed top-0 left-0 w-16 h-16 rounded-full border-2 border-[var(--primary)] opacity-30 blur-[2px]"
+        />
+    );
+}
+
+export function MagneticButton({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) {
+    const ref = useRef<HTMLButtonElement>(null);
+    const x = useSpring(0, { stiffness: 150, damping: 15 });
+    const y = useSpring(0, { stiffness: 150, damping: 15 });
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!ref.current) return;
         const rect = ref.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        x.set((e.clientX - centerX) * 0.3);
-        y.set((e.clientY - centerY) * 0.3);
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        x.set((e.clientX - cx) * 0.4);
+        y.set((e.clientY - cy) * 0.4);
     };
 
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
+    const handleMouseLeave = () => { x.set(0); y.set(0); };
 
     return (
         <motion.button
@@ -199,9 +235,9 @@ export function MagneticButton({
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
-            className={className}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className={`cursor-none ${className}`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
         >
             {children}
         </motion.button>

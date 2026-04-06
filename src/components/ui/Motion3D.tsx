@@ -227,14 +227,26 @@ export function CountUp({ target, suffix = "", duration = 2 }: { target: number;
 
     useEffect(() => {
         if (!inView) return;
+        
+        // Safety check for target
+        const finalTarget = typeof target === 'number' && !isNaN(target) ? target : 0;
+        if (finalTarget === 0) {
+            setDisplay(0);
+            return;
+        }
+
         let start = 0;
         const steps = 60;
-        const increment = target / steps;
+        const increment = finalTarget / steps;
         const timer = setInterval(() => {
             start += increment;
-            if (start >= target) { setDisplay(target); clearInterval(timer); }
+            if (start >= finalTarget) { 
+                setDisplay(finalTarget); 
+                clearInterval(timer); 
+            }
             else setDisplay(Math.floor(start));
         }, (duration * 1000) / steps);
+        
         return () => clearInterval(timer);
     }, [inView, target, duration]);
 

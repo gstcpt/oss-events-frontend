@@ -64,7 +64,7 @@ export default function BlogPost() {
             setBlog(blogData);
             setLikesCount(blogData.likes);
             setSharesCount(blogData.shares);
-            setComments(commentsData);
+            setComments(Array.isArray(commentsData) ? commentsData : []);
             setAverageRating(avgRatingData.averageRating);
             setReviewCount(avgRatingData.reviewCount);
         } catch (err) {
@@ -130,10 +130,6 @@ export default function BlogPost() {
     }, [user, blogId]);
 
     useEffect(() => {
-        fetchBlogData();
-    }, [fetchBlogData]);
-
-    useEffect(() => {
         if (blogId) { fetchRelatedBlogs(); }
     }, [blogId, fetchRelatedBlogs]);
 
@@ -158,10 +154,10 @@ export default function BlogPost() {
 
     const stats = useMemo(() => ({
         views: liveViews || blog?.views || 0,
-        likes: likesCount,
-        shares: sharesCount,
-        comments: comments.length
-    }), [blog?.views, liveViews, likesCount, sharesCount, comments.length]);
+        likes: likesCount || 0,
+        shares: sharesCount || 0,
+        comments: (Array.isArray(comments) ? comments.length : 0)
+    }), [blog?.views, liveViews, likesCount, sharesCount, comments]);
 
     if (loading) {
         return (
@@ -227,7 +223,7 @@ export default function BlogPost() {
                 <ParticleField count={12} color="var(--primary)" />
 
                 {/* Back + actions */}
-                <div className="absolute top-10 left-6 right-6 md:left-12 md:right-12 z-40 flex justify-between items-center pointer-events-none">
+                <div className="absolute top-32 left-6 right-6 md:left-12 md:right-12 z-50 flex justify-between items-center pointer-events-none">
                     <motion.button
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
