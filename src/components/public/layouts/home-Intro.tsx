@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 export default function HeroHome() {
     const t = useTranslations('Home');
     return (
-        <section 
+        <section
             className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden z-20"
             style={{ clipPath: "url(#hero-mask)" }}
         >
@@ -23,7 +23,7 @@ export default function HeroHome() {
             <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105" style={{ backgroundImage: "url('/images/home-hero.jpg')" }}></div>
             {/* Overlay for better text readability */}
             <div className="absolute inset-0 bg-black/30"></div>
-            
+
             <div className="relative z-30 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-10 pb-[10vh]">
                 <h1 className="text-5xl md:text-6xl lg:text-[70px] font-bold text-white mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
                     {t('hero.title_part1')} {t('hero.title_accent')} {t('hero.title_part2')}

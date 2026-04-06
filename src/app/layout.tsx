@@ -14,7 +14,7 @@ import CustomCursor from "@/components/ui/CustomCursor";
 const getCompanyId = cache(async () => {
     try {
         const headersList = await headers();
-        const origin = headersList.get('host') || 'oss-events.vercel.app';
+        const origin = headersList.get('host') || 'oss-events-frontend.vercel.app';
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://oss-events-backend.vercel.app/api';
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 8000);
