@@ -50,7 +50,7 @@ export default function NewPassword() {
             const res = await newPassword({ token, newPassword: values.newPassword });
             toast.success(t('new_password_successful'));
             setSuccess(true);
-            setTimeout(() => router.push("/login"), 3000);
+            setTimeout(() => router.push("/login"), 8000);
         } catch (err: any) {
             toast.error(err.message || t('new_password_error'));
         }
