@@ -1,0 +1,35 @@
+export interface Provider {
+    id: number;
+    user_id: number;
+    category_id: number;
+    type_provider: number;
+    ste_title: string;
+    logo: string;
+    tarification: number;
+    email: string;
+    phone_number: string;
+    whatsapp: string;
+    fix_phone: string;
+    fax: string;
+    country: string;
+    city: string;
+    postal_code: string;
+    street: string;
+    department: string;
+    map_location: string;
+    website: string;
+    facebook: string;
+    instagram: string;
+    tiktok: string;
+    youtube: string;
+    experience: string;
+    foudation_date: string;
+    about: string;
+    policy: string;
+    payment_en_especes: number;
+    payment_virement: number;
+    payment_par_cheque: number;
+    country_id: number;
+    governorate_id: number;
+    municipality_id: number;
+}

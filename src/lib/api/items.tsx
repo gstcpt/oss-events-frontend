@@ -1,0 +1,26 @@
+import { apiFetch } from "../api";
+import { Item, ItemOccupation, ItemMedia } from "@/types/items";
+import { InteractionResponse, ReactionsData } from "@/types/interactions";
+
+export const getAllItems = async () => {return await apiFetch<Item[]>("/items");};
+export const createItem = async (item: Partial<Item>) => {return await apiFetch<{ item: Item }>("/items", { method: "POST", body: JSON.stringify(item) });};
+export const updateItem = async (id: number, item: Partial<Item>) => {return await apiFetch<{ item: Item }>(`/items/${id}`, { method: "PATCH", body: JSON.stringify(item) });};
+export const deleteItem = async (id: number) => {return await apiFetch(`/items/${id}`, { method: "DELETE" });};
+export const getItem = async (id: number) => {return await apiFetch(`/items/${id}`, { method: "GET" });};
+export const getAllInteractions = async () => {return await apiFetch<InteractionResponse[]>("/interactions");};
+export const createInteraction = async (interaction: Partial<InteractionResponse>) => {return await apiFetch<{ interaction: InteractionResponse }>("/interactions", { method: "POST", body: JSON.stringify(interaction) });};
+export const updateInteraction = async (id: number, interaction: Partial<InteractionResponse>) => {return await apiFetch<{ interaction: InteractionResponse }>(`/interactions/${id}`, { method: "PATCH", body: JSON.stringify(interaction) });};
+export const deleteInteraction = async (id: number) => {return await apiFetch(`/interactions/${id}`, { method: "DELETE" });};
+export const getAllItemOccupations = async () => {return await apiFetch<ItemOccupation[]>("/item-occupations");};
+export const createItemOccupation = async (itemOccupation: Partial<ItemOccupation>) => {return await apiFetch<{ itemOccupation: ItemOccupation }>("/item-occupations", { method: "POST", body: JSON.stringify(itemOccupation) });};
+export const updateItemOccupation = async (id: number, itemOccupation: Partial<ItemOccupation>) => {return await apiFetch<{ itemOccupation: ItemOccupation }>(`/item-occupations/${id}`, { method: "PATCH", body: JSON.stringify(itemOccupation) });};
+export const deleteItemOccupation = async (id: number) => {return await apiFetch(`/item-occupations/${id}`, { method: "DELETE" });};
+export const getInteractionStats = async (itemId: number) => {return await apiFetch<ReactionsData>(`/interactions/stats/${itemId}`);};
+export const getInteractionTypes = async () => {return await apiFetch("/interactions/types/all");};
+export const getItemAvailability = async (itemId: number) => {return await apiFetch(`/item-occupations/availability/${itemId}`);};
+export const getAllItemMedia = async () => {return await apiFetch<ItemMedia[]>("/item-media");};
+export const getItemMediaGroupedByItem = async () => {return await apiFetch("/item-media/grouped");};
+export const createItemMedia = async (itemMedia: Partial<ItemMedia>) => {return await apiFetch<{ itemMedia: ItemMedia }>("/item-media", { method: "POST", body: JSON.stringify(itemMedia) });};
+export const updateItemMedia = async (id: number, itemMedia: Partial<ItemMedia>) => {return await apiFetch<{ itemMedia: ItemMedia }>(`/item-media/${id}`, { method: "PATCH", body: JSON.stringify(itemMedia) });};
+export const deleteItemMedia = async (id: number) => {return await apiFetch(`/item-media/${id}`, { method: "DELETE" });};
+export const getItemMediaByItemId = async (itemId: number) => {return await apiFetch<ItemMedia[]>(`/item-media/item/${itemId}`);};
