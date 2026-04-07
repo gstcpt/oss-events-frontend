@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
         ]
     },
     async rewrites() {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://oss-events-backend.vercel.app/api';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        if (!apiUrl) { throw new Error('API URL is not defined') };
 
         // When deploying to Vercel, this rewrite allows the client to call /api/... 
         // and have it proxied to the backend, avoiding CORS issues.
