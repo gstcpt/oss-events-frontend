@@ -64,7 +64,7 @@ export default function BlogPost() {
             setBlog(blogData);
             setLikesCount(blogData.likes);
             setSharesCount(blogData.shares);
-            setComments(Array.isArray(commentsData) ? commentsData : []);
+            setComments(Array.isArray(commentsData) ? commentsData : (commentsData?.data || []));
             setAverageRating(avgRatingData.averageRating);
             setReviewCount(avgRatingData.reviewCount);
         } catch (err) {
@@ -353,7 +353,7 @@ export default function BlogPost() {
                             <div className="flex items-center justify-between mb-12">
                                 <h2 className="text-3xl font-bold text-[var(--footer)] uppercase tracking-tight">{t("community_discussion")}</h2>
                                 <div className="px-4 py-2 bg-[var(--background)] rounded-full text-xs font-bold text-[var(--primary)] border border-[#ece9e0]">
-                                    {blog.comments.length ?? 0} {t("comments")}
+                                    {comments.length} {t("comments")}
                                 </div>
                             </div>
                             <CommentSection targetType="BLOG" targetId={blogId} />
