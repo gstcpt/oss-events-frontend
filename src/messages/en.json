@@ -1223,7 +1223,15 @@
             "selectUser": "Select a user",
             "replyTo": "Reply to",
             "from": "From",
-            "markAllAsRead": "Mark All as Read"
+            "markAllAsRead": "Mark All as Read",
+            "toastMessageSent": "Message sent successfully!",
+            "toastErrorSendMessage": "Failed to send message",
+            "toastMessageTrashed": "Message moved to trash",
+            "toastErrorMoveToTrash": "Failed to move message to trash",
+            "toastMessageRestored": "Message restored",
+            "toastErrorRestore": "Failed to restore message",
+            "messageNotFound": "Message not found",
+            "loadingMessage": "Loading message..."
         },
         "notifications": {
             "title": "Notifications",
@@ -1426,7 +1434,17 @@
             "confirmDelete": "Are you sure you want to delete this subscription?",
             "allCompanies": "All Companies",
             "allPacks": "All Packs",
-            "allStatuses": "All Statuses"
+            "allStatuses": "All Statuses",
+            "toastErrorSubscriptions": "Error fetching subscriptions",
+            "toastErrorPacks": "Error fetching packs",
+            "toastErrorCompaniesFetch": "Error fetching companies",
+            "toastSubscriptionDeleted": "Subscription deleted successfully",
+            "toastErrorDeleteSubscription": "Error deleting subscription",
+            "toastErrorGenerateInvoice": "Error generating invoice",
+            "toastErrorSelectPack": "Please select a pack",
+            "toastErrorSelectCompany": "Please select a company",
+            "toastErrorEndDate": "End date must be after start date",
+            "toastErrorSaveSubscription": "Error saving subscription"
         },
         "locations": {
             "title": "Locations Management",

@@ -244,9 +244,9 @@ export default function Companies() {
       try {
         await deleteCompany(deletingCompany.id);
         fetchCompanies();
-        toast.success('Company deleted successfully');
+        toast.success(t('toastCompanyDeleted'));
       } catch (error) {
-        toast.error('Error deleting company');
+        toast.error(t('toastErrorDeleteCompany'));
       }
     }
     setIsDeleteModalOpen(false);
@@ -267,8 +267,8 @@ export default function Companies() {
     try {
       const result = await uploadCompanyLogo(file, editingCompany.id, formData.title || 'company');
       setFormData({ ...formData, logo: result.logoUrl });
-      toast.success('Logo uploaded and saved');
-    } catch (error) { toast.error('Error uploading logo'); }
+      toast.success(t('toastLogoSaved'));
+    } catch (error) { toast.error(t('toastErrorLogo')); }
     finally { setUploadingLogo(false); }
   };
 
@@ -286,8 +286,8 @@ export default function Companies() {
     try {
       const result = await uploadCompanyFavicon(file, editingCompany.id, formData.title || 'company');
       setFormData({ ...formData, favicon: result.faviconUrl });
-      toast.success('Favicon uploaded and saved');
-    } catch (error) { toast.error('Error uploading favicon'); }
+      toast.success(t('toastFaviconSaved'));
+    } catch (error) { toast.error(t('toastErrorFavicon')); }
     finally { setUploadingFavicon(false); }
   };
 
@@ -330,18 +330,18 @@ export default function Companies() {
       // Handle delayed uploads for new companies
       if (!editingCompany && companyIdToUploadFor) {
         if (logoFile) {
-          try { await uploadCompanyLogo(logoFile, companyIdToUploadFor, formData.title); } catch (e) { toast.error("Logo upload failed"); }
+          try { await uploadCompanyLogo(logoFile, companyIdToUploadFor, formData.title); } catch (e) { toast.error(t('toastErrorLogoUploadFailed')); }
         }
         if (faviconFile) {
-          try { await uploadCompanyFavicon(faviconFile, companyIdToUploadFor, formData.title); } catch (e) { toast.error("Favicon upload failed"); }
+          try { await uploadCompanyFavicon(faviconFile, companyIdToUploadFor, formData.title); } catch (e) { toast.error(t('toastErrorFaviconUploadFailed')); }
         }
       }
 
-      toast.success(editingCompany ? 'Company updated successfully' : 'Company created successfully');
+      toast.success(editingCompany ? t('companyUpdated') : t('companyCreated'));
       setIsModalOpen(false);
       fetchCompanies();
     } catch (error) {
-      toast.error('Error saving company');
+      toast.error(t('toastErrorSavingCompany'));
     }
   };
 

@@ -23,7 +23,7 @@
   /* Custom cursor colors */
   --cursor-core: #C2410C;
   --cursor-ring: #ffae00;
-  --cursor-glow: #ff0000;
+  --cursor-glow: #a70000;
 }
 
 @theme inline {
@@ -81,8 +81,8 @@ body {
 /* Custom Cursor */
 .cursor-core {
   position: fixed;
-  width: 12px;
-  height: 12px;
+  width: 20px;
+  height: 20px;
   background: var(--cursor-core);
   border-radius: 50%;
   pointer-events: none;
@@ -94,8 +94,8 @@ body {
 
 .cursor-ring {
   position: fixed;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border: 1.5px solid var(--cursor-ring);
   border-radius: 50%;
   pointer-events: none;
@@ -105,15 +105,15 @@ body {
 }
 
 .cursor-ring.hovering {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-color: var(--cursor-core);
 }
 
 .cursor-dot {
   position: fixed;
-  width: 4px;
-  height: 4px;
+  width: 8px;
+  height: 8px;
   background: white;
   border-radius: 50%;
   pointer-events: none;

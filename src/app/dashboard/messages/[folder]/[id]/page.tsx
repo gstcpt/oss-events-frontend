@@ -51,9 +51,9 @@ export default function MessageView() {
             try {
                 await draftToSend(message.id);
                 if (typeof window !== "undefined") window.dispatchEvent(new Event("messages_updated"));
-                toast.success("Message sent successfully!");
+                toast.success(t('toastMessageSent'));
                 router.push(`/dashboard/messages/sent`);
-            } catch (error) { toast.error("Failed to send message"); }
+            } catch (error) { toast.error(t('toastErrorSendMessage')); }
         }
     };
     const handleTrash = async () => {
@@ -61,9 +61,9 @@ export default function MessageView() {
             try {
                 await moveMessageToTrash(id, folder);
                 if (typeof window !== "undefined") window.dispatchEvent(new Event("messages_updated"));
-                toast.success("Message moved to trash");
+                toast.success(t('toastMessageTrashed'));
                 router.push(`/dashboard/messages/${folder}`);
-            } catch (error) { toast.error("Failed to move message to trash"); }
+            } catch (error) { toast.error(t('toastErrorMoveToTrash')); }
         }
     };
     const handleRestore = async () => {
@@ -71,13 +71,13 @@ export default function MessageView() {
             try {
                 await restoreMessage(message, user.id);
                 if (typeof window !== "undefined") window.dispatchEvent(new Event("messages_updated"));
-                toast.success("Message restored");
+                toast.success(t('toastMessageRestored'));
                 router.push(`/dashboard/messages/trash`);
-            } catch (error) { toast.error("Failed to restore message"); }
+            } catch (error) { toast.error(t('toastErrorRestore')); }
         }
     };
-    if (loading) { return <p>Loading message...</p>; }
-    if (!message) { return <p>Message not found.</p>; }
+    if (loading) { return <p>{t('loading')}</p>; }
+    if (!message) { return <p>{t('messageNotFound')}</p>; }
     return (
         <div className="card">
             <div className="p-6">

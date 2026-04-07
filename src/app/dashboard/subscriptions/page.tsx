@@ -73,7 +73,7 @@ export default function Subscriptions() {
       setSubscriptions(data);
     } catch (error) {
       console.log(error);
-      toast.error('Error fetching subscriptions');
+      toast.error(t('toastErrorSubscriptions'));
     } finally {
       setLoading(false);
     }
@@ -84,7 +84,7 @@ export default function Subscriptions() {
       const data = await getPacks();
       setPacks(data.filter((pack: Pack) => pack.status === 1));
     } catch (error) {
-      toast.error('Error fetching packs');
+      toast.error(t('toastErrorPacks'));
     }
   };
 
@@ -93,7 +93,7 @@ export default function Subscriptions() {
       const data = await getCompanies();
       setCompanies(data);
     } catch (error) {
-      toast.error('Error fetching companies');
+      toast.error(t('toastErrorCompaniesFetch'));
     }
   };
 
@@ -131,9 +131,9 @@ export default function Subscriptions() {
       try {
         await deleteSubscription(deletingSubscription.id);
         fetchSubscriptions();
-        toast.success('Subscription deleted successfully');
+        toast.success(t('toastSubscriptionDeleted'));
       } catch (error) {
-        toast.error('Error deleting subscription');
+        toast.error(t('toastErrorDeleteSubscription'));
       }
     }
     setIsDeleteModalOpen(false);
@@ -192,7 +192,7 @@ export default function Subscriptions() {
 
       openInvoiceInNewTab(invoiceData);
     } catch (error) {
-      toast.error('Error generating invoice');
+      toast.error(t('toastErrorGenerateInvoice'));
     }
   };
 
@@ -200,17 +200,17 @@ export default function Subscriptions() {
     e.preventDefault();
 
     if (!formData.pack_id) {
-      toast.error('Please select a pack');
+      toast.error(t('toastErrorSelectPack'));
       return;
     }
 
     if (isRoot && !formData.company_id) {
-      toast.error('Please select a company');
+      toast.error(t('toastErrorSelectCompany'));
       return;
     }
 
     if (formData.start_date && formData.end_date && new Date(formData.start_date) >= new Date(formData.end_date)) {
-      toast.error('End date must be after start date');
+      toast.error(t('toastErrorEndDate'));
       return;
     }
 
@@ -235,9 +235,9 @@ export default function Subscriptions() {
 
       setIsModalOpen(false);
       fetchSubscriptions();
-      toast.success(editingSubscription ? 'Subscription updated successfully' : 'Subscription created successfully');
+      toast.success(editingSubscription ? t('subscriptionUpdated') : t('subscriptionCreated'));
     } catch (error) {
-      toast.error('Error saving subscription');
+      toast.error(t('toastErrorSaveSubscription'));
     }
   };
 
