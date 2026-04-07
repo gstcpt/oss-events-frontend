@@ -353,7 +353,7 @@ export default function BlogPost() {
                             <div className="flex items-center justify-between mb-12">
                                 <h2 className="text-3xl font-bold text-[var(--footer)] uppercase tracking-tight">{t("community_discussion")}</h2>
                                 <div className="px-4 py-2 bg-[var(--background)] rounded-full text-xs font-bold text-[var(--primary)] border border-[#ece9e0]">
-                                    {comments.length} {t("comments")}
+                                    {blog.comments.length ?? 0} {t("comments")}
                                 </div>
                             </div>
                             <CommentSection targetType="BLOG" targetId={blogId} />
@@ -364,83 +364,83 @@ export default function BlogPost() {
                     <div className="lg:col-span-1 space-y-6 sticky top-24 h-fit">
                         {/* Community Rating */}
                         <Reveal direction="left" delay={0.2}>
-                        <TiltCard intensity={6}>
-                        <div className="bg-white rounded-xl shadow-xl shadow-black/5 border border-[#ece9e0] p-8 transition-all duration-500 hover:shadow-2xl">
-                            <h3 className="text-base font-bold text-[var(--footer)] mb-6 flex items-center gap-3 uppercase tracking-tight">
-                                <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-                                {t("community_rating")}
-                            </h3>
-                            <RatingStars targetType="BLOG" targetId={blogId} />
-                        </div>
-                        </TiltCard>
+                            <TiltCard intensity={6}>
+                                <div className="bg-white rounded-xl shadow-xl shadow-black/5 border border-[#ece9e0] p-8 transition-all duration-500 hover:shadow-2xl">
+                                    <h3 className="text-base font-bold text-[var(--footer)] mb-6 flex items-center gap-3 uppercase tracking-tight">
+                                        <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+                                        {t("community_rating")}
+                                    </h3>
+                                    <RatingStars targetType="BLOG" targetId={blogId} />
+                                </div>
+                            </TiltCard>
                         </Reveal>
 
                         {/* Post Insights */}
                         <Reveal direction="left" delay={0.3}>
-                        <TiltCard intensity={5}>
-                        <div className="bg-white rounded-xl shadow-xl shadow-black/5 border border-[#ece9e0] p-8 transition-all duration-500 hover:shadow-2xl">
-                            <div className="flex items-center gap-3 mb-8">
-                                <div className="w-1.5 h-6 rounded-full bg-[var(--primary)]" />
-                                <h2 className="text-xl font-bold text-[var(--footer)] uppercase tracking-tight">{t("post_insights")}</h2>
-                            </div>
+                            <TiltCard intensity={5}>
+                                <div className="bg-white rounded-xl shadow-xl shadow-black/5 border border-[#ece9e0] p-8 transition-all duration-500 hover:shadow-2xl">
+                                    <div className="flex items-center gap-3 mb-8">
+                                        <div className="w-1.5 h-6 rounded-full bg-[var(--primary)]" />
+                                        <h2 className="text-xl font-bold text-[var(--footer)] uppercase tracking-tight">{t("post_insights")}</h2>
+                                    </div>
 
-                            <Stagger staggerDelay={0.1} className="grid grid-cols-2 gap-4">
-                                {[
-                                    { icon: Eye, value: stats.views, label: tCommon("views"), color: "text-sky-500", bg: "bg-sky-50" },
-                                    { icon: ThumbsUp, value: stats.likes, label: tCommon("likes"), color: "text-emerald-500", bg: "bg-emerald-50" },
-                                    { icon: MessageSquare, value: stats.comments, label: tCommon("comments"), color: "text-violet-500", bg: "bg-violet-50" },
-                                    { icon: Share2, value: stats.shares, label: tCommon("shares"), color: "text-amber-500", bg: "bg-amber-50" }
-                                ].map((stat, idx) => (
-                                    <StaggerItem key={idx}>
-                                        <motion.div whileHover={{ scale: 1.04, y: -2 }} className="group/stat flex flex-col items-center justify-center p-6 rounded-xl bg-[var(--background)] border border-[#ece9e0] hover:border-[var(--primary)]/30 transition-all duration-300 cursor-default">
-                                            <div className={`w-12 h-12 ${stat.bg} ${stat.color} rounded-2xl flex items-center justify-center mb-3 group-hover/stat:scale-110 transition-transform`}>
-                                                <stat.icon className="w-6 h-6" />
-                                            </div>
-                                            <span className="text-2xl font-bold text-[var(--footer)] tabular-nums tracking-tight"><CountUp target={stat.value} /></span>
-                                            <span className="text-[9px] font-bold text-[#7a7a68] uppercase tracking-[0.2em] mt-2 whitespace-nowrap">{stat.label}</span>
-                                        </motion.div>
-                                    </StaggerItem>
-                                ))}
-                            </Stagger>
-                        </div>
-                        </TiltCard>
+                                    <Stagger staggerDelay={0.1} className="grid grid-cols-2 gap-4">
+                                        {[
+                                            { icon: Eye, value: stats.views, label: tCommon("views"), color: "text-sky-500", bg: "bg-sky-50" },
+                                            { icon: ThumbsUp, value: stats.likes, label: tCommon("likes"), color: "text-emerald-500", bg: "bg-emerald-50" },
+                                            { icon: MessageSquare, value: stats.comments, label: tCommon("comments"), color: "text-violet-500", bg: "bg-violet-50" },
+                                            { icon: Share2, value: stats.shares, label: tCommon("shares"), color: "text-amber-500", bg: "bg-amber-50" }
+                                        ].map((stat, idx) => (
+                                            <StaggerItem key={idx}>
+                                                <motion.div whileHover={{ scale: 1.04, y: -2 }} className="group/stat flex flex-col items-center justify-center p-6 rounded-xl bg-[var(--background)] border border-[#ece9e0] hover:border-[var(--primary)]/30 transition-all duration-300 cursor-default">
+                                                    <div className={`w-12 h-12 ${stat.bg} ${stat.color} rounded-2xl flex items-center justify-center mb-3 group-hover/stat:scale-110 transition-transform`}>
+                                                        <stat.icon className="w-6 h-6" />
+                                                    </div>
+                                                    <span className="text-2xl font-bold text-[var(--footer)] tabular-nums tracking-tight"><CountUp target={stat.value} /></span>
+                                                    <span className="text-[9px] font-bold text-[#7a7a68] uppercase tracking-[0.2em] mt-2 whitespace-nowrap">{stat.label}</span>
+                                                </motion.div>
+                                            </StaggerItem>
+                                        ))}
+                                    </Stagger>
+                                </div>
+                            </TiltCard>
                         </Reveal>
 
                         {/* Content Tags / Categories */}
                         <Reveal direction="left" delay={0.4}>
-                        <div className="bg-white rounded-xl shadow-xl shadow-black/5 border border-[#ece9e0] p-8 transition-all duration-500 hover:shadow-2xl">
-                            <h3 className="text-xl font-bold text-[var(--footer)] mb-8 uppercase tracking-tight">{t("content_tags")}</h3>
+                            <div className="bg-white rounded-xl shadow-xl shadow-black/5 border border-[#ece9e0] p-8 transition-all duration-500 hover:shadow-2xl">
+                                <h3 className="text-xl font-bold text-[var(--footer)] mb-8 uppercase tracking-tight">{t("content_tags")}</h3>
 
-                            {blog.categories && blog.categories.length > 0 && (
-                                <div className="mb-8">
-                                    <h4 className="text-[10px] font-bold text-[#7a7a68] mb-4 uppercase tracking-[0.2em]">{t("categories")}</h4>
+                                {blog.categories && blog.categories.length > 0 && (
+                                    <div className="mb-8">
+                                        <h4 className="text-[10px] font-bold text-[#7a7a68] mb-4 uppercase tracking-[0.2em]">{t("categories")}</h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {blog.categories.map((category) => (
+                                                <span
+                                                    key={category}
+                                                    className="px-5 py-2.5 bg-[#3a3a2e] text-white rounded-xl text-xs font-bold shadow-md hover:shadow-xl hover:bg-[var(--primary)] transition-all duration-500 cursor-pointer hover:scale-105 uppercase tracking-widest border border-white/5"
+                                                >
+                                                    {category}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div>
+                                    <h4 className="text-[10px] font-bold text-[#7a7a68] mb-4 uppercase tracking-[0.2em]">{t("tags")}</h4>
                                     <div className="flex flex-wrap gap-2">
-                                        {blog.categories.map((category) => (
+                                        {blog.tags?.map((tag) => (
                                             <span
-                                                key={category}
-                                                className="px-5 py-2.5 bg-[#3a3a2e] text-white rounded-xl text-xs font-bold shadow-md hover:shadow-xl hover:bg-[var(--primary)] transition-all duration-500 cursor-pointer hover:scale-105 uppercase tracking-widest border border-white/5"
+                                                key={tag}
+                                                className="px-4 py-2 bg-[var(--background)] hover:bg-[#ece9e0] text-[#7a7a68] rounded-2xl text-[10px] font-bold cursor-pointer hover:scale-105 transition-all border border-[#ece9e0] uppercase tracking-wider"
                                             >
-                                                {category}
+                                                #{tag}
                                             </span>
                                         ))}
                                     </div>
                                 </div>
-                            )}
-
-                            <div>
-                                <h4 className="text-[10px] font-bold text-[#7a7a68] mb-4 uppercase tracking-[0.2em]">{t("tags")}</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {blog.tags?.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="px-4 py-2 bg-[var(--background)] hover:bg-[#ece9e0] text-[#7a7a68] rounded-2xl text-[10px] font-bold cursor-pointer hover:scale-105 transition-all border border-[#ece9e0] uppercase tracking-wider"
-                                        >
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
                             </div>
-                        </div>
                         </Reveal>
                     </div>
                 </div>
