@@ -142,7 +142,7 @@ export default function CustomCursor() {
                                 <motion.span
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--cursor-core)] text-center w-full"
+                                    className="text-[12px] font-black uppercase tracking-[0.2em] text-[var(--cursor-core)] text-center w-full"
                                 >
                                     {cursorText}
                                 </motion.span>
@@ -192,7 +192,7 @@ function ParticleTrail({ index, mouseX, mouseY }: { index: number; mouseX: any; 
     return (
         <motion.div
             style={{ x, y, translateX: "-50%", translateY: "-50%" }}
-            className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--cursor-core)] opacity-10 blur-[1px]"
+            className="fixed top-0 left-0 w-4 h-4 rounded-full bg-[var(--cursor-core)] opacity-10 blur-[1px]"
         />
     );
 }
@@ -209,7 +209,7 @@ function Ripple({ x, y }: { x: any; y: any }) {
                 translateX: "-50%",
                 translateY: "-50%",
             }}
-            className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--cursor-core)] opacity-30 blur-[1px]"
+            className="fixed top-0 left-0 w-12 h-12 rounded-full border border-[var(--cursor-core)] opacity-30 blur-[1px]"
         />
     );
 }

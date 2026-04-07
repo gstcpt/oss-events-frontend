@@ -72,19 +72,19 @@ const FormsPage = () => {
         try {
             const data = await getForms();
             setForms(data);
-        } catch { toast.error("Failed to fetch forms."); }
+        } catch { toast.error(t('toastErrorFetchForms')); }
     };
     const fetchCompanies = async () => {
         try {
             const data = await getCompanies();
             setCompanies(data);
-        } catch { toast.error("Failed to fetch companies."); }
+        } catch { toast.error(t('toastErrorFetchCompanies')); }
     };
     const fetchCategories = async () => {
         try {
             const data = await getAllCategories();
             setCategories(data);
-        } catch { toast.error("Failed to fetch categories."); }
+        } catch { toast.error(t('toastErrorFetchCategories')); }
     };
     useEffect(() => {
         fetchForms();
@@ -235,14 +235,14 @@ const FormsPage = () => {
     };
     const goToStep2 = async () => {
         if (!formTitle || !selectedCompanyId || !selectedCategoryId) {
-            toast.error("Please fill in all required fields.");
+            toast.error(t('toastErrorRequiredFields'));
             return;
         }
         try {
             const tags = await getTagsByCategory(parseInt(selectedCategoryId));
             setAvailableTags(tags);
             setStep(2);
-        } catch (error) { toast.error("Failed to fetch tags for the selected category."); }
+        } catch (error) { toast.error(t('toastErrorFetchTags')); }
     };
     const goToStep3 = () => { setStep(3); };
     const handleSubmit = async () => {
@@ -266,23 +266,23 @@ const FormsPage = () => {
         try {
             if (editingForm) {
                 await updateForm({ id: editingForm.id, ...(data as any) });
-                toast.success("Form updated!");
+                toast.success(t('toastFormUpdated'));
             } else {
                 await createForm(data as any);
-                toast.success("Form created!");
+                toast.success(t('toastFormCreated'));
             }
             fetchForms();
             handleCloseModal();
-        } catch { toast.error("Failed to save form."); }
+        } catch { toast.error(t('toastErrorSaveForm')); }
     };
     const handleDelete = async () => {
         if (!deletingForm) return;
         try {
             await deleteForm(deletingForm.id);
-            toast.success("Form deleted!");
+            toast.success(t('toastFormDeleted'));
             fetchForms();
             handleCloseDeleteModal();
-        } catch { toast.error("Failed to delete form."); }
+        } catch { toast.error(t('toastErrorDeleteForm')); }
     };
     const isRootUser = Number(user?.role_id) === 1;
     const columns: DataTableColumn<Form>[] = [

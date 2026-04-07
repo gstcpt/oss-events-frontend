@@ -791,7 +791,12 @@
             "allCategories": "Toutes les catégories",
             "close": "Fermer",
             "save": "Enregistrer l'événement",
-            "cancel": "Annuler"
+            "cancel": "Annuler",
+            "toastErrorCompanyRequired": "La sélection de l'entreprise est requise",
+            "toastEventUpdated": "Événement mis à jour avec succès",
+            "toastEventCreated": "Événement créé avec succès",
+            "toastErrorOperation": "Échec de l'opération: {error}",
+            "toastErrorDatesRequired": "Veuillez définir les dates de début et de fin"
         },
         "categories": {
             "title": "Catégories",
@@ -1780,7 +1785,16 @@
             "toastPasswordSuccess": "Mot de passe mis à jour avec succès !",
             "toastErrorLoadProfile": "Échec de la récupération du profil. Veuillez réessayer.",
             "toastErrorLoadProvider": "Échec de la récupération des informations du prestataire. Veuillez compléter votre profil.",
-            "toastErrorSaveGeneric": "Échec de la mise à jour des détails. Veuillez réessayer."
+            "toastErrorSaveGeneric": "Échec de la mise à jour des détails. Veuillez réessayer.",
+            "toastErrorLoadCountries": "Échec de la récupération des pays.",
+            "toastErrorLoadCategories": "Échec de la récupération des catégories.",
+            "toastErrorLoadGovernorates": "Échec de la récupération des gouvernorats.",
+            "toastErrorLoadMunicipalities": "Échec de la récupération des municipalités.",
+            "toastErrorImageFormat": "Seuls les fichiers image sont autorisés",
+            "toastErrorImageSize": "La taille du fichier doit être inférieure à 5 Mo",
+            "toastErrorPasswordMismatch": "Les mots de passe ne correspondent pas.",
+            "toastErrorPasswordLength": "Le mot de passe doit contenir au moins 8 caractères.",
+            "toastErrorSaveProvider": "Échec de l'enregistrement des informations du prestataire: {error}"
         },
         "companySettings": {
             "title": "Paramètres de l'entreprise",

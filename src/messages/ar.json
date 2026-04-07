@@ -791,7 +791,12 @@
             "allCategories": "جميع الفئات",
             "close": "إغلاق",
             "save": "حفظ الفعالية",
-            "cancel": "إلغاء"
+            "cancel": "إلغاء",
+            "toastErrorCompanyRequired": "يجب تحديد الشركة",
+            "toastEventUpdated": "تم تحديث الفعالية بنجاح",
+            "toastEventCreated": "تم إنشاء الفعالية بنجاح",
+            "toastErrorOperation": "فشلت العملية: {error}",
+            "toastErrorDatesRequired": "يرجى تحديد تاريخي البدء والنهاية"
         },
         "categories": {
             "title": "الفئات",
@@ -1780,7 +1785,16 @@
             "toastPasswordSuccess": "تم تحديث كلمة المرور بنجاح!",
             "toastErrorLoadProfile": "فشل في جلب الملف الشخصي. يرجى المحاولة مرة أخرى.",
             "toastErrorLoadProvider": "فشل في جلب معلومات المزود. يرجى إكمال ملفك الشخصي.",
-            "toastErrorSaveGeneric": "فشل في تحديث التفاصيل. يرجى المحاولة مرة أخرى."
+            "toastErrorSaveGeneric": "فشل في تحديث التفاصيل. يرجى المحاولة مرة أخرى.",
+            "toastErrorLoadCountries": "فشل في جلب الدول.",
+            "toastErrorLoadCategories": "فشل في جلب الفئات.",
+            "toastErrorLoadGovernorates": "فشل في جلب الولايات.",
+            "toastErrorLoadMunicipalities": "فشل في جلب البلديات.",
+            "toastErrorImageFormat": "يُسمح فقط بملفات الصور",
+            "toastErrorImageSize": "يجب أن يكون حجم الملف أقل من 5 ميجابايت",
+            "toastErrorPasswordMismatch": "كلمات المرور غير متطابقة.",
+            "toastErrorPasswordLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+            "toastErrorSaveProvider": "فشل في حفظ معلومات المزود: {error}"
         },
         "companySettings": {
             "title": "إعدادات الشركة",

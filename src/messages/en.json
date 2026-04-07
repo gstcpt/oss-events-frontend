@@ -1673,7 +1673,17 @@
             "formUpdated": "Form updated successfully",
             "formDeleted": "Form deleted successfully",
             "errorSaving": "Error saving form",
-            "confirmDelete": "Are you sure you want to delete this form?"
+            "confirmDelete": "Are you sure you want to delete this form?",
+            "toastErrorFetchForms": "Failed to fetch forms.",
+            "toastErrorFetchCompanies": "Failed to fetch companies.",
+            "toastErrorFetchCategories": "Failed to fetch categories.",
+            "toastErrorRequiredFields": "Please fill in all required fields.",
+            "toastErrorFetchTags": "Failed to fetch tags for the selected category.",
+            "toastFormUpdated": "Form updated!",
+            "toastFormCreated": "Form created!",
+            "toastErrorSaveForm": "Failed to save form.",
+            "toastFormDeleted": "Form deleted!",
+            "toastErrorDeleteForm": "Failed to delete form."
         },
         "newsletter": {
             "title": "Newsletter",
