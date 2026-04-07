@@ -129,12 +129,12 @@ export default function CustomCursor() {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{
                                 opacity: 1,
-                                width: isHovered ? (isTextHovered ? 120 : 90) : 40,
-                                height: isHovered ? (isTextHovered ? 120 : 90) : 40,
-                                backgroundColor: isHovered ? "rgba(170, 169, 153, 0.05)" : "rgba(170, 169, 153, 0.1)",
-                                border: isHovered ? "1px solid rgba(170, 169, 153, 0.4)" : "1px solid rgba(170, 169, 153, 0.2)",
-                                backdropFilter: isHovered ? "blur(8px)" : "blur(0px)",
-                                scale: isClicked ? 1.2 : 1,
+                                width: isHovered ? (isTextHovered ? 60 : 50) : 24,
+                                height: isHovered ? (isTextHovered ? 60 : 50) : 24,
+                                backgroundColor: isHovered ? "rgba(var(--primary-rgb), 0.05)" : "rgba(var(--primary-rgb), 0.1)",
+                                border: isHovered ? "1.5px solid var(--primary)" : "1px solid rgba(var(--primary-rgb), 0.3)",
+                                backdropFilter: isHovered ? "blur(4px)" : "blur(0px)",
+                                scale: isClicked ? 0.9 : 1,
                             }}
                             exit={{ opacity: 0, scale: 0 }}
                         >
@@ -142,7 +142,7 @@ export default function CustomCursor() {
                                 <motion.span
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className="text-[9px] font-black uppercase tracking-[0.3em] text-[var(--primary)] text-center w-full"
+                                    className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--primary)] text-center w-full"
                                 >
                                     {cursorText}
                                 </motion.span>
@@ -161,10 +161,10 @@ export default function CustomCursor() {
                             initial={{ scale: 0 }}
                             animate={{
                                 scale: isVisible ? 1 : 0,
-                                width: isClicked ? 12 : (isTextHovered ? 100 : (isHovered ? 10 : 8)),
-                                height: isClicked ? 12 : (isTextHovered ? 100 : (isHovered ? 10 : 8)),
-                                backgroundColor: isTextHovered ? "#ffffff" : "var(--primary)",
-                                opacity: isTextHovered ? 0.3 : 1,
+                                width: isClicked ? 6 : (isTextHovered ? 40 : (isHovered ? 8 : 6)),
+                                height: isClicked ? 6 : (isTextHovered ? 40 : (isHovered ? 8 : 6)),
+                                backgroundColor: isTextHovered ? "var(--primary)" : "var(--primary)",
+                                opacity: isTextHovered ? 0.2 : 1,
                             }}
                             transition={{ type: "spring", damping: 35, stiffness: 400 }}
                         />
