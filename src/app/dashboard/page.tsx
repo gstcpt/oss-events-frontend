@@ -262,12 +262,25 @@ export default function Dashboard() {
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-800"><Activity className="h-5 w-5 text-indigo-600" />{t('liveActivityStream')}</h3>
                             {data.liveActivity?.length > 0 ? (
                                 <ul className="space-y-3 divide-y divide-slate-50">
-                                    {data.liveActivity.slice(0, 5).map((activity: any, idx: number) => (
-                                        <li key={idx} className="text-sm py-2 first:pt-0 last:pb-0">
-                                            <div className="font-medium text-slate-800">{activity.description}</div>
-                                            <div className="text-xs text-slate-500 mt-1">{new Date(activity.timestamp).toLocaleString()}</div>
-                                        </li>
-                                    ))}
+                                    {data.liveActivity.slice(0, 5).map((activity: any, idx: number) => {
+                                        const tLive = useTranslations('Dashboard.page.liveActivity');
+                                        const userName = activity.user || 'User';
+                                        const targetType = activity.targetType || '';
+                                        let description = '';
+                                        if (activity.type === 'interaction') {
+                                            const actionKey = activity.description?.typeKey || 'interacted';
+                                            const actionText = tLive(actionKey as any);
+                                            description = `${userName} ${actionText} ${targetType}`;
+                                        } else if (activity.type === 'event') {
+                                            description = tLive('newEventBooking') + ': ' + (activity.description?.title || activity.title);
+                                        }
+                                        return (
+                                            <li key={idx} className="text-sm py-2 first:pt-0 last:pb-0">
+                                                <div className="font-medium text-slate-800">{description}</div>
+                                                <div className="text-xs text-slate-500 mt-1">{new Date(activity.timestamp).toLocaleString()}</div>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             ) : (<p className="text-slate-500 text-sm">{t('noRecentActivityDetected')}</p>)}
                         </div>
@@ -291,12 +304,25 @@ export default function Dashboard() {
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-800"><Activity className="h-5 w-5 text-indigo-600" />{t('liveActivityStream')}</h3>
                             {data.liveActivity?.length > 0 ? (
                                 <ul className="space-y-3 divide-y divide-slate-50">
-                                    {data.liveActivity.slice(0, 5).map((activity: any, idx: number) => (
-                                        <li key={idx} className="text-sm py-2 first:pt-0 last:pb-0">
-                                            <div className="font-medium text-slate-800">{activity.description}</div>
-                                            <div className="text-xs text-slate-500 mt-1">{new Date(activity.timestamp).toLocaleString()}</div>
-                                        </li>
-                                    ))}
+                                    {data.liveActivity.slice(0, 5).map((activity: any, idx: number) => {
+                                        const tLive = useTranslations('Dashboard.page.liveActivity');
+                                        const userName = activity.user || 'User';
+                                        const targetType = activity.targetType || '';
+                                        let description = '';
+                                        if (activity.type === 'interaction') {
+                                            const actionKey = activity.description?.typeKey || 'interacted';
+                                            const actionText = tLive(actionKey as any);
+                                            description = `${userName} ${actionText} ${targetType}`;
+                                        } else if (activity.type === 'event') {
+                                            description = tLive('newEventBooking') + ': ' + (activity.description?.title || activity.title);
+                                        }
+                                        return (
+                                            <li key={idx} className="text-sm py-2 first:pt-0 last:pb-0">
+                                                <div className="font-medium text-slate-800">{description}</div>
+                                                <div className="text-xs text-slate-500 mt-1">{new Date(activity.timestamp).toLocaleString()}</div>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             ) : (<p className="text-slate-500 text-sm">{t('noRecentActivityDetected')}</p>)}
                         </div>
@@ -313,8 +339,9 @@ export default function Dashboard() {
                         return (
                             <QuickActionCard
                                 key={idx}
-                                {...action}
                                 icon={IconComponent}
+                                keyProp={action.key}
+                                href={action.href}
                             />
                         );
                     })}
