@@ -128,7 +128,8 @@
         "view_details": "عرض التفاصيل",
         "add_to_plan": "إضافة إلى الخطة",
         "interactions": "التفاعلات",
-        "view_profile": "الملف الشخصي"
+        "view_profile": "الملف الشخصي",
+        "starting_from": "ابتداءً من"
     },
     "Home": {
         "hero": {
@@ -438,7 +439,8 @@
             "6": "السبت"
         },
         "feature": "ميزة",
-        "view_profile": "عرض الملف الشخصي"
+        "view_profile": "عرض الملف الشخصي",
+        "select": "اختيار"
     },
     "ProviderDetailPage": {
         "loading": "جاري تحميل التفاصيل...",
@@ -1357,7 +1359,10 @@
             "tva": "الأداء (TVA)",
             "priceTTC": "السعر الإجمالي",
             "discount": "تخفيض",
-            "actions": "الإجراءات"
+            "actions": "الإجراءات",
+            "selectModule": "اختر وحدة",
+            "noModules": "لا توجد وحدات متاحة",
+            "noSubscriptions": "لا توجد اشتراكات لهذه الباقة"
         },
         "subscriptions": {
             "title": "الاشتراكات",

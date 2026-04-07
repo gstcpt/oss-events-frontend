@@ -257,14 +257,24 @@ export function CountUp({ target, suffix = "", duration = 2 }: { target: number;
    10. PARTICLE FIELD – subtle ambient 3-D particles
 ───────────────────────────────────────────────────────────── */
 export function ParticleField({ count = 20, color = "var(--primary)" }: { count?: number; color?: string }) {
-    const particles = Array.from({ length: count }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 6 + 2,
-        duration: Math.random() * 8 + 4,
-        delay: Math.random() * 4,
-    }));
+    const [mounted, setMounted] = useState(false);
+    const [particles, setParticles] = useState<any[]>([]);
+
+    useEffect(() => {
+        setMounted(true);
+        const newParticles = Array.from({ length: count }, (_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            size: Math.random() * 6 + 2,
+            duration: Math.random() * 8 + 4,
+            delay: Math.random() * 4,
+        }));
+        setParticles(newParticles);
+    }, [count]);
+
+    if (!mounted) return null;
+
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {particles.map(p => (

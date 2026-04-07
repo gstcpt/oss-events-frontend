@@ -59,7 +59,7 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
                         ['clean']
                     ]
                 },
-                formats: ['header', 'bold', 'italic', 'underline', 'list', 'bullet', 'link', 'image']
+                formats: ['header', 'bold', 'italic', 'underline', 'list', 'link', 'image']
             });
 
             // Make sure toolbar has a rounded top border 

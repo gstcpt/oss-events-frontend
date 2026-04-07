@@ -10,6 +10,7 @@ export default function CustomCursor() {
     const [isViewHovered, setIsViewHovered] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [cursorText, setCursorText] = useState("");
+    const [mounted, setMounted] = useState(false);
 
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
@@ -41,6 +42,7 @@ export default function CustomCursor() {
     }, [mouseX, mouseY, isVisible]);
 
     useEffect(() => {
+        setMounted(true);
         const handleMouseDown = () => setIsClicked(true);
         const handleMouseUp = () => setIsClicked(false);
         const handleMouseEnter = () => setIsVisible(true);
@@ -105,7 +107,7 @@ export default function CustomCursor() {
         };
     }, [updateMousePosition]);
 
-    if (typeof window === "undefined") return null;
+    if (!mounted) return null;
 
     return (
         <div className="fixed inset-0 pointer-events-none z-[999999] overflow-hidden">

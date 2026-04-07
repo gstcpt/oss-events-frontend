@@ -128,7 +128,8 @@
         "view_details": "View Details",
         "add_to_plan": "Add to Plan",
         "interactions": "Interactions",
-        "view_profile": "View Profile"
+        "view_profile": "View Profile",
+        "starting_from": "Starting from"
     },
     "Home": {
         "hero": {
@@ -438,7 +439,8 @@
             "6": "Saturday"
         },
         "feature": "Feature",
-        "view_profile": "View Profile"
+        "view_profile": "View Profile",
+        "select": "Select"
     },
     "ProviderDetailPage": {
         "loading": "Loading provider profile...",
@@ -1357,7 +1359,10 @@
             "tva": "TVA",
             "priceTTC": "Price TTC",
             "discount": "Discount",
-            "actions": "Actions"
+            "actions": "Actions",
+            "selectModule": "Select Module",
+            "noModules": "No modules available",
+            "noSubscriptions": "No subscriptions for this pack"
         },
         "subscriptions": {
             "title": "Subscriptions",

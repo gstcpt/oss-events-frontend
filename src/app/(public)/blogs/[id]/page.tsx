@@ -154,10 +154,10 @@ export default function BlogPost() {
 
     const stats = useMemo(() => ({
         views: liveViews || blog?.views || 0,
-        likes: likesCount || 0,
-        shares: sharesCount || 0,
-        comments: (Array.isArray(comments) ? comments.length : 0)
-    }), [blog?.views, liveViews, likesCount, sharesCount, comments]);
+        likes: likesCount || blog?.likes || 0,
+        shares: sharesCount || blog?.shares || 0,
+        comments: blog?.commentCount || comments.length || 0
+    }), [blog?.views, blog?.likes, blog?.shares, blog?.commentCount, liveViews, likesCount, sharesCount, comments.length]);
 
     if (loading) {
         return (
@@ -223,7 +223,7 @@ export default function BlogPost() {
                 <ParticleField count={12} color="var(--primary)" />
 
                 {/* Back + actions */}
-                <div className="absolute top-32 left-6 right-6 md:left-12 md:right-12 z-50 flex justify-between items-center pointer-events-none">
+                <div className="absolute top-36 md:top-40 left-6 right-6 md:left-12 md:right-12 z-40 flex justify-between items-center pointer-events-none">
                     <motion.button
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -298,7 +298,7 @@ export default function BlogPost() {
                                         </div>
                                         <div className="space-y-1 text-center">
                                             <p className="text-[10px] font-bold text-[#7a7a68] uppercase tracking-[0.2em]">{t("comments")}</p>
-                                            <p className="text-2xl font-bold text-[var(--footer)] tabular-nums">{comments.length}</p>
+                                            <p className="text-2xl font-bold text-[var(--footer)] tabular-nums">{stats.comments}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -322,7 +322,7 @@ export default function BlogPost() {
                                     ))}
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <ReactionButtons targetType="BLOG" targetId={blogId} />
+                                    <ReactionButtons targetType="BLOG" targetId={blogId} onReaction={fetchBlogData} />
                                     <Button
                                         onClick={handleShare}
                                         className="flex items-center gap-3 px-8 py-4 bg-[#3a3a2e] hover:bg-[var(--primary)] text-white rounded-full transition-all duration-500 hover:scale-105 shadow-xl shadow-black/10"
@@ -353,10 +353,10 @@ export default function BlogPost() {
                             <div className="flex items-center justify-between mb-12">
                                 <h2 className="text-3xl font-bold text-[var(--footer)] uppercase tracking-tight">{t("community_discussion")}</h2>
                                 <div className="px-4 py-2 bg-[var(--background)] rounded-full text-xs font-bold text-[var(--primary)] border border-[#ece9e0]">
-                                    {comments.length} {t("comments")}
+                                    {stats.comments} {t("comments")}
                                 </div>
                             </div>
-                            <CommentSection targetType="BLOG" targetId={blogId} />
+                            <CommentSection targetType="BLOG" targetId={blogId} onCommentCountChange={(count) => setBlog(prev => prev ? { ...prev, commentCount: count } : null)} />
                         </div>
                     </div>
 
@@ -370,7 +370,7 @@ export default function BlogPost() {
                                         <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
                                         {t("community_rating")}
                                     </h3>
-                                    <RatingStars targetType="BLOG" targetId={blogId} />
+                                    <RatingStars targetType="BLOG" targetId={blogId} onRate={fetchBlogData} />
                                 </div>
                             </TiltCard>
                         </Reveal>
@@ -396,7 +396,7 @@ export default function BlogPost() {
                                                     <div className={`w-12 h-12 ${stat.bg} ${stat.color} rounded-2xl flex items-center justify-center mb-3 group-hover/stat:scale-110 transition-transform`}>
                                                         <stat.icon className="w-6 h-6" />
                                                     </div>
-                                                    <span className="text-2xl font-bold text-[var(--footer)] tabular-nums tracking-tight"><CountUp target={stat.value} /></span>
+                                                    <span className="text-2xl font-bold text-[var(--footer)] tabular-nums tracking-tight"><CountUp target={Number(stat.value) || 0} /></span>
                                                     <span className="text-[9px] font-bold text-[#7a7a68] uppercase tracking-[0.2em] mt-2 whitespace-nowrap">{stat.label}</span>
                                                 </motion.div>
                                             </StaggerItem>

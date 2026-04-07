@@ -19,9 +19,10 @@ interface CommentSectionProps {
     targetType: TargetType;
     targetId: number;
     initialComments?: Comment[];
+    onCommentCountChange?: (count: number) => void;
 }
 
-export const CommentSection: React.FC<CommentSectionProps> = ({ targetType, targetId, initialComments }) => {
+export const CommentSection: React.FC<CommentSectionProps> = ({ targetType, targetId, initialComments, onCommentCountChange }) => {
     const t = useTranslations("Interactions.comments");
     const [comments, setComments] = useState<Comment[]>(initialComments || []);
     const [pagination, setPagination] = useState<Pagination | null>(null);
@@ -40,6 +41,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ targetType, targ
             if (response && response.success) {
                 if (page === 1) { setComments(response.data); } else { setComments(prev => [...prev, ...response.data]); }
                 setPagination(response.pagination);
+                if (onCommentCountChange) onCommentCountChange(response.pagination.total);
             }
         } catch (error) { toast.error(t('failedToFetch')); }
     };
@@ -65,6 +67,8 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ targetType, targ
                 setComments([response.comment, ...comments]);
                 setNewComment('');
                 toast.success(t('commentPosted'));
+                if (onCommentCountChange && pagination) onCommentCountChange(pagination.total + 1);
+                if (pagination) setPagination({ ...pagination, total: pagination.total + 1 });
             } else { toast.error(t('failedToPost')); }
         } catch (error) { toast.error(t('errorPosting')); } finally { setIsSubmitting(false); }
     };
@@ -92,6 +96,8 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ targetType, targ
             if (response && response.success) {
                 setComments(comments.filter(c => c.id !== id));
                 toast.success(t('commentDeleted'));
+                if (onCommentCountChange && pagination) onCommentCountChange(pagination.total - 1);
+                if (pagination) setPagination({ ...pagination, total: pagination.total - 1 });
             }
         } catch (e) { toast.error(t('failedToDelete')); }
     };

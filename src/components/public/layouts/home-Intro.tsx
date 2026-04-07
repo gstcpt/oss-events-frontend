@@ -38,7 +38,7 @@ export default function HeroHome() {
                                 <span>{t('hero.explore_categories')}</span>
                             </Button>
                         </Link>
-                        <Link href="/auth/register" className="w-full sm:w-auto">
+                        <Link href="/register" className="w-full sm:w-auto">
                             <Button className="w-full sm:w-auto min-w-[220px] h-[52px] bg-transparent border-2 border-white !text-white font-semibold text-[14px] rounded-full hover:-translate-y-1 transition-all hover:bg-white/10 hover:border-white/90 shadow-inner active:scale-95 flex items-center justify-center">
                                 <span>{t('hero.become_provider')}</span>
                             </Button>
