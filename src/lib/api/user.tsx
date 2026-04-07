@@ -38,6 +38,6 @@ export const updateProvider = async (id: number, data: any, currentUser: any) =>
 export const updateClient = async (id: number, data: any, currentUser: any) => apiFetch(`${USER_API}/clients/${id}`, { method: "PATCH", body: JSON.stringify({ ...data, currentUser }) });
 export const updateUser = async (id: number, data: any) => apiFetch(`${USER_API}/${id}`, { method: "PATCH", body: JSON.stringify(data) });
 
-export const updateMyProfile = async (currentUser: any, data: any) => apiFetch("${USER_API}/profile/me", { method: "PATCH", body: JSON.stringify({ ...data, currentUser }) });
+export const updateMyProfile = async (currentUser: any, data: any) => apiFetch(`${USER_API}/profile/me`, { method: "PATCH", body: JSON.stringify({ ...data, currentUser }) });
 
 export const deleteUser = async (id: number) => apiFetch(`${USER_API}/${id}`, { method: "DELETE" });
