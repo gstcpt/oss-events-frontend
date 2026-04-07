@@ -11,6 +11,7 @@ import { CompanyProvider } from '@/context/CompanyContext';
 import { cache } from 'react';
 import CustomCursor from "@/components/ui/CustomCursor";
 import { Analytics } from "@vercel/analytics/next"
+import { toast } from 'sonner';
 
 const getCompanyId = cache(async () => {
     try {
@@ -25,7 +26,7 @@ const getCompanyId = cache(async () => {
             const data = await res.json();
             return data?.id || '1';
         }
-    } catch (error) { console.error('Failed to fetch company:', error); }
+    } catch (error) { toast.error('Failed to fetch company...'); }
     return '1';
 });
 
@@ -56,16 +57,16 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <AuthProvider>
                 <EventCartProvider>
                     <CompanyProvider companyId={companyId}>
-                        <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${poppins.variable} ${cairo.variable} font-sans ${locale === 'ar' ? 'font-arabic' : ''}`}>
+                        <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${poppins.variable} ${cairo.variable} ${locale === 'ar' ? 'font-arabic' : 'font-sans'}`}>
                             <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" /></head>
-                            <body className="antialiased min-h-screen selection:bg-primary/30">
+                            <body className={`antialiased min-h-screen selection:bg-primary/30 ${locale === 'ar' ? 'font-arabic' : ''}`}>
                                 <CustomCursor />
                                 <NextIntlClientProvider locale={locale} messages={messages}>
                                     <div className="flex flex-col min-h-screen">
                                         {children}
                                     </div>
                                 </NextIntlClientProvider>
-                                <Toaster position="top-right" richColors />
+                                <Toaster position={locale === 'ar' ? "top-left" : "top-right"} richColors />
                             </body>
                         </html>
                     </CompanyProvider>

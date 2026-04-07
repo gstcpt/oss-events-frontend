@@ -21,9 +21,9 @@
   --radius: 0.75rem;
 
   /* Custom cursor colors */
-  --cursor-core: #C2410C;
-  --cursor-ring: #ffae00;
-  --cursor-glow: #a70000;
+  --cursor-color: #7200e4;
+  --cursor-ring: rgba(97, 0, 194, 0.646);
+  --cursor-glow: #8000ff;
 }
 
 @theme inline {
@@ -76,6 +76,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: none;
+}
+
+/* Arabic locale — switch entire document to Cairo */
+html[lang="ar"] body,
+.font-arabic,
+.font-arabic body {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
 }
 
 /* Custom Cursor */

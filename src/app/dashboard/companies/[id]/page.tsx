@@ -233,12 +233,10 @@ export default function CompanyDetails() {
 
   const fetchUsers = async () => {
     try {
-      console.log(user);
       if (!user) return;
       const data = await getAdmins(user.id);
       setUsers(data || []);
     } catch (error) {
-      console.error("Error fetching users", error);
       toast.error('Error fetching users');
     }
   };

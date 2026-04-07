@@ -72,7 +72,6 @@ export default function Subscriptions() {
       const data = await getSubscriptions();
       setSubscriptions(data);
     } catch (error) {
-      console.log(error);
       toast.error(t('toastErrorSubscriptions'));
     } finally {
       setLoading(false);
@@ -245,12 +244,12 @@ export default function Subscriptions() {
     <div className="space-y-8">
       <div className="card">
         <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Subscriptions Management</h2>
-          <Button onClick={handleAdd} className="addNewBtn"><i className="fa fa-plus mr-2"></i> Add New Subscription</Button>
+          <h2 className="text-lg font-semibold">{t('subscriptionsManagement')}</h2>
+          <Button onClick={handleAdd} className="addNewBtn"><i className="fa fa-plus mr-2"></i> {t('addNewSubscription')}</Button>
         </div>
         <div className="p-6">
           {loading ? (
-            <div className="text-center py-4">Loading subscriptions...</div>
+            <div className="text-center py-4">{t('loadingSubscriptions')}</div>
           ) : (
             <DataTable
               columns={columns}

@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useCompany } from "@/context/CompanyContext";
 import { getPublicCompany, CompanyInfo } from "@/lib/api/public/company";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface ContactSupportSectionProps {
     className?: string;
@@ -27,7 +28,7 @@ export default function ContactSupportSection({ className = "", showHours = true
                     setCompany(data);
                 }
             } catch (error) {
-                console.error("Failed to load company info:", error);
+                toast.error("Failed to load company info...");
             } finally {
                 setLoading(false);
             }

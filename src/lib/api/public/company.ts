@@ -21,7 +21,6 @@ export const getPublicCompany = async (companyId: string | number): Promise<Comp
         const data = await apiFetch<CompanyInfo>(`/companies/public/${companyId}`);
         return data;
     } catch (error) {
-        console.error("Error fetching public company:", error);
         throw error;
     }
 };

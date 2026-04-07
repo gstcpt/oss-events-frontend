@@ -85,7 +85,7 @@ export default function BlogPost() {
                 setLiveViews(statsResp.data.pageViews);
             }
         } catch (err) {
-            console.error("Failed to fetch live blog stats:", err);
+            toast.error("Failed to fetch live blog stats");
         } finally {
             setLiveStatsLoading(false);
         }

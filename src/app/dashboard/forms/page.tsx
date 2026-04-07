@@ -301,10 +301,10 @@ const FormsPage = () => {
         <div className="space-y-8">
             <div className="card">
                 <div className="px-6 py-4 flex justify-between items-center">
-                    <h2 className="text-lg font-semibold">Forms Management</h2>
-                    <Button onClick={() => handleOpenModal(null)} className="addNewBtn"><i className="fa fa-plus mr-2"></i>Add Form</Button>
+                    <h2 className="text-lg font-semibold">{t('formsManagement')}</h2>
+                    <Button onClick={() => handleOpenModal(null)} className="addNewBtn"><i className="fa fa-plus mr-2"></i>{t('addNewForm')}</Button>
                 </div>
-                <div className="p-6">{forms.length ? (<DataTable columns={columns} data={forms} onEdit={handleOpenModal} onDelete={handleOpenDeleteModal} />) : (<p className="text-center mt-5 text-gray-500">No forms available.</p>)}</div>
+                <div className="p-6">{forms.length ? (<DataTable columns={columns} data={forms} onEdit={handleOpenModal} onDelete={handleOpenDeleteModal} />) : (<p className="text-center mt-5 text-gray-500">{t('noData')}</p>)}</div>
             </div>
             <Modal isOpen={isModalOpen} onClose={handleCloseModal} title={editingForm ? "Edit Form" : "Add Form"} widthClass="max-w-8xl">
                 <div className="overflow-y-auto max-h-[85vh]">

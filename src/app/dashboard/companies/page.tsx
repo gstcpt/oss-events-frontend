@@ -164,12 +164,10 @@ export default function Companies() {
 
   const fetchUsers = async () => {
     try {
-      console.log("user", user);
       if (!user) return;
       const data = await getAdmins(user.id);
       setUsers(data || []);
     } catch (error) {
-      console.error("Error fetching users", error);
       toast.error(t('toastErrorUsers'));
     }
   };
@@ -349,12 +347,12 @@ export default function Companies() {
     <div className="space-y-8">
       <div className="card">
         <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Companies Management</h2>
-          {user?.role === 'Root' && (<Button onClick={handleAdd} className="addNewBtn"><i className="fa fa-plus mr-2"></i> Add New Company</Button>)}
+          <h2 className="text-lg font-semibold">{t('companiesManagement')}</h2>
+          {user?.role === 'Root' && (<Button onClick={handleAdd} className="addNewBtn"><i className="fa fa-plus mr-2"></i> {t('addNewCompany')}</Button>)}
         </div>
         <div className="p-6">
           {loading ? (
-            <div className="text-center py-4">Loading companies...</div>
+            <div className="text-center py-4">{t('loadingCompanies')}</div>
           ) : (
             <DataTable
               columns={columns}
@@ -372,10 +370,10 @@ export default function Companies() {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingCompany ? 'Edit Company' : 'Add New Company'}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingCompany ? t('editCompany') : t('addNewCompany')}>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-6">
-            <h3 className="text-sm font-bold text-primary uppercase tracking-wider">Basic Information</h3>
+            <h3 className="text-sm font-bold text-primary uppercase tracking-wider">{t('basicInformation')}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="title" className="font-semibold">Company Title *</Label>

@@ -169,7 +169,7 @@ export default function Tags() {
     try {
       const data = await getTags(user.id);
       setTags(data);
-    } catch (error) { console.error(error); toast.error(t('errorLoading')); } finally { setLoading(false); }
+    } catch (error) { toast.error(t('errorLoading')); } finally { setLoading(false); }
   };
   const fetchCompanies = async () => {
     try {

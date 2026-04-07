@@ -29,7 +29,6 @@ export async function apiFetch<T = any>(path: string, options?: RequestInit & { 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
-    // Logging removed from file to prevent loop, but keeping console logs for browser debugging
     try {
         const fullUrl = `${API_URL}${path}`;
         const res = await fetch(fullUrl, { ...fetchOptions, headers, credentials: "include", signal: controller.signal });

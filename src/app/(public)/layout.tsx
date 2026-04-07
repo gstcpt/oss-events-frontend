@@ -101,21 +101,19 @@ function AudienceTracker() {
                 interactions: 0, durationMs: undefined, scrollDepthPct: undefined,
                 isBounce: undefined,
                 meta: { viewport: { w: window.innerWidth, h: window.innerHeight } }
-            }).catch(() => {});
+            }).catch(() => { });
         };
 
-        submit().catch(() => {});
-    // searchParams.toString() produces a stable primitive –
-    // combined with lastTrackedRef this is safe and won't loop.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        submit().catch(() => { });
+        // searchParams.toString() produces a stable primitive –
+        // combined with lastTrackedRef this is safe and won't loop.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname, searchParams.toString()]);
 
     return null;
 }
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
-    console.log("PublicLayout: Render Start");
-
     return (
         <div className="public-section">
             <AudienceTracker />

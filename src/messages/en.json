@@ -796,7 +796,8 @@
             "toastEventUpdated": "Event updated successfully",
             "toastEventCreated": "Event created successfully",
             "toastErrorOperation": "Operation failed: {error}",
-            "toastErrorDatesRequired": "Please set start and end dates"
+            "toastErrorDatesRequired": "Please set start and end dates",
+            "eventsManagement": "Events Management"
         },
         "categories": {
             "title": "Categories",
@@ -888,7 +889,10 @@
             "toastErrorUpdateImage": "Error updating item image.",
             "toastErrorUpdateCoverImage": "Error updating item cover image.",
             "toastErrorFetchProvider": "Error fetching provider info.",
-            "toastMapLocationSelected": "Map location selected."
+            "toastMapLocationSelected": "Map location selected.",
+            "servicesManagement": "Services Management",
+            "step2MediaManagement": "Step 2: Media Management",
+            "eventsManagement": "Events Management"
         },
         "companies": {
             "title": "Companies",
@@ -967,7 +971,16 @@
             "toastErrorFavicon": "Error uploading favicon",
             "toastErrorLogoUploadFailed": "Logo upload failed",
             "toastErrorFaviconUploadFailed": "Favicon upload failed",
-            "toastErrorSavingCompany": "Error saving company"
+            "toastErrorSavingCompany": "Error saving company",
+            "companiesManagement": "Companies Management",
+            "addNewCompany": "Add New Company",
+            "editCompany": "Edit Company",
+            "loadingCompanies": "Loading companies...",
+            "basicInformation": "Basic Information",
+            "administrationStatus": "Administration & Status",
+            "visualAssetsBranding": "Visual Assets & Branding",
+            "contactDetails": "Contact Details",
+            "locationInformation": "Location Information"
         },
         "users": {
             "title": "Users",
@@ -1444,7 +1457,10 @@
             "toastErrorSelectPack": "Please select a pack",
             "toastErrorSelectCompany": "Please select a company",
             "toastErrorEndDate": "End date must be after start date",
-            "toastErrorSaveSubscription": "Error saving subscription"
+            "toastErrorSaveSubscription": "Error saving subscription",
+            "subscriptionsManagement": "Subscriptions Management",
+            "addNewSubscription": "Add New Subscription",
+            "loadingSubscriptions": "Loading subscriptions..."
         },
         "locations": {
             "title": "Locations Management",
@@ -1683,7 +1699,10 @@
             "toastFormCreated": "Form created!",
             "toastErrorSaveForm": "Failed to save form.",
             "toastFormDeleted": "Form deleted!",
-            "toastErrorDeleteForm": "Failed to delete form."
+            "toastErrorDeleteForm": "Failed to delete form.",
+            "formsManagement": "Forms Management",
+            "availableFields": "Available Fields",
+            "configureFieldOptions": "Configure Field Options"
         },
         "newsletter": {
             "title": "Newsletter",
@@ -1699,7 +1718,9 @@
             "errorSending": "Error sending newsletter",
             "subjectPlaceholder": "Enter subject",
             "contentPlaceholder": "Write newsletter content...",
-            "noSubscribers": "No subscribers yet"
+            "noSubscribers": "No subscribers yet",
+            "unauthorizedAccess": "Unauthorized Access",
+            "newsletterManagement": "Newsletter Management"
         },
         "interactions": {
             "title": "Timeline",
@@ -1867,7 +1888,9 @@
             "loading": "Loading company settings...",
             "errorLoading": "Error loading company settings",
             "settingsUpdated": "Company settings updated successfully",
-            "errorSaving": "Error saving company settings"
+            "errorSaving": "Error saving company settings",
+            "companyLogo": "Company Logo",
+            "companyFavicon": "Company Favicon"
         },
         "privacyPolicy": {
             "title": "Privacy Policy",
@@ -1977,7 +2000,31 @@
             "userConnectivityStatus": "User Connectivity Status",
             "topPowerUsers": "Top 5 Power Users (Events Created)",
             "clientIntelligence": "Client Intelligence",
-            "totalAuthorized": "Total Authorized"
+            "totalAuthorized": "Total Authorized",
+            "taxonomyMatrix": "Taxonomy Matrix",
+            "classificationIndex": "Classification Index",
+            "catalogAnalytics": "Catalog Analytics",
+            "detailedInventoryLedger": "Detailed Inventory Ledger",
+            "eventsChronicle": "Events Chronicle",
+            "temporalLedger": "Temporal Ledger",
+            "systemAuditTrail": "System Audit Trail",
+            "auditTrailExplorer": "Audit Trail Explorer",
+            "mediaAssetVault": "Media Asset Vault",
+            "contentRepository": "Content Repository",
+            "subscriptionPortfolio": "Subscription Portfolio",
+            "financialTransmissionLedger": "Financial Transmission Ledger",
+            "tagMetaAnalytics": "Tag Meta-Analytics",
+            "taxonomyRegistry": "Taxonomy Registry",
+            "providersPortfolio": "Providers Portfolio",
+            "providerDetailedRegistry": "Provider Detailed Registry",
+            "acquisitionLifecycle": "Acquisition & Lifecycle",
+            "completeMembershipRegistry": "Complete Membership Registry",
+            "privilegedAccessOversight": "Privileged Access Oversight",
+            "administrativeCredentialLedger": "Administrative Credential Ledger",
+            "engagementSummary": "Engagement Summary",
+            "demographicDeepDive": "Demographic Deep-Dive",
+            "b2bNetworkAnalytics": "B2B Network Analytics",
+            "enterpriseEntityLedger": "Enterprise Entity Ledger"
         },
         "error": {
             "title": "Error",
