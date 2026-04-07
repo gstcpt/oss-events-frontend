@@ -52,9 +52,9 @@ export default function Providers() {
       )
     },
     ...(isRoot ? [{
-      header: "Company",
+      header: t('company'),
       accessor: "companies",
-      cell: (provider: any) => <span className="">{provider.companies_user?.title || "System Core"}</span>
+      cell: (provider: any) => <span className="">{provider.companies_user?.title || t('systemCore')}</span>
     }] : []),
   ];
   useEffect(() => {

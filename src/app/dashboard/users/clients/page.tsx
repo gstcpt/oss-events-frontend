@@ -52,9 +52,9 @@ export default function Clients() {
       )
     },
     ...(isRoot ? [{
-      header: "Company",
+      header: t('company'),
       accessor: "companies",
-      cell: (client: any) => <span className="">{client.companies_user?.title || "System Core"}</span>
+      cell: (client: any) => <span className="">{client.companies_user?.title || t('systemCore')}</span>
     }] : []),
   ];
   useEffect(() => {

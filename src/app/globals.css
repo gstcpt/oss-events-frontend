@@ -19,11 +19,11 @@
   --input: #e2e8f0;
   --ring: #AAA999;
   --radius: 0.75rem;
-  
+
   /* Custom cursor colors */
-  --cursor-core: #AAA999;
-  --cursor-ring: rgba(170, 169, 153, 0.4);
-  --cursor-glow: rgba(170, 169, 153, 0.15);
+  --cursor-core: #C2410C;
+  --cursor-ring: #ffae00;
+  --cursor-glow: #ff0000;
 }
 
 @theme inline {
@@ -58,7 +58,7 @@
   --animate-shimmer: shimmer 2s infinite linear;
   --animate-fade-in-stagger: fade-in-up 0.5s ease-out forwards;
   --radius-hero-arc: ellipse(150% 50% at 50% 100%);
-  
+
   /* New modern animations */
   --animate-pulse-ring: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-glow: glow 2s ease-in-out infinite alternate;
@@ -107,7 +107,7 @@ body {
 .cursor-ring.hovering {
   width: 60px;
   height: 60px;
-  border-color: var(--primary);
+  border-color: var(--cursor-core);
 }
 
 .cursor-dot {
@@ -122,11 +122,19 @@ body {
 }
 
 /* Hide default cursor on interactive elements */
-a, button, input, textarea, select, [role="button"], .clickable {
+a,
+button,
+input,
+textarea,
+select,
+[role="button"],
+.clickable {
   cursor: none !important;
 }
 
-a:hover, button:hover, .cursor-hover {
+a:hover,
+button:hover,
+.cursor-hover {
   cursor: none !important;
 }
 
@@ -163,6 +171,7 @@ a:hover, button:hover, .cursor-hover {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -170,14 +179,27 @@ a:hover, button:hover, .cursor-hover {
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @keyframes slide-in-right {
@@ -185,6 +207,7 @@ a:hover, button:hover, .cursor-hover {
     opacity: 0;
     transform: translateX(20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -192,91 +215,201 @@ a:hover, button:hover, .cursor-hover {
 }
 
 @keyframes bounce-slow {
-  0%, 100% { transform: translateY(-10%); }
-  50% { transform: translateY(0); }
+
+  0%,
+  100% {
+    transform: translateY(-10%);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  75% { transform: translateX(-4px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
 }
 
 @keyframes shimmer {
-  from { background-position: -200% 0; }
-  to { background-position: 200% 0; }
+  from {
+    background-position: -200% 0;
+  }
+
+  to {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes pulse-ring {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
 }
 
 @keyframes glow {
-  0% { box-shadow: 0 0 20px var(--cursor-glow); }
-  100% { box-shadow: 0 0 40px var(--cursor-glow), 0 0 60px var(--cursor-glow); }
+  0% {
+    box-shadow: 0 0 20px var(--cursor-glow);
+  }
+
+  100% {
+    box-shadow: 0 0 40px var(--cursor-glow), 0 0 60px var(--cursor-glow);
+  }
 }
 
 @keyframes tilt {
-  0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg); }
-  100% { transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
+  0% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  }
 }
 
 @keyframes spotlight {
-  0% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.05); }
-  100% { opacity: 0; transform: scale(1.1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
 }
 
 @keyframes border-beam {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 300% 0%; }
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 300% 0%;
+  }
 }
 
 @keyframes elastic {
-  0% { transform: scale(0); }
-  55% { transform: scale(1.05); }
-  70% { transform: scale(0.95); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+  }
+
+  55% {
+    transform: scale(1.05);
+  }
+
+  70% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes focus-glow {
-  0%, 100% { box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary); }
-  50% { box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+  }
+
+  50% {
+    box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary);
+  }
 }
 
 @keyframes float-3d {
-  0%, 100% { 
-    transform: translateY(0) rotateX(0deg) rotateY(0deg); 
+
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
   }
-  25% { 
-    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg); 
+
+  25% {
+    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
   }
-  50% { 
-    transform: translateY(0) rotateX(0deg) rotateY(0deg); 
+
+  50% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
   }
-  75% { 
-    transform: translateY(8px) rotateX(-2deg) rotateY(2deg); 
+
+  75% {
+    transform: translateY(8px) rotateX(-2deg) rotateY(2deg);
   }
 }
 
 @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes orb {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -30px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
 }
 
 @keyframes ripple {
-  0% { transform: scale(0); opacity: 0.5; }
-  100% { transform: scale(4); opacity: 0; }
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 .shimmer {
@@ -310,14 +443,14 @@ a:hover, button:hover, .cursor-hover {
 .gradient-border {
   position: relative;
   background: linear-gradient(var(--background), var(--background)) padding-box,
-              linear-gradient(135deg, var(--primary), transparent, var(--primary)) border-box;
+    linear-gradient(135deg, var(--primary), transparent, var(--primary)) border-box;
   border: 2px solid transparent;
   border-radius: var(--radius);
 }
 
 .gradient-border-animated {
   background: linear-gradient(var(--background), var(--background)) padding-box,
-              linear-gradient(90deg, var(--primary), transparent 50%, var(--primary)) border-box;
+    linear-gradient(90deg, var(--primary), transparent 50%, var(--primary)) border-box;
   border: 2px solid transparent;
   background-size: 200% 100%;
   animation: gradient-shift 3s ease infinite;
@@ -376,7 +509,7 @@ a:hover, button:hover, .cursor-hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
   transform: scale(0);
   opacity: 0;
 }
@@ -427,7 +560,7 @@ a:hover, button:hover, .cursor-hover {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 30%, rgba(170, 169, 153, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(170, 169, 153, 0.08) 0%, transparent 50%);
   animation: orb 20s ease-in-out infinite;
@@ -488,6 +621,7 @@ input[type="range"].dual-thumb-range::-moz-range-track {
 }
 
 .hero-arc-up {}
+
 .hero-arc-bottom {}
 
 .header-separator {
@@ -637,7 +771,7 @@ input[type="range"].dual-thumb-range::-moz-range-track {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.5s ease;
 }
 
@@ -666,8 +800,13 @@ input[type="range"].dual-thumb-range::-moz-range-track {
 }
 
 @keyframes border-rotate {
-  0% { background: linear-gradient(0deg, var(--primary), transparent, var(--primary)); }
-  100% { background: linear-gradient(360deg, var(--primary), transparent, var(--primary)); }
+  0% {
+    background: linear-gradient(0deg, var(--primary), transparent, var(--primary));
+  }
+
+  100% {
+    background: linear-gradient(360deg, var(--primary), transparent, var(--primary));
+  }
 }
 
 .hover-skeleton {
@@ -679,7 +818,7 @@ input[type="range"].dual-thumb-range::-moz-range-track {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
@@ -712,9 +851,17 @@ input[type="range"].dual-thumb-range::-moz-range-track {
 }
 
 @keyframes gradient-bg {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Pulse button effect */
@@ -733,8 +880,15 @@ input[type="range"].dual-thumb-range::-moz-range-track {
 }
 
 @keyframes btn-pulse-ring {
-  0% { transform: scale(1); opacity: 0.5; }
-  100% { transform: scale(1.2); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
 }
 
 /* Spotlight effect for cards */
@@ -784,12 +938,13 @@ html {
 
 /* Hide cursor on touch devices */
 @media (hover: none) {
+
   .cursor-core,
   .cursor-ring,
   .cursor-dot {
     display: none !important;
   }
-  
+
   body {
     cursor: auto !important;
   }

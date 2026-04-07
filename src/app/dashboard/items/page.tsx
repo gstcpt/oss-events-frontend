@@ -139,7 +139,7 @@ export default function Items() {
                                 setProviderInfo(providerInfo);
                                 if (categoryForms.length === 1) { setNewItemData((prev: any) => ({ ...prev, form_id: categoryForms[0].id })); }
                             }
-                        } catch (error) { toast.error("Error fetching provider-specific data."); }
+                        } catch (error) { toast.error(t('toastErrorProviderData')); }
                     }
                     else {
                         const [providersData, categoriesData] = await Promise.all([getProvidersByCompany(user.company_id), getCategoriesByCompany(user.company_id)]);
@@ -148,7 +148,7 @@ export default function Items() {
                         if (user?.role === "Admin") { setNewItemData((prev: any) => ({ ...prev, company_id: user.company_id })); }
                     }
                 }
-            } catch (error) { toast.error("Failed to fetch initial data."); }
+            } catch (error) { toast.error(t('toastErrorInitialData')); }
         };
         if (user) { fetchInitialData(); }
     }, [user]);
@@ -160,7 +160,7 @@ export default function Items() {
                     setProviders(providersData);
                     setCategories(categoriesData);
                     setNewItemData((prev: any) => ({ ...prev, category_id: isEditing ? prev.category_id : null, provider_id: isEditing ? prev.provider_id : null, form_id: isEditing ? prev.form_id : null }));
-                } catch (error) { toast.error("Failed to fetch data for the selected company."); }
+                } catch (error) { toast.error(t('toastErrorCompanyData')); }
             };
             fetchCompanyData();
         }
@@ -347,12 +347,12 @@ export default function Items() {
                                 video_files: videoFiles.map((vid: any) => vid.file)
                             }));
                         }
-                    } catch (error) { toast.error("Failed to load item data."); }
+                    } catch (error) { toast.error(t('toastErrorLoadItemData')); }
                 };
                 loadItemData();
                 setIsWizardOpen(true);
             } catch (error) {
-                toast.error("Failed to load item data.");
+                toast.error(t('toastErrorLoadItemData'));
                 setIsEditing(false);
                 setCurrentItem(null);
                 setIsWizardOpen(false);
@@ -389,7 +389,7 @@ export default function Items() {
             setItemComments(commentsData.data || []);
             setItemMedia(media || []);
         } catch (error) {
-            toast.error("Failed to fetch details");
+            toast.error(t('toastErrorFetchDetails'));
             setInteractionStats(null);
             setItemComments([]);
             setItemMedia([]);
@@ -451,7 +451,7 @@ export default function Items() {
             setIsCommentDeleteModalOpen(false);
             setCommentAction(null);
         } catch (error) {
-            toast.error("Failed to process comment action");
+            toast.error(t('toastErrorCommentAction'));
         }
     };
 
@@ -464,8 +464,8 @@ export default function Items() {
             const data = await getAllItems();
             setItems(data);
             handleCloseDeleteModal();
-            toast.success("Service deleted successfully");
-        } catch (error) { toast.error("Failed to delete item"); }
+            toast.success(t('toastItemDeleted'));
+        } catch (error) { toast.error(t('toastErrorDeleteItem')); }
     };
     const isRootUser = Number(user?.role_id) === 1;
     const columns = [
@@ -533,7 +533,7 @@ export default function Items() {
                     setProviderInfo(providerInfo);
                 }
             } catch (error) {
-                toast.error("Error setting provider defaults.");
+                toast.error(t('toastErrorProviderDefaults'));
                 setNewItemData({
                     title: "",
                     code: "",
@@ -731,12 +731,12 @@ export default function Items() {
             if (isEditing && currentItem && currentItem.id) {
                 const { id, ...updatePayload } = itemPayload;
                 const updateResult = await updateItem(currentItem.id, updatePayload);
-                toast.success("Service details updated successfully!");
+                toast.success(t('toastItemUpdated'));
                 item = updateResult.item || updateResult;
             }
             else {
                 const createResult = await createItem(itemPayload);
-                toast.success("Service details saved successfully!");
+                toast.success(t('toastItemSaved'));
                 item = createResult.item;
             }
             const uploadAndLinkMedia = async (file: File | string, type: string) => {
@@ -778,7 +778,7 @@ export default function Items() {
                     try {
                         await updateItem(item.id, { image: heroImageUrl });
                     } catch (updateError) {
-                        toast.error("Error updating item image.");
+                        toast.error(t('toastErrorUpdateImage'));
                     }
                 }
             }
@@ -789,7 +789,7 @@ export default function Items() {
                     try {
                         await updateItem(item.id, { cover: coverImageUrl });
                     } catch (updateError) {
-                        toast.error("Error updating item cover image.");
+                        toast.error(t('toastErrorUpdateCoverImage'));
                     }
                 }
             }
@@ -852,7 +852,7 @@ export default function Items() {
             try {
                 const providerInfo = await getProviderByUserId(Number(value), user);
                 if (providerInfo && providerInfo.category_id) { setNewItemData((prev: any) => ({ ...prev, category_id: providerInfo.category_id })); }
-            } catch (error) { toast.error("Error fetching provider info."); }
+            } catch (error) { toast.error(t('toastErrorFetchProvider')); }
             return;
         }
         setNewItemData((prev: any) => ({ ...prev, [field]: value }));
@@ -1057,7 +1057,7 @@ export default function Items() {
                                                                     }
                                                                     return { lat: 34.0, lng: 9.0 };
                                                                 })()}
-                                                                onPick={(pos) => { toast.success("Map location selected."); }}
+                                                                onPick={(pos) => { toast.success(t('toastMapLocationSelected')); }}
                                                             />
                                                         </div>
                                                     </div>
@@ -1824,7 +1824,7 @@ export default function Items() {
                                                                     }
                                                                     return { lat: 34.0, lng: 9.0 };
                                                                 })()}
-                                                                onPick={(pos) => { toast.success("Map location selected."); }}
+                                                                onPick={(pos) => { toast.success(t('toastMapLocationSelected')); }}
                                                             />
                                                         </div>
                                                     </div>

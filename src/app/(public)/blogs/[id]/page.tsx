@@ -284,7 +284,7 @@ export default function BlogPost() {
                                             : (<div className="w-14 h-14 rounded-xl bg-[var(--primary)] flex items-center justify-center shadow-lg"><User className="w-8 h-8 text-white" /></div>)
                                         }
                                         <div className="space-y-1">
-                                            <p className="text-[10px] font-bold text-[#7a7a68] uppercase tracking-[0.3em]">Written By</p>
+                                            <p className="text-[10px] font-bold text-[#7a7a68] uppercase tracking-[0.3em]">{t("written_by")}</p>
                                             <p className="text-xl font-bold text-[var(--footer)] tracking-tight">{blog.author?.name || "Team Axia"}</p>
                                         </div>
                                     </div>

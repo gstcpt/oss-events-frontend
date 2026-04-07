@@ -52,9 +52,9 @@ export default function Moderators() {
       )
     },
     ...(isRoot ? [{
-      header: "Company",
+      header: t('company'),
       accessor: "companies",
-      cell: (admin: any) => <span className="">{admin.companies_user?.title || "System Core"}</span>
+      cell: (admin: any) => <span className="">{admin.companies_user?.title || t('systemCore')}</span>
     }] : []),
   ];
   useEffect(() => {

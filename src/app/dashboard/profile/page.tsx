@@ -138,20 +138,20 @@ const Profile = () => {
 
                         } else { setIsEditing(true); }
                     }).catch(() => {
-                        toast.error("Failed to fetch provider info. Please complete your profile.");
+                        toast.error(t("toastErrorLoadProvider"));
                         setIsEditing(true);
                     });
                 }
-            }).catch(() => { toast.error("Failed to fetch profile. Please try again."); });
+            }).catch(() => { toast.error(t("toastErrorLoadProfile")); });
         }
-    }, [user]);
+    }, [user, t]);
     useEffect(() => {
-        getAllCountries().then(setCountries).catch(() => toast.error("Failed to fetch countries."));
-        getMainCategories().then(setCategories).catch(() => toast.error("Failed to fetch categories."));
-    }, []);
-    useEffect(() => { if (providerData?.country_id) { getGovernrateByCountryId(providerData.country_id).then(setGovernorates).catch(() => toast.error("Failed to fetch governorates.")); } else { setGovernorates([]); } }, [providerData?.country_id]);
-    useEffect(() => { if (providerData?.governorate_id) { getMunicipalityByGovernrateId(providerData.governorate_id).then(setMunicipalities).catch(() => toast.error("Failed to fetch municipalities.")); } else { setMunicipalities([]); } }, [providerData?.governorate_id]);
-    if (!user || !formData) { return (<div className="flex items-center justify-center h-screen"><div className="text-lg font-semibold">Loading...</div></div>); }
+        getAllCountries().then(setCountries).catch(() => toast.error(t("toastErrorLoadCountries")));
+        getMainCategories().then(setCategories).catch(() => toast.error(t("toastErrorLoadCategories")));
+    }, [t]);
+    useEffect(() => { if (providerData?.country_id) { getGovernrateByCountryId(providerData.country_id).then(setGovernorates).catch(() => toast.error(t("toastErrorLoadGovernorates"))); } else { setGovernorates([]); } }, [providerData?.country_id, t]);
+    useEffect(() => { if (providerData?.governorate_id) { getMunicipalityByGovernrateId(providerData.governorate_id).then(setMunicipalities).catch(() => toast.error(t("toastErrorLoadMunicipalities"))); } else { setMunicipalities([]); } }, [providerData?.governorate_id, t]);
+    if (!user || !formData) { return (<div className="flex items-center justify-center h-screen"><div className="text-lg font-semibold">{t('loading')}</div></div>); }
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -180,11 +180,11 @@ const Profile = () => {
         if (!e.target.files || !e.target.files[0]) return;
         const file = e.target.files[0];
         if (!file.type.match(/\/(jpg|jpeg|png|gif|webp)$/)) {
-            toast.error("Only image files are allowed");
+            toast.error(t("toastErrorImageFormat"));
             return;
         }
         if (file.size > 5 * 1024 * 1024) {
-            toast.error("File size must be less than 5MB");
+            toast.error(t("toastErrorImageSize"));
             return;
         }
         try {
@@ -196,18 +196,18 @@ const Profile = () => {
                 setFormData(updatedFormData);
                 setUser(updatedFormData);
             }
-            toast.success("Avatar updated successfully!");
-        } catch (error) { toast.error("Failed to upload avatar"); }
+            toast.success(t("toastAvatarSuccess"));
+        } catch (error) { toast.error(t("toastErrorSaveGeneric")); }
     };
     const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files || !e.target.files[0]) return;
         const file = e.target.files[0];
         if (!file.type.match(/\/(jpg|jpeg|png|gif|webp)$/)) {
-            toast.error("Only image files are allowed");
+            toast.error(t("toastErrorImageFormat"));
             return;
         }
         if (file.size > 5 * 1024 * 1024) {
-            toast.error("File size must be less than 5MB");
+            toast.error(t("toastErrorImageSize"));
             return;
         }
         try {
@@ -216,8 +216,8 @@ const Profile = () => {
             const response = await uploadProviderLogo(formData, user);
             const updatedProviderData = { ...providerData, logo: response.url };
             setProviderData(updatedProviderData);
-            toast.success("Logo updated successfully!");
-        } catch (error) { toast.error("Failed to upload logo"); }
+            toast.success(t("toastLogoSuccess"));
+        } catch (error) { toast.error(t("toastErrorSaveGeneric")); }
     };
     const triggerAvatarUpload = () => { avatarFileRef.current?.click(); };
     const triggerLogoUpload = () => { logoFileRef.current?.click(); };
@@ -232,8 +232,8 @@ const Profile = () => {
             setUser(updatedUser);
             setFormData(updatedUser);
             setIsEditing(false);
-            toast.success("Personal details updated successfully!");
-        } catch (error) { toast.error("Failed to update personal details. Please try again."); }
+            toast.success(t("toastPersonalSuccess"));
+        } catch (error) { toast.error(t("toastErrorSaveGeneric")); }
     };
     const handleProviderUpdate = async () => {
         if (!formData) return;
@@ -271,10 +271,10 @@ const Profile = () => {
             };
             if (!providerData?.id) {
                 await createProvider(basePayload, user);
-                toast.success("Provider information created successfully!");
+                toast.success(t("toastProviderSuccess"));
             } else {
                 await updateProvider(providerData.id, basePayload, user);
-                toast.success("Provider information updated successfully!");
+                toast.success(t("toastProviderSuccess"));
             }
             setIsEditing(false);
             if (user) {
@@ -305,7 +305,7 @@ const Profile = () => {
                     }
                 });
             }
-        } catch (error: any) { toast.error(`Failed to save provider information: ${error.message || 'Please try again.'}`); }
+        } catch (error: any) { toast.error(t("toastErrorSaveProvider", { error: error.message || 'Please try again.' })); }
     };
     const handleScheduleSave = async () => {
         if (!providerData?.id) return;
@@ -352,9 +352,9 @@ const Profile = () => {
 
             await updateOpeningHours(providerData.id, hoursPayload);
             await updateExceptions(providerData.id, exceptionsPayload);
-            toast.success("Schedule updated successfully!");
+            toast.success(t("toastScheduleSuccess"));
         } catch (error: any) {
-            toast.error("Failed to update schedule: " + error.message);
+            toast.error(t("toastErrorSaveGeneric") + ": " + error.message);
         }
     };
 
@@ -385,18 +385,18 @@ const Profile = () => {
 
     const handlePasswordSave = async () => {
         if (passwordData.newPassword !== passwordData.confirmPassword) {
-            toast.error("Passwords do not match.");
+            toast.error(t("toastErrorPasswordMismatch"));
             return;
         }
         if (passwordData.newPassword.length < 8) {
-            toast.error("Password must be at least 8 characters long.");
+            toast.error(t("toastErrorPasswordLength"));
             return;
         }
         try {
             await updateMyProfile(user, { password: passwordData.newPassword });
             setPasswordData({ newPassword: "", confirmPassword: "" });
-            toast.success("Password updated successfully!");
-        } catch (error) { toast.error("Failed to update password. Please try again."); }
+            toast.success(t("toastPasswordSuccess"));
+        } catch (error) { toast.error(t("toastErrorSaveGeneric")); }
     };
     const handlePasswordInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -408,8 +408,8 @@ const Profile = () => {
         <div className="bg-gray-50 min-h-screen p-4 sm:p-6 lg:p-8">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800">Profile Settings</h1>
-                    <p className="text-gray-500 mt-1">Manage your personal and security settings.</p>
+                    <h1 className="text-3xl font-bold text-gray-800">{t('settingsTitle')}</h1>
+                    <p className="text-gray-500 mt-1">{t('settingsSubtitle')}</p>
                 </header>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     <aside className="lg:col-span-1">
@@ -426,35 +426,35 @@ const Profile = () => {
                             <p className="text-gray-500 text-sm">{formData.email}</p>
                         </div>
                         <div className="bg-white rounded-xl shadow-md p-4 mt-6 space-y-2 items-center text-center">
-                            <p className={`text-sm font-semibold mt-2 ${formData.status == 1 ? "text-green-600" : "text-red-600"}`}>Status: {formData.status == 1 ? 'Active' : 'Inactive'}</p>
-                            <p className="text-gray-600 text-sm font-semibold mt-2">Role: {formData.roles?.title}</p>
+                            <p className={`text-sm font-semibold mt-2 ${formData.status == 1 ? "text-green-600" : "text-red-600"}`}>{t('status')}: {formData.status == 1 ? t('active') : t('inactive')}</p>
+                            <p className="text-gray-600 text-sm font-semibold mt-2">{t('role_label')}: {formData.roles?.title}</p>
                         </div>
                         <nav className="bg-white rounded-xl shadow-md p-4 mt-6 space-y-2">
-                            <TabButton tabName="personal" label="Personal Details" icon={<User size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />
-                            {isProvider && <TabButton tabName="provider" label="Provider Details" icon={<Building size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />}
-                            {isProvider && <TabButton tabName="schedule" label="Schedule" icon={<Clock size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />}
-                            <TabButton tabName="security" label="Security" icon={<Shield size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />
+                            <TabButton tabName="personal" label={t('tabs.personal')} icon={<User size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />
+                            {isProvider && <TabButton tabName="provider" label={t('tabs.provider')} icon={<Building size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />}
+                            {isProvider && <TabButton tabName="schedule" label={t('tabs.schedule')} icon={<Clock size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />}
+                            <TabButton tabName="security" label={t('tabs.security')} icon={<Shield size={20} />} activeTab={activeTab} setActiveTab={setActiveTab} />
                         </nav>
                     </aside>
                     <main className="lg:col-span-3">
                         <div className="bg-white rounded-xl shadow-md">
                             {activeTab === "personal" && (
                                 <div className="p-6 sm:p-8">
-                                    <div className="flex justify-between items-center mb-6"><h3 className="text-xl font-bold text-gray-800">Personal Information</h3>{!isEditing && (<Button className="updateBtn" onClick={() => setIsEditing(true)}><i className="fas fa-edit mr-2"></i>Update</Button>)}</div>
+                                    <div className="flex justify-between items-center mb-6"><h3 className="text-xl font-bold text-gray-800">{t('personalInfo')}</h3>{!isEditing && (<Button className="updateBtn" onClick={() => setIsEditing(true)}><i className="fas fa-edit mr-2"></i>{t('update')}</Button>)}</div>
                                     <div className="space-y-4">
-                                        <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="First Name" name="firstname" value={formData.firstname || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
-                                        <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Middle Name" name="midname" value={formData.midname || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
-                                        <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Last Name" name="lastname" value={formData.lastname || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
-                                        <ProfileDetail icon={<UserPlus size={18} className="text-gray-500" />} label="Username" name="username" value={formData.username || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
-                                        <ProfileDetail icon={<Mail size={18} className="text-gray-500" />} label="Email" name="email" value={formData.email} isEditing={isEditing} handleInputChange={handleInputChange} />
-                                        <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label="Phone Number" name="phone" value={formData.phone || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
-                                        <ProfileDetail icon={<Building size={18} className="text-gray-500" />} label="Company" name="company" value={formData.companies_user?.title || "N/A"} isEditing={isEditing} handleInputChange={handleInputChange} disabled={!isRoot} />
-                                        <ProfileDetail icon={<Shield size={18} className="text-gray-500" />} label="Role" name="role" value={formData.roles?.title || "N/A"} isEditing={isEditing} handleInputChange={handleInputChange} disabled={!isRoot} />
+                                        <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('firstName')} name="firstname" value={formData.firstname || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
+                                        <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('midName')} name="midname" value={formData.midname || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
+                                        <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('lastName')} name="lastname" value={formData.lastname || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
+                                        <ProfileDetail icon={<UserPlus size={18} className="text-gray-500" />} label={t('username')} name="username" value={formData.username || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
+                                        <ProfileDetail icon={<Mail size={18} className="text-gray-500" />} label={t('email')} name="email" value={formData.email} isEditing={isEditing} handleInputChange={handleInputChange} />
+                                        <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label={t('phone_number')} name="phone" value={formData.phone || ""} isEditing={isEditing} handleInputChange={handleInputChange} />
+                                        <ProfileDetail icon={<Building size={18} className="text-gray-500" />} label={t('company')} name="company" value={formData.companies_user?.title || "N/A"} isEditing={isEditing} handleInputChange={handleInputChange} disabled={!isRoot} />
+                                        <ProfileDetail icon={<Shield size={18} className="text-gray-500" />} label={t('role_label')} name="role" value={formData.roles?.title || "N/A"} isEditing={isEditing} handleInputChange={handleInputChange} disabled={!isRoot} />
                                     </div>
                                     {isEditing && (
                                         <div className="mt-8 flex justify-end gap-4">
-                                            <Button className="updateBtn" onClick={handleSave}>Update</Button>
-                                            <Button className="closeBtn" variant="outline" onClick={() => { setIsEditing(false); if (user) { getMyProfile(user.id).then(setFormData); } }}>Close</Button>
+                                            <Button className="updateBtn" onClick={handleSave}>{t('update')}</Button>
+                                            <Button className="closeBtn" variant="outline" onClick={() => { setIsEditing(false); if (user) { getMyProfile(user.id).then(setFormData); } }}>{t('close')}</Button>
                                         </div>
                                     )}
                                 </div>
@@ -462,131 +462,131 @@ const Profile = () => {
                             {activeTab === "provider" && isProvider && (
                                 <div className="p-6 sm:p-8">
                                     <div className="flex justify-between items-center mb-6">
-                                        <h3 className="text-xl font-bold text-gray-800">Provider Information</h3>
-                                        {!isEditing && (<Button className="updateBtn" onClick={() => setIsEditing(true)}><i className="fas fa-edit mr-2"></i>Update</Button>)}
+                                        <h3 className="text-xl font-bold text-gray-800">{t('providerInfo')}</h3>
+                                        {!isEditing && (<Button className="updateBtn" onClick={() => setIsEditing(true)}><i className="fas fa-edit mr-2"></i>{t('update')}</Button>)}
                                     </div>
                                     <div className="space-y-6">
                                         <div className="p-4 border rounded-lg">
-                                            <h4 className="font-semibold text-gray-700 mb-4">Logo</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4">{t('logo')}</h4>
                                             <div className="flex items-center gap-4">
                                                 <div className="relative">
                                                     <img src={providerData.logo || "/images/default.jpg"} alt="Provider Logo" className="w-24 h-24 object-cover rounded-lg border" />
                                                     {isEditing && (<Button type="button" onClick={triggerLogoUpload} className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-6 h-6 p-0"><Camera size={12} /></Button>)}
                                                 </div>
                                                 <div>
-                                                    <p className="text-sm text-gray-600">Upload your company logo</p>
-                                                    <p className="text-xs text-gray-500">Max size: 5MB</p>
+                                                    <p className="text-sm text-gray-600">{t('logoUploadDesc')}</p>
+                                                    <p className="text-xs text-gray-500">{t('logoMaxSize')}</p>
                                                 </div>
                                                 <input ref={logoFileRef} type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
                                             </div>
                                         </div>
                                         <div className="p-4 border rounded-lg">
-                                            <h4 className="font-semibold text-gray-700 mb-4">General</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4">{t('general')}</h4>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Society Title" name="ste_title" value={providerData?.ste_title || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('societyTitle')} name="ste_title" value={providerData?.ste_title || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
                                                 {isEditing ? (
                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
-                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><Shield size={18} className="text-gray-500" /><span className="ml-2">Category</span></div>
+                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><Shield size={18} className="text-gray-500" /><span className="ml-2">{t('category')}</span></div>
                                                         <div className="md:col-span-2">
                                                             <Select value={String(providerData.category_id || '')} onValueChange={(value) => handleProviderSelectChange("category_id", value)} disabled={providerData.category_id ? true : false}>
-                                                                <SelectTrigger id="category"><SelectValue placeholder="Select a category" /></SelectTrigger>
+                                                                <SelectTrigger id="category"><SelectValue placeholder={t('selectCategory')} /></SelectTrigger>
                                                                 <SelectContent>{categories.map((category) => (<SelectItem key={category.id} value={`${category.id}`}>{category.title}</SelectItem>))}</SelectContent>
                                                             </Select>
                                                         </div>
                                                     </div>
                                                 ) : (
                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
-                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><Shield size={18} className="text-gray-500" /><span className="ml-2">Category</span></div>
+                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><Shield size={18} className="text-gray-500" /><span className="ml-2">{t('category')}</span></div>
                                                         <div className="md:col-span-2"><span className="text-gray-800">{categories.find(c => String(c.id) === String(providerData.category_id))?.title || 'Not set'}</span></div>
                                                     </div>
                                                 )}
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Tarification" name="tarification" value={providerData?.tarification || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Experience" name="experience" value={providerData?.experience || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Foundation Date" name="foudation_date" value={providerData?.foudation_date ? new Date(providerData.foudation_date).toISOString().split('T')[0] : ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} type="date" />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('tarification')} name="tarification" value={providerData?.tarification || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('experience')} name="experience" value={providerData?.experience || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('foundationDate')} name="foudation_date" value={providerData?.foudation_date ? new Date(providerData.foudation_date).toISOString().split('T')[0] : ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} type="date" />
                                                 {isEditing ? (
                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
-                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><File size={18} className="text-gray-500" /><span className="ml-2">Account Type</span></div>
+                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><File size={18} className="text-gray-500" /><span className="ml-2">{t('accountType')}</span></div>
                                                         <div className="md:col-span-2">
                                                             <Select value={String(providerData?.type_provider || '')} onValueChange={(value) => handleProviderSelectChange("type_provider", value)}>
-                                                                <SelectTrigger id="type_provider"><SelectValue placeholder="Select a account type" /></SelectTrigger>
-                                                                <SelectContent><SelectItem value="1">Individual</SelectItem><SelectItem value="2">Company</SelectItem></SelectContent>
+                                                                <SelectTrigger id="type_provider"><SelectValue placeholder={t('selectAccountType')} /></SelectTrigger>
+                                                                <SelectContent><SelectItem value="1">{t('individual')}</SelectItem><SelectItem value="2">{t('company')}</SelectItem></SelectContent>
                                                             </Select>
                                                         </div>
                                                     </div>
                                                 ) : (
                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-center">
-                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><File size={18} className="text-gray-500" /><span className="ml-2">Account Type</span></div>
-                                                        <div className="md:col-span-2"><span className="text-gray-800">{providerData?.type_provider ? (providerData?.type_provider === 1 ? 'Individual' : 'Company') : 'Not set'}</span></div>
+                                                        <div className="flex items-center text-sm font-semibold text-gray-600"><File size={18} className="text-gray-500" /><span className="ml-2">{t('accountType')}</span></div>
+                                                        <div className="md:col-span-2"><span className="text-gray-800">{providerData?.type_provider ? (providerData?.type_provider === 1 ? t('individual') : t('company')) : 'Not set'}</span></div>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
                                         <div className="p-4 border rounded-lg">
-                                            <h4 className="font-semibold text-gray-700 mb-4">Contact</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4">{t('contact')}</h4>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <ProfileDetail icon={<Mail size={18} className="text-gray-500" />} label="Email" name="email" value={providerData?.email || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label="Phone Number" name="phone_number" value={providerData?.phone_number || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label="WhatsApp" name="whatsapp" value={providerData?.whatsapp || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label="Fix Phone" name="fix_phone" value={providerData?.fix_phone || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label="Fax" name="fax" value={providerData?.fax || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<Mail size={18} className="text-gray-500" />} label={t('email')} name="email" value={providerData?.email || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label={t('phone_number')} name="phone_number" value={providerData?.phone_number || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label={t('whatsapp')} name="whatsapp" value={providerData?.whatsapp || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label={t('fixPhone')} name="fix_phone" value={providerData?.fix_phone || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<Phone size={18} className="text-gray-500" />} label={t('fax')} name="fax" value={providerData?.fax || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
                                             </div>
                                         </div>
                                         <div className="p-4 border rounded-lg">
-                                            <h4 className="font-semibold text-gray-700 mb-4">Address</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4">{t('address')}</h4>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div className="md:col-span-2 relative z-0"><LeafletMapPicker onPick={handleMapLocationSelect} initial={providerData.map_coordinates || undefined} /></div>
                                                 {providerData?.map_location && !isEditing && (
                                                     <div className="md:col-span-2">
                                                         <div className="flex items-center text-sm font-semibold text-gray-600 mb-2">
-                                                            <MapPin size={18} className="text-gray-500" /><span className="ml-2 mr-2">Selected Location</span><span className="text-gray-800">Lat: {providerData.map_coordinates?.lat?.toFixed(6)}, Lng: {providerData.map_coordinates?.lng?.toFixed(6)}</span>
+                                                            <MapPin size={18} className="text-gray-500" /><span className="ml-2 mr-2">{t('selectedLocation')}</span><span className="text-gray-800">Lat: {providerData.map_coordinates?.lat?.toFixed(6)}, Lng: {providerData.map_coordinates?.lng?.toFixed(6)}</span>
                                                         </div>
                                                     </div>
                                                 )}
-                                                <ProfileSelect icon={<Building size={18} className="text-gray-500" />} label="Country" name="country_id" value={providerData?.country_id} onValueChange={handleProviderSelectChange} isEditing={isEditing} options={countries} placeholder="Select a country" />
-                                                <ProfileSelect icon={<Building size={18} className="text-gray-500" />} label="Governorate" name="governorate_id" value={providerData?.governorate_id} onValueChange={handleProviderSelectChange} isEditing={isEditing} options={governorates} placeholder="Select a governorate" disabled={!providerData?.country_id || governorates.length === 0} />
-                                                <ProfileSelect icon={<Building size={18} className="text-gray-500" />} label="Municipality" name="municipality_id" value={providerData?.municipality_id} onValueChange={handleProviderSelectChange} isEditing={isEditing} options={municipalities} placeholder="Select a municipality" disabled={!providerData?.governorate_id || municipalities.length === 0} />
-                                                <ProfileDetail icon={<Building size={18} className="text-gray-500" />} label="Street" name="street" value={providerData?.street || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<Building size={18} className="text-gray-500" />} label="Department" name="department" value={providerData?.department || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileSelect icon={<Building size={18} className="text-gray-500" />} label={t('country')} name="country_id" value={providerData?.country_id} onValueChange={handleProviderSelectChange} isEditing={isEditing} options={countries} placeholder={t('selectCountry')} />
+                                                <ProfileSelect icon={<Building size={18} className="text-gray-500" />} label={t('governorate')} name="governorate_id" value={providerData?.governorate_id} onValueChange={handleProviderSelectChange} isEditing={isEditing} options={governorates} placeholder={t('selectGovernorate')} disabled={!providerData?.country_id || governorates.length === 0} />
+                                                <ProfileSelect icon={<Building size={18} className="text-gray-500" />} label={t('municipality')} name="municipality_id" value={providerData?.municipality_id} onValueChange={handleProviderSelectChange} isEditing={isEditing} options={municipalities} placeholder={t('selectMunicipality')} disabled={!providerData?.governorate_id || municipalities.length === 0} />
+                                                <ProfileDetail icon={<Building size={18} className="text-gray-500" />} label={t('street')} name="street" value={providerData?.street || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<Building size={18} className="text-gray-500" />} label={t('department')} name="department" value={providerData?.department || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
                                             </div>
                                         </div>
                                         <div className="p-4 border rounded-lg">
-                                            <h4 className="font-semibold text-gray-700 mb-4">Social Media</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4">{t('socialMedia')}</h4>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Website" name="website" value={providerData?.website || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Facebook" name="facebook" value={providerData?.facebook || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Instagram" name="instagram" value={providerData?.instagram || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="TikTok" name="tiktok" value={providerData?.tiktok || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Youtube" name="youtube" value={providerData?.youtube || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('website')} name="website" value={providerData?.website || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('facebook')} name="facebook" value={providerData?.facebook || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('instagram')} name="instagram" value={providerData?.instagram || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('tiktok')} name="tiktok" value={providerData?.tiktok || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('youtube')} name="youtube" value={providerData?.youtube || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} />
                                             </div>
                                         </div>
                                         <div className="p-4 border rounded-lg">
-                                            <h4 className="font-semibold text-gray-700 mb-4">Details</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4">{t('details')}</h4>
                                             <div className="space-y-4">
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="About" name="about" value={providerData?.about || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} type="textarea" />
-                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label="Policy" name="policy" value={providerData?.policy || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} type="textarea" />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('about')} name="about" value={providerData?.about || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} type="textarea" />
+                                                <ProfileDetail icon={<User size={18} className="text-gray-500" />} label={t('policy')} name="policy" value={providerData?.policy || ""} isEditing={isEditing} handleInputChange={handleProviderInputChange} type="textarea" />
                                             </div>
                                         </div>
                                         <div className="p-4 border rounded-lg">
-                                            <h4 className="font-semibold text-gray-700 mb-4">Payment Methods</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4">{t('paymentMethods')}</h4>
                                             <div className="flex flex-col md:flex-row md:space-x-4">
                                                 <div className="flex items-center space-x-2 col">
                                                     <Checkbox id="payment_en_especes" checked={providerData?.payment_en_especes || false} onCheckedChange={(checked) => handleCheckboxChange("payment_en_especes", !!checked)} disabled={!isEditing} />
-                                                    <label htmlFor="payment_en_especes" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Payment in cash</label>
+                                                    <label htmlFor="payment_en_especes" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{t('paymentCash')}</label>
                                                 </div>
                                                 <div className="flex items-center space-x-2 mt-2 col">
                                                     <Checkbox id="payment_virement" checked={providerData?.payment_virement || false} onCheckedChange={(checked) => handleCheckboxChange("payment_virement", !!checked)} disabled={!isEditing} />
-                                                    <label htmlFor="payment_virement" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Payment by transfer</label>
+                                                    <label htmlFor="payment_virement" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{t('paymentTransfer')}</label>
                                                 </div>
                                                 <div className="flex items-center space-x-2 mt-2 col">
                                                     <Checkbox id="payment_par_cheque" checked={providerData?.payment_par_cheque || false} onCheckedChange={(checked) => handleCheckboxChange("payment_par_cheque", !!checked)} disabled={!isEditing} />
-                                                    <label htmlFor="payment_par_cheque" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Payment by check</label>
+                                                    <label htmlFor="payment_par_cheque" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{t('paymentCheck')}</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     {isEditing && (
                                         <div className="mt-8 flex justify-end gap-4">
-                                            <Button className="updateBtn" onClick={handleSave}>Update</Button>
+                                            <Button className="updateBtn" onClick={handleSave}>{t('update')}</Button>
                                             <Button className="closeBtn" variant="outline" onClick={() => {
                                                 setIsEditing(false);
                                                 if (user) {
@@ -619,7 +619,7 @@ const Profile = () => {
                                                 }
                                             }}
                                             >
-                                                Close
+                                                {t('close')}
                                             </Button>
                                         </div>
                                     )}
@@ -628,14 +628,14 @@ const Profile = () => {
                             {activeTab === "schedule" && isProvider && (
                                 <div className="p-6 sm:p-8">
                                     <div className="flex justify-between items-center mb-6">
-                                        <h3 className="text-xl font-bold text-gray-800">Opening Hours & Exceptions</h3>
-                                        <Button className="updateBtn" onClick={handleScheduleSave}>Save Schedule</Button>
+                                        <h3 className="text-xl font-bold text-gray-800">{t('scheduleTitle')}</h3>
+                                        <Button className="updateBtn" onClick={handleScheduleSave}>{t('saveSchedule')}</Button>
                                     </div>
 
                                     <div className="space-y-8">
                                         {/* Weekly Hours */}
                                         <div className="border rounded-lg p-4">
-                                            <h4 className="font-semibold text-gray-700 mb-4 flex items-center"><Clock size={16} className="mr-2" /> Weekly Schedule</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-4 flex items-center"><Clock size={16} className="mr-2" /> {t('weeklySchedule')}</h4>
                                             <div className="space-y-2">
                                                 {openingHours.map((hour, index) => (
                                                     <div key={index} className="grid grid-cols-12 gap-2 items-center border-b pb-2 last:border-0">
@@ -657,7 +657,7 @@ const Profile = () => {
                                                                     <Input type="time" value={hour.endTime} onChange={(e) => handleHourChange(index, 'endTime', e.target.value)} className="w-30 h-8 text-sm" />
                                                                 </>
                                                             ) : (
-                                                                <span className="text-sm text-gray-400 italic">Closed</span>
+                                                                <span className="text-sm text-gray-400 italic">{t('closed')}</span>
                                                             )}
                                                         </div>
                                                     </div>
@@ -668,12 +668,12 @@ const Profile = () => {
                                         {/* Exceptions */}
                                         <div className="border rounded-lg p-4">
                                             <div className="flex justify-between items-center mb-4">
-                                                <h4 className="font-semibold text-gray-700 flex items-center"><CalendarIcon size={16} className="mr-2" /> Exceptions & Holidays</h4>
-                                                <Button size="sm" variant="outline" onClick={addException} className="flex items-center gap-1"><Plus size={14} /> Add Exception</Button>
+                                                <h4 className="font-semibold text-gray-700 flex items-center"><CalendarIcon size={16} className="mr-2" /> {t('exceptionsTitle')}</h4>
+                                                <Button size="sm" variant="outline" onClick={addException} className="flex items-center gap-1"><Plus size={14} /> {t('addException')}</Button>
                                             </div>
 
                                             <div className="space-y-3">
-                                                {exceptions.length === 0 && <p className="text-sm text-gray-500 italic">No exceptions added.</p>}
+                                                {exceptions.length === 0 && <p className="text-sm text-gray-500 italic">{t('noExceptions')}</p>}
                                                 {exceptions.map((ex, index) => (
                                                     <div key={index} className="bg-gray-50 p-3 rounded-md border relative">
                                                         <Button
@@ -687,7 +687,7 @@ const Profile = () => {
 
                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                             <div>
-                                                                <label className="text-xs font-semibold text-gray-600 block mb-1">Date</label>
+                                                                <label className="text-xs font-semibold text-gray-600 block mb-1">{t('date')}</label>
                                                                 <Input
                                                                     type="date"
                                                                     value={ex.date}
@@ -701,13 +701,13 @@ const Profile = () => {
                                                                     checked={ex.isClosed}
                                                                     onCheckedChange={(checked) => handleExceptionChange(index, 'isClosed', checked)}
                                                                 />
-                                                                <label htmlFor={`closed-${index}`} className="text-sm font-medium">Closed all day</label>
+                                                                <label htmlFor={`closed-${index}`} className="text-sm font-medium">{t('closedAllDay')}</label>
                                                             </div>
 
                                                             {!ex.isClosed && (
                                                                 <div className="md:col-span-2 flex gap-2 items-center">
                                                                     <div className="flex-1">
-                                                                        <label className="text-xs font-semibold text-gray-600 block mb-1">Start Time</label>
+                                                                        <label className="text-xs font-semibold text-gray-600 block mb-1">{t('startTime')}</label>
                                                                         <Input
                                                                             type="time"
                                                                             value={ex.startTime}
@@ -716,7 +716,7 @@ const Profile = () => {
                                                                         />
                                                                     </div>
                                                                     <div className="flex-1">
-                                                                        <label className="text-xs font-semibold text-gray-600 block mb-1">End Time</label>
+                                                                        <label className="text-xs font-semibold text-gray-600 block mb-1">{t('endTime')}</label>
                                                                         <Input
                                                                             type="time"
                                                                             value={ex.endTime}
@@ -728,12 +728,12 @@ const Profile = () => {
                                                             )}
 
                                                             <div className="md:col-span-2">
-                                                                <label className="text-xs font-semibold text-gray-600 block mb-1">Note (Optional)</label>
+                                                                <label className="text-xs font-semibold text-gray-600 block mb-1">{t('noteOptional')}</label>
                                                                 <Input
                                                                     type="text"
                                                                     value={ex.note || ""}
                                                                     onChange={(e) => handleExceptionChange(index, 'note', e.target.value)}
-                                                                    placeholder="e.g. National Holiday"
+                                                                    placeholder={t('notePlaceholder')}
                                                                     className="h-8 text-sm bg-white"
                                                                 />
                                                             </div>
@@ -747,38 +747,38 @@ const Profile = () => {
                             )}
                             {activeTab === "security" && (
                                 <div className="p-6 sm:p-8">
-                                    <h3 className="text-xl font-bold text-gray-800 mb-6">Security Settings</h3>
+                                    <h3 className="text-xl font-bold text-gray-800 mb-6">{t('securitySettings')}</h3>
                                     <div className="space-y-6">
                                         <div>
-                                            <h4 className="font-semibold text-gray-700 mb-3">Account Status</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-3">{t('accountStatus')}</h4>
                                             <div className="p-4 bg-gray-50 rounded-lg space-y-3">
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center">
                                                         {formData.email_verified ? (<CheckCircle size={18} className="text-green-500" />) : (<XCircle size={18} className="text-red-500" />)}
-                                                        <span className="ml-2 text-sm text-gray-600">Email Verified</span>
+                                                        <span className="ml-2 text-sm text-gray-600">{t('emailVerified')}</span>
                                                     </div>
-                                                    <span className={`font-semibold text-sm ${formData.email_verified ? "text-green-600" : "text-red-600"}`}>{formData.email_verified ? "Verified" : "Not Verified"}</span>
+                                                    <span className={`font-semibold text-sm ${formData.email_verified ? "text-green-600" : "text-red-600"}`}>{formData.email_verified ? t('verified') : t('notVerified')}</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
-                                            <h4 className="font-semibold text-gray-700 mb-3">Change Password</h4>
+                                            <h4 className="font-semibold text-gray-700 mb-3">{t('changePasswordTitle')}</h4>
                                             <div className="p-4 bg-gray-50 rounded-lg space-y-4">
                                                 <div className="grid grid-cols-1 gap-2">
-                                                    <label htmlFor="newPassword" className="text-sm font-medium text-gray-600">New Password</label>
+                                                    <label htmlFor="newPassword" className="text-sm font-medium text-gray-600">{t('newPassword')}</label>
                                                     <div className="relative">
-                                                        <Input id="newPassword" type={showNewPassword ? "text" : "password"} name="newPassword" value={passwordData.newPassword} onChange={handlePasswordInputChange} placeholder="Enter new password" className="pr-10" />
+                                                        <Input id="newPassword" type={showNewPassword ? "text" : "password"} name="newPassword" value={passwordData.newPassword} onChange={handlePasswordInputChange} placeholder={t('enterNewPassword')} className="pr-10" />
                                                         <Button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="absolute inset-y-0 right-0 flex items-center pr-3 closeBtn">{showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}</Button>
                                                     </div>
                                                 </div>
                                                 <div className="grid grid-cols-1 gap-2">
-                                                    <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-600">Confirm New Password</label>
+                                                    <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-600">{t('confirmNewPassword')}</label>
                                                     <div className="relative">
-                                                        <Input id="confirmPassword" type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordInputChange} placeholder="Confirm new password" className="pr-10" />
+                                                        <Input id="confirmPassword" type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordInputChange} placeholder={t('confirmNewPasswordPlaceholder')} className="pr-10" />
                                                         <Button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute inset-y-0 right-0 flex items-center pr-3 closeBtn">{showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}</Button>
                                                     </div>
                                                 </div>
-                                                <div className="flex justify-end"><Button className="updateBtn" onClick={handlePasswordSave} size="sm">Update</Button></div>
+                                                <div className="flex justify-end"><Button className="updateBtn" onClick={handlePasswordSave} size="sm">{t('update')}</Button></div>
                                             </div>
                                         </div>
                                     </div>

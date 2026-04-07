@@ -8,8 +8,10 @@ import Footer from "@/components/dashboard/layouts/Footer";
 import { useAuth } from "@/context/AuthContext";
 import { usePathname, useRouter } from "next/navigation";
 import { canAccess } from "@/lib/rbac";
+import { useTranslations } from "next-intl";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+    const t = useTranslations('Dashboard.page');
     const { user, loading } = useAuth();
     const pathname = usePathname();
     const router = useRouter();
@@ -28,7 +30,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="min-h-screen flex items-center justify-center bg-slate-50">
                 <div className="flex flex-col items-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                    <p className="mt-4 text-slate-500 font-medium">Loading...</p>
+                    <p className="mt-4 text-slate-500 font-medium">{t('loading')}</p>
                 </div>
             </div>
         );

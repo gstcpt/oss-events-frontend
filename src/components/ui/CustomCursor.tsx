@@ -129,11 +129,11 @@ export default function CustomCursor() {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{
                                 opacity: 1,
-                                width: isHovered ? (isTextHovered ? 60 : 50) : 24,
-                                height: isHovered ? (isTextHovered ? 60 : 50) : 24,
+                                width: isHovered ? (isTextHovered ? 32 : 24) : 16,
+                                height: isHovered ? (isTextHovered ? 32 : 24) : 16,
                                 backgroundColor: isHovered ? "rgba(var(--primary-rgb), 0.05)" : "rgba(var(--primary-rgb), 0.1)",
-                                border: isHovered ? "1.5px solid var(--primary)" : "1px solid rgba(var(--primary-rgb), 0.3)",
-                                backdropFilter: isHovered ? "blur(4px)" : "blur(0px)",
+                                border: isHovered ? "1px solid var(--primary)" : "1px solid rgba(var(--primary-rgb), 0.3)",
+                                backdropFilter: isHovered ? "blur(2px)" : "blur(0px)",
                                 scale: isClicked ? 0.9 : 1,
                             }}
                             exit={{ opacity: 0, scale: 0 }}
@@ -161,10 +161,10 @@ export default function CustomCursor() {
                             initial={{ scale: 0 }}
                             animate={{
                                 scale: isVisible ? 1 : 0,
-                                width: isClicked ? 6 : (isTextHovered ? 40 : (isHovered ? 8 : 6)),
-                                height: isClicked ? 6 : (isTextHovered ? 40 : (isHovered ? 8 : 6)),
+                                width: isClicked ? 4 : (isTextHovered ? 20 : (isHovered ? 6 : 4)),
+                                height: isClicked ? 4 : (isTextHovered ? 20 : (isHovered ? 6 : 4)),
                                 backgroundColor: isTextHovered ? "var(--primary)" : "var(--primary)",
-                                opacity: isTextHovered ? 0.2 : 1,
+                                opacity: isTextHovered ? 0.3 : 1,
                             }}
                             transition={{ type: "spring", damping: 35, stiffness: 400 }}
                         />
@@ -201,15 +201,15 @@ function Ripple({ x, y }: { x: any; y: any }) {
     return (
         <motion.div
             initial={{ opacity: 0.5, scale: 0 }}
-            animate={{ opacity: 0, scale: 4 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            animate={{ opacity: 0, scale: 2 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             style={{
                 left: x.get(),
                 top: y.get(),
                 translateX: "-50%",
                 translateY: "-50%",
             }}
-            className="fixed top-0 left-0 w-16 h-16 rounded-full border-2 border-[var(--primary)] opacity-30 blur-[2px]"
+            className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--primary)] opacity-30 blur-[1px]"
         />
     );
 }

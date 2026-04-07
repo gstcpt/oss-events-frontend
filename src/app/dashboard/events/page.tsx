@@ -164,7 +164,7 @@ export default function Events() {
                     try {
                         const usersData = await getCompanyUsers(targetCompanyId);
                         setCompanyUsers(usersData); // Load all users for the company
-                    } catch (e) { toast.error("Failed to load users."); }
+                    } catch (e) { toast.error(t('errorLoadingUsers') || "Failed to load users."); }
 
                     const items = await getAvailableItems(targetCompanyId);
                     setAvailableItems(items);
@@ -176,7 +176,7 @@ export default function Events() {
                             return {
                                 id: line.id,
                                 itemId: line.item_id,
-                                itemName: it?.title || "Unknown Item",
+                                itemName: it?.title || t('unknownItem'),
                                 itemImage: it?.image || it?.item_media?.[0]?.url,
                                 itemCover: it?.cover || line.items?.cover,
                                 providerId: it?.provider_id || line.items?.provider_id,
@@ -192,7 +192,7 @@ export default function Events() {
                         setSelectedItems(mapped);
                     }
 
-                } catch (e) { toast.error("Failed to load dependencies."); }
+                } catch (e) { toast.error(t('errorLoading') || "Failed to load dependencies."); }
             }
         };
         loadDependencies();
@@ -205,21 +205,21 @@ export default function Events() {
             setEvents(await getAllEvents());
             setIsDeleteModalOpen(false);
             setCurrentEvent(null);
-            toast.success("Event deleted successfully");
+            toast.success(t('eventDeleted'));
         } catch (error) {
-            toast.error("Failed to delete event: " + (error as Error).message);
+            toast.error(t('errorSaving') + ": " + (error as Error).message);
         }
     };
 
     const handleSave = async () => {
         if (!editClientId || !editStartDate || !editEndDate || !editTitle || selectedItems.length === 0) {
-            toast.error("Please fill all required fields (Title, Client/User, Dates, and at least 1 Item)");
+            toast.error(t('fillRequiredFields') || "Please fill all required fields");
             return;
         }
 
         const targetCompanyId = editCompanyId || user?.company_id;
         if (!targetCompanyId) {
-            toast.error("Company selection is required");
+            toast.error(t('toastErrorCompanyRequired'));
             return;
         }
 
@@ -246,7 +246,7 @@ export default function Events() {
                         status: i.status
                     }))
                 );
-                toast.success("Event updated successfully");
+                toast.success(t('toastEventUpdated'));
             } else {
                 await createComplexEvent(
                     targetCompanyId,
@@ -266,12 +266,12 @@ export default function Events() {
                         discount: i.discount
                     }))
                 );
-                toast.success("Event created successfully");
+                toast.success(t('toastEventCreated'));
             }
             const data = await getAllEvents();
             setEvents(data);
             handleCloseModal();
-        } catch (error) { toast.error("Operation failed: " + (error as Error).message); }
+        } catch (error) { toast.error(t('toastErrorOperation', { error: (error as Error).message })); }
     };
 
     const addSelectedItem = () => {
@@ -283,7 +283,7 @@ export default function Events() {
         const end = itemEndDate || editEndDate;
 
         if (!start || !end) {
-            toast.error("Please set start and end dates");
+            toast.error(t('toastErrorDatesRequired'));
             return;
         }
 
