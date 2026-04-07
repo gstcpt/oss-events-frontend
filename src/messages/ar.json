@@ -796,7 +796,8 @@
             "toastEventUpdated": "تم تحديث الفعالية بنجاح",
             "toastEventCreated": "تم إنشاء الفعالية بنجاح",
             "toastErrorOperation": "فشلت العملية: {error}",
-            "toastErrorDatesRequired": "يرجى تحديد تاريخي البدء والنهاية"
+            "toastErrorDatesRequired": "يرجى تحديد تاريخي البدء والنهاية",
+            "eventsManagement": "إدارة الفعاليات"
         },
         "categories": {
             "title": "الفئات",
@@ -888,7 +889,10 @@
             "toastErrorUpdateImage": "خطأ في تحديث صورة العنصر.",
             "toastErrorUpdateCoverImage": "خطأ في تحديث صورة الغلاف.",
             "toastErrorFetchProvider": "خطأ في جلب معلومات المزود.",
-            "toastMapLocationSelected": "تم تحديد الموقع على الخريطة."
+            "toastMapLocationSelected": "تم تحديد الموقع على الخريطة.",
+            "servicesManagement": "إدارة الخدمات",
+            "step2MediaManagement": "الخطوة 2: إدارة الوسائط",
+            "eventsManagement": "إدارة الفعاليات"
         },
         "companies": {
             "title": "الشركات",
@@ -967,7 +971,16 @@
             "toastErrorFavicon": "خطأ في رفع أيقونة المفضلة",
             "toastErrorLogoUploadFailed": "فشل في رفع الشعار",
             "toastErrorFaviconUploadFailed": "فشل في رفع أيقونة المفضلة",
-            "toastErrorSavingCompany": "خطأ في حفظ الشركة"
+            "toastErrorSavingCompany": "خطأ في حفظ الشركة",
+            "companiesManagement": "إدارة الشركات",
+            "addNewCompany": "إضافة شركة جديدة",
+            "editCompany": "تعديل الشركة",
+            "loadingCompanies": "جاري تحميل الشركات...",
+            "basicInformation": "المعلومات الأساسية",
+            "administrationStatus": "الإدارة والحالة",
+            "visualAssetsBranding": "الأصول البصرية والهوية",
+            "contactDetails": "بيانات الاتصال",
+            "locationInformation": "معلومات الموقع"
         },
         "users": {
             "title": "المستخدمون",
@@ -1073,8 +1086,7 @@
                 "errorDeletingModerator": "خطأ في حذف المراقب",
                 "moderatorUpdatedSuccessfully": "تم تحديث المراقب بنجاح",
                 "moderatorCreatedSuccessfully": "تم إنشاء المراقب بنجاح",
-                "errorSavingModerator": "خطأ في حفظ المراقب",
-                "systemCore": "نواة النظام"
+                "errorSavingModerator": "خطأ في حفظ المراقب"
             },
             "providers": {
                 "title": "مزودي الخدمات",
@@ -1706,7 +1718,9 @@
             "errorSending": "خطأ في إرسال النشرة",
             "subjectPlaceholder": "أدخل الموضوع",
             "contentPlaceholder": "اكتب محتوى النشرة...",
-            "noSubscribers": "لا يوجد مشتركون بعد"
+            "noSubscribers": "لا يوجد مشتركون بعد",
+            "unauthorizedAccess": "الوصول غير المصرح به",
+            "newsletterManagement": "إدارة النشرة الإخبارية"
         },
         "interactions": {
             "title": "سجل النشاطات",
@@ -1874,7 +1888,8 @@
             "loading": "جاري تحميل الإعدادات...",
             "errorLoading": "خطأ في تحميل الإعدادات",
             "settingsUpdated": "تم تحديث الإعدادات بنجاح",
-            "errorSaving": "خطأ في حفظ الإعدادات"
+            "errorSaving": "خطأ في حفظ الإعدادات",
+            "companyFavicon": "أيقونة الشركة"
         },
         "privacyPolicy": {
             "title": "سياسة الخصوصية",
@@ -1984,7 +1999,31 @@
             "userConnectivityStatus": "حالة اتصال المستخدمين",
             "topPowerUsers": "أفضل 5 مستخدمين (الفعاليات المُنشأة)",
             "clientIntelligence": "ذكاء العملاء",
-            "totalAuthorized": "إجمالي المُصرَّح لهم"
+            "totalAuthorized": "إجمالي المُصرَّح لهم",
+            "taxonomyMatrix": "مصفوفة التصنيف",
+            "classificationIndex": "فهرس التصنيف",
+            "catalogAnalytics": "تحليلات الكتالوج",
+            "detailedInventoryLedger": "دفتر الجرد المفصل",
+            "eventsChronicle": "سجل الفعاليات",
+            "temporalLedger": "دفتر الوقت",
+            "systemAuditTrail": "مسار التدقيق للنظام",
+            "auditTrailExplorer": "مستكشف مسار التدقيق",
+            "mediaAssetVault": "خزنة الأصول الإعلامية",
+            "contentRepository": "مستودع المحتوى",
+            "subscriptionPortfolio": "محفظة الاشتراكات",
+            "financialTransmissionLedger": "دفتر التحويلات المالية",
+            "tagMetaAnalytics": "تحليلات البيانات الوصفية للعلامات",
+            "taxonomyRegistry": "سجل التصنيف",
+            "providersPortfolio": "محفظة المزودين",
+            "providerDetailedRegistry": "سجل المزودين المفصل",
+            "acquisitionLifecycle": "دورة الاكتساب والحياة",
+            "completeMembershipRegistry": "سجل العضوية الكامل",
+            "privilegedAccessOversight": "الإشراف على الوصول المميز",
+            "administrativeCredentialLedger": "دفتر بيانات الاعتماد الإدارية",
+            "engagementSummary": "ملخص التفاعل",
+            "demographicDeepDive": "الغوص الديموغرافي",
+            "b2bNetworkAnalytics": "تحليلات شبكة B2B",
+            "enterpriseEntityLedger": "دفتر كيانات المؤسسات"
         },
         "error": {
             "title": "خطأ",

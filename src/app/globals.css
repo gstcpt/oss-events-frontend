@@ -20,10 +20,11 @@
   --ring: #AAA999;
   --radius: 0.75rem;
 
-  /* Custom cursor colors */
-  --cursor-color: #7200e4;
-  --cursor-ring: rgba(97, 0, 194, 0.646);
-  --cursor-glow: #8000ff;
+  /* Custom cursor colors - from Codepen design */
+  --cursor-color: #c084fc;
+  --cursor-ring: rgba(192, 132, 252, 0.5);
+  --cursor-core: #ffffff;
+  --cursor-glow: #c084fc;
 }
 
 @theme inline {
@@ -86,12 +87,12 @@ html[lang="ar"] body,
   letter-spacing: 0;
 }
 
-/* Custom Cursor */
+/* Custom Cursor - Codepen design colors */
 .cursor-core {
   position: fixed;
-  width: 20px;
-  height: 20px;
-  background: var(--cursor-core);
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -102,9 +103,9 @@ html[lang="ar"] body,
 
 .cursor-ring {
   position: fixed;
-  width: 60px;
-  height: 60px;
-  border: 1.5px solid var(--cursor-ring);
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(192, 132, 252, 0.3);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
@@ -113,16 +114,16 @@ html[lang="ar"] body,
 }
 
 .cursor-ring.hovering {
-  width: 80px;
-  height: 80px;
-  border-color: var(--cursor-core);
+  width: 52px;
+  height: 52px;
+  border-color: rgba(192, 132, 252, 0.6);
 }
 
 .cursor-dot {
   position: fixed;
-  width: 8px;
-  height: 8px;
-  background: white;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;

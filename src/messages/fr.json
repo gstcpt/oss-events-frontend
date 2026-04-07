@@ -796,7 +796,8 @@
             "toastEventUpdated": "Événement mis à jour avec succès",
             "toastEventCreated": "Événement créé avec succès",
             "toastErrorOperation": "Échec de l'opération: {error}",
-            "toastErrorDatesRequired": "Veuillez définir les dates de début et de fin"
+            "toastErrorDatesRequired": "Veuillez définir les dates de début et de fin",
+            "eventsManagement": "Gestion des événements"
         },
         "categories": {
             "title": "Catégories",
@@ -888,7 +889,10 @@
             "toastErrorUpdateImage": "Erreur lors de la mise à jour de l'image de l'article.",
             "toastErrorUpdateCoverImage": "Erreur lors de la mise à jour de l'image de couverture.",
             "toastErrorFetchProvider": "Erreur lors de la récupération des informations du prestataire.",
-            "toastMapLocationSelected": "Emplacement sur la carte sélectionné."
+            "toastMapLocationSelected": "Emplacement sur la carte sélectionné.",
+            "servicesManagement": "Gestion des services",
+            "step2MediaManagement": "Étape 2 : Gestion des médias",
+            "eventsManagement": "Gestion des événements"
         },
         "companies": {
             "title": "Entreprises",
@@ -967,7 +971,16 @@
             "toastErrorFavicon": "Erreur lors du téléchargement du favicon",
             "toastErrorLogoUploadFailed": "Échec du téléchargement du logo",
             "toastErrorFaviconUploadFailed": "Échec du téléchargement du favicon",
-            "toastErrorSavingCompany": "Erreur lors de l'enregistrement de l'entreprise"
+            "toastErrorSavingCompany": "Erreur lors de l'enregistrement de l'entreprise",
+            "companiesManagement": "Gestion des entreprises",
+            "addNewCompany": "Ajouter une entreprise",
+            "editCompany": "Modifier l'entreprise",
+            "loadingCompanies": "Chargement des entreprises...",
+            "basicInformation": "Informations de base",
+            "administrationStatus": "Administration et Statut",
+            "visualAssetsBranding": "Identité visuelle et Image de marque",
+            "contactDetails": "Coordonnées",
+            "locationInformation": "Informations de localisation"
         },
         "users": {
             "title": "Utilisateurs",
@@ -1073,8 +1086,7 @@
                 "errorDeletingModerator": "Erreur lors de la suppression du modérateur",
                 "moderatorUpdatedSuccessfully": "Modérateur mis à jour avec succès",
                 "moderatorCreatedSuccessfully": "Modérateur créé avec succès",
-                "errorSavingModerator": "Erreur lors de l'enregistrement du modérateur",
-                "systemCore": "Noyau Système"
+                "errorSavingModerator": "Erreur lors de l'enregistrement du modérateur"
             },
             "providers": {
                 "title": "Prestataires",
@@ -1706,7 +1718,9 @@
             "errorSending": "Erreur lors de l'envoi",
             "subjectPlaceholder": "Entrez l'objet",
             "contentPlaceholder": "Écrivez le contenu de la newsletter...",
-            "noSubscribers": "Aucun abonnés pour le moment"
+            "noSubscribers": "Aucun abonnés pour le moment",
+            "unauthorizedAccess": "Accès non autorisé",
+            "newsletterManagement": "Gestion de la newsletter"
         },
         "interactions": {
             "title": "Fil d'activité",
@@ -1874,7 +1888,8 @@
             "loading": "Chargement des paramètres...",
             "errorLoading": "Erreur lors du chargement",
             "settingsUpdated": "Paramètres mis à jour avec succès",
-            "errorSaving": "Erreur lors de l'enregistrement"
+            "errorSaving": "Erreur lors de l'enregistrement",
+            "companyFavicon": "Favicon de l'entreprise"
         },
         "privacyPolicy": {
             "title": "Politique de confidentialité",
@@ -1984,7 +1999,31 @@
             "userConnectivityStatus": "État de connectivité des utilisateurs",
             "topPowerUsers": "Top 5 des utilisateurs puissants (Événements créés)",
             "clientIntelligence": "Intelligence client",
-            "totalAuthorized": "Total autorisé"
+            "totalAuthorized": "Total autorisé",
+            "taxonomyMatrix": "Matrice de taxonomie",
+            "classificationIndex": "Index de classification",
+            "catalogAnalytics": "Analytique du catalogue",
+            "detailedInventoryLedger": "Registre d'inventaire détaillé",
+            "eventsChronicle": "Chronique des événements",
+            "temporalLedger": "Registre temporel",
+            "systemAuditTrail": "Piste d'audit système",
+            "auditTrailExplorer": "Explorateur de piste d'audit",
+            "mediaAssetVault": "Coffre-fort des actifs médias",
+            "contentRepository": "Dépôt de contenu",
+            "subscriptionPortfolio": "Portefeuille d'abonnements",
+            "financialTransmissionLedger": "Registre des transmissions financières",
+            "tagMetaAnalytics": "Méta-analytique des tags",
+            "taxonomyRegistry": "Registre de taxonomie",
+            "providersPortfolio": "Portefeuille des prestataires",
+            "providerDetailedRegistry": "Registre détaillé des prestataires",
+            "acquisitionLifecycle": "Cycle d'acquisition et de vie",
+            "completeMembershipRegistry": "Registre complet des memberships",
+            "privilegedAccessOversight": "Surveillance des accès privilégiés",
+            "administrativeCredentialLedger": "Registre des identifiants administratifs",
+            "engagementSummary": "Résumé de l'engagement",
+            "demographicDeepDive": "Plongeon démographique",
+            "b2bNetworkAnalytics": "Analytique du réseau B2B",
+            "enterpriseEntityLedger": "Registre des entités d'entreprise"
         },
         "error": {
             "title": "Erreur",

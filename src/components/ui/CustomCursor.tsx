@@ -129,12 +129,12 @@ export default function CustomCursor() {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{
                                 opacity: 1,
-                                width: isHovered ? (isTextHovered ? 32 : 24) : 16,
-                                height: isHovered ? (isTextHovered ? 32 : 24) : 16,
-                                backgroundColor: isHovered ? "rgba(var(--cursor-core-rgb), 0.05)" : "rgba(var(--cursor-core-rgb), 0.1)",
-                                border: isHovered ? "1px solid var(--cursor-core)" : "1px solid rgba(var(--cursor-core-rgb), 0.3)",
-                                backdropFilter: isHovered ? "blur(2px)" : "blur(0px)",
-                                scale: isClicked ? 0.9 : 1,
+                                width: isHovered ? (isTextHovered ? 52 : 42) : 32,
+                                height: isHovered ? (isTextHovered ? 52 : 42) : 32,
+                                backgroundColor: isHovered ? "rgba(192, 132, 252, 0.08)" : "rgba(192, 132, 252, 0.15)",
+                                border: isHovered ? "1px solid rgba(192, 132, 252, 0.6)" : "1px solid rgba(192, 132, 252, 0.3)",
+                                backdropFilter: isHovered ? "blur(4px)" : "blur(2px)",
+                                scale: isClicked ? 0.85 : 1,
                             }}
                             exit={{ opacity: 0, scale: 0 }}
                         >
@@ -142,7 +142,7 @@ export default function CustomCursor() {
                                 <motion.span
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className="text-[12px] font-black uppercase tracking-[0.2em] text-[var(--cursor-core)] text-center w-full"
+                                    className="text-[12px] font-black uppercase tracking-[0.2em] text-[#c084fc] text-center w-full"
                                 >
                                     {cursorText}
                                 </motion.span>
@@ -161,10 +161,10 @@ export default function CustomCursor() {
                             initial={{ scale: 0 }}
                             animate={{
                                 scale: isVisible ? 1 : 0,
-                                width: isClicked ? 4 : (isTextHovered ? 20 : (isHovered ? 6 : 4)),
-                                height: isClicked ? 4 : (isTextHovered ? 20 : (isHovered ? 6 : 4)),
-                                backgroundColor: isTextHovered ? "var(--cursor-core)" : "var(--cursor-core)",
-                                opacity: isTextHovered ? 0.3 : 1,
+                                width: isClicked ? 6 : (isTextHovered ? 14 : (isHovered ? 12 : 10)),
+                                height: isClicked ? 6 : (isTextHovered ? 14 : (isHovered ? 12 : 10)),
+                                backgroundColor: isTextHovered ? "#c084fc" : "#ffffff",
+                                opacity: isTextHovered ? 1 : 1,
                             }}
                             transition={{ type: "spring", damping: 35, stiffness: 400 }}
                         />
@@ -188,11 +188,14 @@ export default function CustomCursor() {
 function ParticleTrail({ index, mouseX, mouseY }: { index: number; mouseX: any; mouseY: any }) {
     const x = useSpring(mouseX, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
     const y = useSpring(mouseY, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
+    const colors = ["rgba(192, 132, 252, 0.25)", "rgba(129, 140, 248, 0.2)", "rgba(192, 132, 252, 0.15)"];
+    const sizes = ["w-2 h-2", "w-1.5 h-1.5", "w-1 h-1"];
 
     return (
         <motion.div
             style={{ x, y, translateX: "-50%", translateY: "-50%" }}
-            className="fixed top-0 left-0 w-4 h-4 rounded-full bg-[var(--cursor-core)] opacity-10 blur-[1px]"
+            className={`fixed top-0 left-0 rounded-full blur-[2px] ${sizes[index]}`}
+            animate={{ backgroundColor: colors[index] }}
         />
     );
 }
@@ -209,7 +212,7 @@ function Ripple({ x, y }: { x: any; y: any }) {
                 translateX: "-50%",
                 translateY: "-50%",
             }}
-            className="fixed top-0 left-0 w-12 h-12 rounded-full border border-[var(--cursor-core)] opacity-30 blur-[1px]"
+            className="fixed top-0 left-0 w-[52px] h-[52px] rounded-full border border-[#c084fc] opacity-40 blur-[2px]"
         />
     );
 }
