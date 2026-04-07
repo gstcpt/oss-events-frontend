@@ -112,7 +112,7 @@ export default function Companies() {
       const countryData = await getAllCountries();
       setCountries(countryData);
     } catch (error) {
-      toast.error('Error fetching locations');
+      toast.error(t('toastErrorLocations'));
     }
   };
 
@@ -138,7 +138,7 @@ export default function Companies() {
       const data = await getGovernrateByCountryId(countryId);
       setGovernorates(data);
     } catch (error) {
-      toast.error('Error fetching governorates');
+      toast.error(t('toastErrorGovernorates'));
     }
   };
 
@@ -147,7 +147,7 @@ export default function Companies() {
       const data = await getMunicipalityByGovernrateId(governorateId);
       setMunicipalities(data);
     } catch (error) {
-      toast.error('Error fetching municipalities');
+      toast.error(t('toastErrorMunicipalities'));
     }
   };
 
@@ -156,7 +156,7 @@ export default function Companies() {
       const data = await getAllCompanies();
       setCompanies(data);
     } catch (error) {
-      toast.error('Error fetching companies');
+      toast.error(t('toastErrorCompaniesFetch'));
     } finally {
       setLoading(false);
     }
@@ -170,7 +170,7 @@ export default function Companies() {
       setUsers(data || []);
     } catch (error) {
       console.error("Error fetching users", error);
-      toast.error('Error fetching users');
+      toast.error(t('toastErrorUsers'));
     }
   };
 

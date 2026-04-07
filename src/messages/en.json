@@ -953,7 +953,21 @@
             "create": "Create",
             "deleteConfirmMessage": "Are you sure you want to delete this setting?",
             "deleteWarning": "This action cannot be undone.",
-            "delete": "Delete"
+            "delete": "Delete",
+            "toastErrorLocations": "Error fetching locations",
+            "toastErrorGovernorates": "Error fetching governorates",
+            "toastErrorMunicipalities": "Error fetching municipalities",
+            "toastErrorCompaniesFetch": "Error fetching companies",
+            "toastErrorUsers": "Error fetching users",
+            "toastCompanyDeleted": "Company deleted successfully",
+            "toastErrorDeleteCompany": "Error deleting company",
+            "toastLogoSaved": "Logo uploaded and saved",
+            "toastErrorLogo": "Error uploading logo",
+            "toastFaviconSaved": "Favicon uploaded and saved",
+            "toastErrorFavicon": "Error uploading favicon",
+            "toastErrorLogoUploadFailed": "Logo upload failed",
+            "toastErrorFaviconUploadFailed": "Favicon upload failed",
+            "toastErrorSavingCompany": "Error saving company"
         },
         "users": {
             "title": "Users",
