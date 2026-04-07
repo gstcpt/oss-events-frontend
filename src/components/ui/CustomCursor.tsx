@@ -18,20 +18,20 @@ export default function CustomCursor() {
     // Velocity-based effects (liquid feel)
     const xVelocity = useVelocity(mouseX);
     const yVelocity = useVelocity(mouseY);
-    const velocity = useTransform([xVelocity, yVelocity], ([vx, vy]) => 
+    const velocity = useTransform([xVelocity, yVelocity], ([vx, vy]) =>
         Math.sqrt(Math.pow(Number(vx), 2) + Math.pow(Number(vy), 2))
     );
-    
+
     const scaleX = useTransform(velocity, [0, 3000], [1, 1.5]);
     const scaleY = useTransform(velocity, [0, 3000], [1, 0.5]);
-    const angle = useTransform([xVelocity, yVelocity], ([vx, vy]) => 
+    const angle = useTransform([xVelocity, yVelocity], ([vx, vy]) =>
         Math.atan2(Number(vy), Number(vx)) * (180 / Math.PI)
     );
 
     // Spring physics for smooth movement
     const smoothMouseX = useSpring(mouseX, { stiffness: 450, damping: 45 });
     const smoothMouseY = useSpring(mouseY, { stiffness: 450, damping: 45 });
-    
+
     const dotX = useSpring(mouseX, { stiffness: 2000, damping: 90 });
     const dotY = useSpring(mouseY, { stiffness: 2000, damping: 90 });
 
@@ -51,14 +51,14 @@ export default function CustomCursor() {
         const handleHoverStart = (e: Event) => {
             const target = e.target as HTMLElement;
             setIsHovered(true);
-            
+
             const isText = ["P", "H1", "H2", "H3", "H4", "H5", "H6", "SPAN", "LI"].includes(target.tagName);
             if (isText) setIsTextHovered(true);
-            
+
             if (target.tagName === "IMG" || target.closest(".item-image")) {
                 setIsImageHovered(true);
             }
-            
+
             if (target.closest(".view-trigger")) {
                 setIsViewHovered(true);
                 setCursorText(target.getAttribute("data-cursor-text") || "View");
@@ -131,8 +131,8 @@ export default function CustomCursor() {
                                 opacity: 1,
                                 width: isHovered ? (isTextHovered ? 32 : 24) : 16,
                                 height: isHovered ? (isTextHovered ? 32 : 24) : 16,
-                                backgroundColor: isHovered ? "rgba(var(--primary-rgb), 0.05)" : "rgba(var(--primary-rgb), 0.1)",
-                                border: isHovered ? "1px solid var(--primary)" : "1px solid rgba(var(--primary-rgb), 0.3)",
+                                backgroundColor: isHovered ? "rgba(var(--cursor-core-rgb), 0.05)" : "rgba(var(--cursor-core-rgb), 0.1)",
+                                border: isHovered ? "1px solid var(--cursor-core)" : "1px solid rgba(var(--cursor-core-rgb), 0.3)",
                                 backdropFilter: isHovered ? "blur(2px)" : "blur(0px)",
                                 scale: isClicked ? 0.9 : 1,
                             }}
@@ -142,7 +142,7 @@ export default function CustomCursor() {
                                 <motion.span
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--primary)] text-center w-full"
+                                    className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--cursor-core)] text-center w-full"
                                 >
                                     {cursorText}
                                 </motion.span>
@@ -157,13 +157,13 @@ export default function CustomCursor() {
                                 translateX: "-50%",
                                 translateY: "-50%",
                             }}
-                            className="fixed top-0 left-0 bg-[var(--primary)] rounded-full mix-blend-difference"
+                            className="fixed top-0 left-0 bg-[var(--cursor-core)] rounded-full mix-blend-difference"
                             initial={{ scale: 0 }}
                             animate={{
                                 scale: isVisible ? 1 : 0,
                                 width: isClicked ? 4 : (isTextHovered ? 20 : (isHovered ? 6 : 4)),
                                 height: isClicked ? 4 : (isTextHovered ? 20 : (isHovered ? 6 : 4)),
-                                backgroundColor: isTextHovered ? "var(--primary)" : "var(--primary)",
+                                backgroundColor: isTextHovered ? "var(--cursor-core)" : "var(--cursor-core)",
                                 opacity: isTextHovered ? 0.3 : 1,
                             }}
                             transition={{ type: "spring", damping: 35, stiffness: 400 }}
@@ -173,7 +173,7 @@ export default function CustomCursor() {
                         {[...Array(3)].map((_, i) => (
                             <ParticleTrail key={i} index={i} mouseX={mouseX} mouseY={mouseY} />
                         ))}
-                        
+
                         {/* 4. CLICK RIPPLE */}
                         <AnimatePresence>
                             {isClicked && <Ripple key="ripple" x={mouseX} y={mouseY} />}
@@ -188,11 +188,11 @@ export default function CustomCursor() {
 function ParticleTrail({ index, mouseX, mouseY }: { index: number; mouseX: any; mouseY: any }) {
     const x = useSpring(mouseX, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
     const y = useSpring(mouseY, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
-    
+
     return (
         <motion.div
             style={{ x, y, translateX: "-50%", translateY: "-50%" }}
-            className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--primary)] opacity-10 blur-[1px]"
+            className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[var(--cursor-core)] opacity-10 blur-[1px]"
         />
     );
 }
@@ -209,7 +209,7 @@ function Ripple({ x, y }: { x: any; y: any }) {
                 translateX: "-50%",
                 translateY: "-50%",
             }}
-            className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--primary)] opacity-30 blur-[1px]"
+            className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[var(--cursor-core)] opacity-30 blur-[1px]"
         />
     );
 }
