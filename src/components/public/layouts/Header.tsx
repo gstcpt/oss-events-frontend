@@ -61,7 +61,7 @@ export default function Header() {
     ];
 
     return (
-        <nav className={`fixed w-full z-50 transition-all duration-100 ${!isTransparent ? "bg-white shadow-md py-2" : "bg-gradient-to-b from-black/30 to-transparent py-4 text-white"}`}>
+        <nav className={`fixed w-full z-40 transition-all duration-100 ${!isTransparent ? "bg-white shadow-md py-2" : "bg-gradient-to-b from-black/30 to-transparent py-4 text-white"}`}>
             {/* Main nav bar */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between gap-4 pt-4">

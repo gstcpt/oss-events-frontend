@@ -111,11 +111,11 @@ export default function MediaGallery({ media, moreLabel = "More", galleryLabel =
 
             {/* Lightbox Modal Overlay */}
             {isOpen && previewIndex !== null && (
-                <div className="fixed inset-0 bg-black/95 flex flex-col items-center justify-center animate-in fade-in duration-500 overflow-hidden" style={{ zIndex: 999999 }}>
+                <div className="fixed inset-0 bg-black/95 flex flex-col items-center justify-center animate-in fade-in duration-500 overflow-hidden" style={{ zIndex: 99999 }}>
                     <div className="absolute inset-0 opacity-[0.03] pointer-events-none" />
                     
                     {/* Header */}
-                    <div className="absolute top-0 left-0 right-0 p-10 flex justify-between items-start" style={{ zIndex: 999999 }}>
+                    <div className="absolute top-0 left-0 right-0 p-10 flex justify-between items-start" style={{ zIndex: 99999 }}>
                         <div className="flex flex-col gap-1">
                             <span className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-[0.5em]">{galleryLabel}</span>
                             <h4 className="text-white/40 text-xs font-bold uppercase tracking-widest">
@@ -136,14 +136,14 @@ export default function MediaGallery({ media, moreLabel = "More", galleryLabel =
                             <button 
                                 onClick={goToPrevious} 
                                 className="hidden md:flex absolute left-10 top-1/2 -translate-y-1/2 w-20 h-20 bg-white/5 hover:bg-[var(--primary)] text-white/40 hover:text-white rounded-full items-center justify-center transition-all duration-500 backdrop-blur-3xl border border-white/10 hover:border-[var(--primary)] group shadow-2xl"
-                                style={{ zIndex: 999999 }}
+                                style={{ zIndex: 99999 }}
                             >
                                 <ChevronLeft className="w-10 h-10 group-hover:-translate-x-1 transition-transform" />
                             </button>
                             <button 
                                 onClick={goToNext} 
                                 className="hidden md:flex absolute right-10 top-1/2 -translate-y-1/2 w-20 h-20 bg-white/5 hover:bg-[var(--primary)] text-white/40 hover:text-white rounded-full items-center justify-center transition-all duration-500 backdrop-blur-3xl border border-white/10 hover:border-[var(--primary)] group shadow-2xl"
-                                style={{ zIndex: 999999 }}
+                                style={{ zIndex: 99999 }}
                             >
                                 <ChevronRight className="w-10 h-10 group-hover:translate-x-1 transition-transform" />
                             </button>
@@ -169,7 +169,7 @@ export default function MediaGallery({ media, moreLabel = "More", galleryLabel =
                     </div>
 
                     {/* Bottom Rail Thumbnails */}
-                    <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-4 px-10 overflow-x-auto py-6 no-scrollbar" style={{ zIndex: 999999 }}>
+                    <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-4 px-10 overflow-x-auto py-6 no-scrollbar" style={{ zIndex: 99999 }}>
                         {normalizedMedia.map((item, index) => (
                             <button 
                                 key={item.id || index} 

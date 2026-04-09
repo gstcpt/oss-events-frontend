@@ -11,7 +11,7 @@ export default function GoToTop() {
         return () => { window.removeEventListener("scroll", toggleVisibility); };
     }, []);
     return (
-        <div className="fixed bottom-8 right-8 z-50">
+        <div className="fixed bottom-8 right-8 z-40">
             {isVisible && (
                 <Button onClick={scrollToTop} className="bg-linear-to-r from-stone-600 to-stone-700 hover:from-stone-700 hover:to-stone-800 text-white font-bold rounded-full p-3 shadow-lg transition-transform transform hover:scale-110 border border-stone-300">
                     <ArrowUp size={24} />
