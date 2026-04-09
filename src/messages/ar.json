@@ -1015,8 +1015,6 @@
             "toastErrorFaviconUploadFailed": "فشل في رفع أيقونة المفضلة",
             "toastErrorSavingCompany": "خطأ في حفظ الشركة",
             "companiesManagement": "إدارة الشركات",
-            "addNewCompany": "إضافة شركة جديدة",
-            "editCompany": "تعديل الشركة",
             "loadingCompanies": "جاري تحميل الشركات...",
             "basicInformation": "المعلومات الأساسية",
             "administrationStatus": "الإدارة والحالة",
@@ -1501,7 +1499,6 @@
             "toastErrorEndDate": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
             "toastErrorSaveSubscription": "خطأ في حفظ الاشتراك",
             "subscriptionsManagement": "إدارة الاشتراكات",
-            "addNewSubscription": "إضافة اشتراك جديد",
             "loadingSubscriptions": "جاري تحميل الاشتراكات..."
         },
         "locations": {

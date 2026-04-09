@@ -1015,8 +1015,6 @@
             "toastErrorFaviconUploadFailed": "Favicon upload failed",
             "toastErrorSavingCompany": "Error saving company",
             "companiesManagement": "Companies Management",
-            "addNewCompany": "Add New Company",
-            "editCompany": "Edit Company",
             "loadingCompanies": "Loading companies...",
             "basicInformation": "Basic Information",
             "administrationStatus": "Administration & Status",
@@ -1501,7 +1499,6 @@
             "toastErrorEndDate": "End date must be after start date",
             "toastErrorSaveSubscription": "Error saving subscription",
             "subscriptionsManagement": "Subscriptions Management",
-            "addNewSubscription": "Add New Subscription",
             "loadingSubscriptions": "Loading subscriptions..."
         },
         "locations": {
@@ -1922,7 +1919,7 @@
             "companyEmail": "Email",
             "companyPhone": "Phone",
             "companyAddress": "Address",
-            "companyLogo": "Logo",
+            "companyLogo": "Company Logo",
             "companyCover": "Cover Image",
             "companyDescription": "Description",
             "companyWebsite": "Website",
@@ -1931,7 +1928,6 @@
             "errorLoading": "Error loading company settings",
             "settingsUpdated": "Company settings updated successfully",
             "errorSaving": "Error saving company settings",
-            "companyLogo": "Company Logo",
             "companyFavicon": "Company Favicon"
         },
         "privacyPolicy": {

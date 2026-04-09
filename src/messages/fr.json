@@ -1015,8 +1015,6 @@
             "toastErrorFaviconUploadFailed": "Échec du téléchargement du favicon",
             "toastErrorSavingCompany": "Erreur lors de l'enregistrement de l'entreprise",
             "companiesManagement": "Gestion des entreprises",
-            "addNewCompany": "Ajouter une entreprise",
-            "editCompany": "Modifier l'entreprise",
             "loadingCompanies": "Chargement des entreprises...",
             "basicInformation": "Informations de base",
             "administrationStatus": "Administration et Statut",
@@ -1468,7 +1466,7 @@
         },
         "subscriptions": {
             "title": "Abonnements",
-            "addNewSubscription": "Ajouter un abonnement",
+            "addNewSubscription": "Ajouter un nouvel abonnement",
             "editSubscription": "Modifier l'abonnement",
             "deleteSubscription": "Supprimer l'abonnement",
             "subscriptionDetails": "Détails de l'abonnement",
@@ -1501,7 +1499,6 @@
             "toastErrorEndDate": "La date de fin doit être postérieure à la date de début",
             "toastErrorSaveSubscription": "Erreur lors de l'enregistrement de l'abonnement",
             "subscriptionsManagement": "Gestion des abonnements",
-            "addNewSubscription": "Ajouter un nouvel abonnement",
             "loadingSubscriptions": "Chargement des abonnements..."
         },
         "locations": {
