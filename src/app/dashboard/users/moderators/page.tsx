@@ -127,7 +127,7 @@ export default function Moderators() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const payload = {
+      const payload: any = {
         ...formData,
         company_id: formData.company_id && formData.company_id !== 'none' ? Number(formData.company_id) : undefined,
         phone: formData.phone || undefined,
@@ -135,6 +135,9 @@ export default function Moderators() {
       };
       if (!isRoot && user?.company_id) {
         payload.company_id = Number(user.company_id);
+      }
+      if (editingAdmin && !formData.password) {
+        delete payload.password;
       }
       if (editingAdmin) {
         await updateModerator(editingAdmin.id, payload, user);

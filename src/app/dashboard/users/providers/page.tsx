@@ -127,7 +127,7 @@ export default function Providers() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const payload = {
+      const payload: any = {
         ...formData,
         company_id: formData.company_id && formData.company_id !== 'none' ? Number(formData.company_id) : undefined,
         phone: formData.phone || undefined,
@@ -135,6 +135,10 @@ export default function Providers() {
       };
       if (!isRoot && user?.company_id) {
         payload.company_id = Number(user.company_id);
+      }
+      // Only include password if editing and user actually entered a new password
+      if (editingProvider && !formData.password) {
+        delete payload.password;
       }
       if (editingProvider) {
         await updateProvider(editingProvider.id, payload, user);
