@@ -223,16 +223,16 @@ export default function BlogPost() {
                 <ParticleField count={12} color="var(--primary)" />
 
                 {/* Back + actions */}
-                <div className="absolute top-36 md:top-40 left-6 right-6 md:left-12 md:right-12 z-40 flex justify-between items-center pointer-events-none">
+                <div className="absolute top-24 left-4 right-4 md:top-40 md:left-12 md:right-12 z-40 flex justify-between items-center pointer-events-none">
                     <motion.button
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.4, duration: 0.5 }}
                         onClick={() => router.back()}
-                        className="group pointer-events-auto flex items-center gap-3 px-6 py-3.5 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-all duration-500 shadow-2xl"
+                        className="group pointer-events-auto flex items-center gap-2 px-4 py-3 md:px-6 bg-black/40 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white hover:text-black transition-all duration-500 shadow-xl"
                     >
-                        <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-                        <span className="text-xs font-bold uppercase tracking-[0.2em]">{t("back")}</span>
+                        <ArrowLeft className="w-4 h-4 md:w-5 h-5 transition-transform group-hover:-translate-x-1" />
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{t("back")}</span>
                     </motion.button>
 
                     <motion.div
@@ -241,8 +241,8 @@ export default function BlogPost() {
                         transition={{ delay: 0.5, duration: 0.5 }}
                         className="pointer-events-auto flex items-center gap-3"
                     >
-                        <ShareButton title={blog.title} onShare={handleShare} className="bg-white/10 backdrop-blur-2xl border-white/20 text-white hover:bg-white hover:text-primary transition-all duration-500" />
-                        <FavoriteButton targetType="BLOG" targetId={blogId} isFavorite={liked} onFavoriteToggle={checkUserSpecificData} onDark={true} className="bg-white/10 backdrop-blur-2xl border-white/20 transition-all duration-500" />
+                        <ShareButton title={blog.title} onShare={handleShare} className="bg-black/40 backdrop-blur-xl border-white/30 text-white hover:bg-white hover:text-primary transition-all duration-500" />
+                        <FavoriteButton targetType="BLOG" targetId={blogId} isFavorite={liked} onFavoriteToggle={checkUserSpecificData} onDark={true} className="bg-black/40 backdrop-blur-xl border-white/30 transition-all duration-500" />
                     </motion.div>
                 </div>
 

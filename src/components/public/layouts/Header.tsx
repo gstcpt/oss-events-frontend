@@ -61,7 +61,7 @@ export default function Header() {
     ];
 
     return (
-        <nav className={`fixed w-full z-40 transition-all duration-100 ${!isTransparent ? "bg-white shadow-md py-2" : "bg-gradient-to-b from-black/30 to-transparent py-4 text-white"}`}>
+        <nav className={`fixed w-full z-40 transition-all duration-100 ${!isTransparent ? "bg-white shadow-md py-2" : "bg-gradient-to-b from-black/80 via-black/50 to-transparent py-4 text-white"}`}>
             {/* Main nav bar */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between gap-4 pt-4">
@@ -77,13 +77,13 @@ export default function Header() {
                             const isActive = pathname === link.href;
                             return (
                                 <Link key={link.name} href={link.href} className={
-                                    `relative py-1 text-sm transition-all duration-100 group ${isActive
+                                    `relative py-1 text-sm font-semibold transition-all duration-100 group ${isActive
                                         ? isTransparent
-                                            ? "font-medium text-white"
-                                            : "text-[#4A4A4A] font-semibold"
+                                            ? "text-white"
+                                            : "text-[#1a1a1a] font-bold"
                                         : isTransparent
-                                            ? "text-white/90 hover:text-white"
-                                            : "text-[#4A4A4A]/80 hover:text-[#4A4A4A]"
+                                            ? "text-white/95 hover:text-white"
+                                            : "text-[#1a1a1a]/80 hover:text-[#1a1a1a]"
                                     }`
                                 }>
                                     {link.name}
@@ -108,16 +108,16 @@ export default function Header() {
                         </div>
 
                         {/* Calendar icon */}
-                        <Link href="/createEvent" className={`flex items-center justify-center transition-all duration-100 ${isTransparent ? "text-white/90 hover:text-white" : "text-[#4A4A4A] hover:text-[#4A4A4A]"}`}>
+                        <Link href="/createEvent" className={`flex items-center justify-center transition-all duration-100 ${isTransparent ? "text-white/90 hover:text-white" : "text-[#1a1a1a] hover:text-[var(--primary)]"}`}>
                             <Calendar size={20} strokeWidth={2} />
                         </Link>
 
                         {/* Auth button */}
                         {!user ? (
                             <Link href="/login" className={
-                                `px-6 py-2 text-sm font-medium rounded-full border transition-all duration-100 active:scale-95 flex items-center justify-center ${isTransparent
+                                `px-6 py-2 text-sm font-semibold rounded-full border transition-all duration-100 active:scale-95 flex items-center justify-center ${isTransparent
                                     ? "bg-transparent border-white text-white hover:bg-white/10"
-                                    : "bg-transparent border-[#4A4A4A] text-[#4A4A4A] hover:bg-black/5"
+                                    : "bg-transparent border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a]/5"
                                 }`
                             }>{t("signin")}</Link>
                         ) : (
@@ -125,7 +125,7 @@ export default function Header() {
                                 <Button onClick={() => setOpen(!open)} className={
                                     `flex items-center gap-3 py-3 px-6 rounded-full shadow-lg transition-all ${isTransparent
                                         ? 'bg-white/20 text-white hover:bg-white/30 border border-white/50'
-                                        : 'bg-[#4A4A4A] text-white hover:bg-[#333]'
+                                        : 'bg-[#1a1a1a] text-white hover:bg-[#333]'
                                     }`
                                 }>
                                     <User size={18} />
@@ -135,13 +135,13 @@ export default function Header() {
                                 {open && (
                                     <>
                                         <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-                                        <div className="absolute text-[var(--footer)] right-0 mt-4 w-56 bg-white border border-[#ece9e0] rounded-2xl shadow-2xl z-20 overflow-hidden py-2">
-                                            <div className="px-5 py-3 border-b border-[#ece9e0] mb-1">
-                                                <p className="text-[10px] font-bold uppercase tracking-widest mb-1 leading-none">{t("logged_in_as")}</p>
+                                        <div className="absolute text-[#1a1a1a] right-0 mt-4 w-56 bg-white border border-slate-200 rounded-2xl shadow-2xl z-20 overflow-hidden py-2">
+                                            <div className="px-5 py-3 border-b border-slate-100 mb-1">
+                                                <p className="text-[10px] font-bold uppercase tracking-widest mb-1 leading-none text-slate-500">{t("logged_in_as")}</p>
                                                 <p className="text-sm font-bold truncate">{user.firstname} {user.lastname}</p>
                                             </div>
                                             <Link href="/dashboard" onClick={() => setOpen(false)}
-                                                className="flex items-center gap-3 px-5 py-3 text-[10px] font-bold hover:bg-[var(--background)] hover:text-[var(--primary)] transition-colors uppercase tracking-widest"
+                                                className="flex items-center gap-3 px-5 py-3 text-[10px] font-bold hover:bg-slate-50 hover:text-[var(--primary)] transition-colors uppercase tracking-widest"
                                             >
                                                 <User size={14} /> {t("dashboard")}
                                             </Link>
@@ -163,7 +163,7 @@ export default function Header() {
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             className={`p-2 rounded-md transition-colors ${isTransparent
                                 ? "text-white hover:bg-white/15"
-                                : "text-gray-600 hover:bg-slate-100 hover:text-primary"
+                                : "text-[#1a1a1a] hover:bg-slate-100 hover:text-[var(--primary)]"
                                 }`}
                             variant="ghost"
                         >
@@ -178,25 +178,25 @@ export default function Header() {
 
             {/* ── Mobile Menu ── */}
             {mobileMenuOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xl">
+                <div className="md:hidden absolute top-full left-0 w-full bg-white/98 backdrop-blur-md border-b border-slate-200 shadow-xl">
                     <div className="px-5 py-6 space-y-1">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className={`block py-2.5 px-3 rounded-lg text-base font-medium transition-colors ${pathname === link.href
-                                    ? "text-primary bg-primary/5"
-                                    : "text-slate-700 hover:text-primary hover:bg-slate-50"
+                                className={`block py-3 px-4 rounded-lg text-base font-semibold transition-colors ${pathname === link.href
+                                    ? "text-[var(--primary)] bg-[var(--primary)]/5"
+                                    : "text-[#1a1a1a] hover:text-[var(--primary)] hover:bg-slate-100"
                                     }`}
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 {link.name}
                             </Link>
                         ))}
-                        <hr className="!my-4 border-slate-100" />
+                        <hr className="!my-4 border-slate-200" />
                         <Link
                             href="/createEvent"
-                            className="flex items-center gap-3 py-2.5 px-3 rounded-lg text-base font-medium text-slate-700 hover:text-primary hover:bg-slate-50 transition-colors"
+                            className="flex items-center gap-3 py-3 px-4 rounded-lg text-base font-semibold text-[#1a1a1a] hover:text-[var(--primary)] hover:bg-slate-100 transition-colors"
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             <Calendar size={18} />
@@ -205,23 +205,23 @@ export default function Header() {
                         {!user ? (
                             <Link
                                 href="/login"
-                                className="block w-full text-center mt-4 px-5 py-2.5 border border-slate-300 rounded-full text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+                                className="block w-full text-center mt-4 px-5 py-3 border-2 border-[var(--primary)] rounded-full text-sm font-semibold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white transition-colors"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 {t("signin")}
                             </Link>
                         ) : (
                             <div className="space-y-1 pt-2">
-                                <Link href="/dashboard" className="block py-2.5 px-3 rounded-lg text-base font-medium text-slate-700 hover:text-primary hover:bg-slate-50 transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                                <Link href="/dashboard" className="block py-3 px-4 rounded-lg text-base font-semibold text-[#1a1a1a] hover:text-[var(--primary)] hover:bg-slate-100 transition-colors" onClick={() => setMobileMenuOpen(false)}>
                                     {t("dashboard")}
                                 </Link>
-                                <Link href="#" className="block py-2.5 px-3 rounded-lg text-base font-medium text-red-600 hover:bg-red-50 transition-colors" onClick={() => { setMobileMenuOpen(false); logout(); }}>
+                                <Link href="#" className="block py-3 px-4 rounded-lg text-base font-semibold text-red-600 hover:bg-red-50 transition-colors" onClick={() => { setMobileMenuOpen(false); logout(); }}>
                                     {t("logout")}
                                 </Link>
                             </div>
                         )}
-                        <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                            <span className="text-sm font-medium text-slate-400 uppercase tracking-wider">{t("language")}</span>
+                        <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("language")}</span>
                             <LocaleSwitcher
                                 isTransparent={false}
                                 changeLocaleAction={async (newLocale) => {

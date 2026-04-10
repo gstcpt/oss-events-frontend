@@ -238,16 +238,16 @@ export default function ProviderDetail() {
         <div className="min-h-screen bg-[#f8f9fa]">
             <ScrollProgressBar />
             {/* ── BACK BUTTON ── */}
-            <div className="absolute top-28 left-10 z-50">
+            <div className="absolute top-24 left-4 md:top-28 md:left-10 z-50">
                 <motion.button
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
                     onClick={() => router.back()}
-                    className="group flex items-center gap-3 px-6 py-3 bg-white/20 backdrop-blur-3xl border border-white/20 rounded-full text-white hover:bg-white/40 transition-all shadow-2xl active:scale-95 font-bold text-xs uppercase tracking-widest"
+                    className="group flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 bg-black/40 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white/40 transition-all shadow-xl active:scale-95 font-bold text-[10px] md:text-xs uppercase tracking-widest"
                 >
                     <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                    {tCommon("back")}
+                    <span className="hidden md:inline">{tCommon("back")}</span>
                 </motion.button>
             </div>
 

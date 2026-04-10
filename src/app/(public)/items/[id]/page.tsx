@@ -360,13 +360,13 @@ export default function ItemDetail({ params }: { params: Promise<{ id: string }>
                 <ParticleField count={12} color="var(--primary)" />
 
                 {/* Hero Buttons */}
-                <div className="absolute top-32 left-10 right-10 z-50 flex justify-between items-center">
+                <div className="absolute top-32 left-4 right-4 md:left-10 md:right-10 z-50 flex justify-between items-center">
                     <motion.button
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5, duration: 0.5 }}
                         onClick={() => router.back()}
-                        className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-full text-white hover:bg-[var(--primary)] hover:border-[var(--primary)] transition-all duration-500 group shadow-2xl"
+                        className="flex items-center gap-2 px-4 py-3 md:px-6 bg-black/40 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-[var(--primary)] hover:border-[var(--primary)] transition-all duration-500 group shadow-xl"
                     >
                         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                         <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{t("back_to_services")}</span>
@@ -376,7 +376,7 @@ export default function ItemDetail({ params }: { params: Promise<{ id: string }>
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.6, duration: 0.5 }}
-                        className="flex gap-4"
+                        className="flex gap-3"
                     >
                         <FavoriteButton
                             targetType="ITEM"
@@ -384,7 +384,7 @@ export default function ItemDetail({ params }: { params: Promise<{ id: string }>
                             isFavorite={item.userReactions?.isFavorite || false}
                             onFavoriteToggle={fetchItem}
                             onDark={true}
-                            className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-[var(--primary)] hover:border-[var(--primary)] transition-all duration-500 shadow-xl"
+                            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center bg-black/40 backdrop-blur-xl rounded-full border border-white/30 hover:bg-[var(--primary)] hover:border-[var(--primary)] transition-all duration-500 shadow-xl"
                         />
                     </motion.div>
                 </div>
