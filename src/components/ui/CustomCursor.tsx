@@ -11,29 +11,40 @@ export default function CustomCursor() {
     const [isVisible, setIsVisible] = useState(false);
     const [cursorText, setCursorText] = useState("");
     const [mounted, setMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
 
-    // Velocity-based effects (liquid feel)
+    // Check for mobile/touch device
+    useEffect(() => {
+        const checkMobile = () => {
+            const mobile = window.matchMedia("(max-width: 1024px)").matches || 
+                          'ontouchstart' in window || 
+                          navigator.maxTouchPoints > 0;
+            setIsMobile(mobile);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Velocity-based effects
     const xVelocity = useVelocity(mouseX);
     const yVelocity = useVelocity(mouseY);
     const velocity = useTransform([xVelocity, yVelocity], ([vx, vy]) =>
         Math.sqrt(Math.pow(Number(vx), 2) + Math.pow(Number(vy), 2))
     );
 
-    const scaleX = useTransform(velocity, [0, 3000], [1, 1.5]);
-    const scaleY = useTransform(velocity, [0, 3000], [1, 0.5]);
-    const angle = useTransform([xVelocity, yVelocity], ([vx, vy]) =>
-        Math.atan2(Number(vy), Number(vx)) * (180 / Math.PI)
-    );
+    const scaleX = useTransform(velocity, [0, 3000], [1, 1.3]);
+    const scaleY = useTransform(velocity, [0, 3000], [1, 0.7]);
 
-    // Spring physics for smooth movement
-    const smoothMouseX = useSpring(mouseX, { stiffness: 450, damping: 45 });
-    const smoothMouseY = useSpring(mouseY, { stiffness: 450, damping: 45 });
+    // Faster spring physics for responsive movement
+    const smoothMouseX = useSpring(mouseX, { stiffness: 800, damping: 60 });
+    const smoothMouseY = useSpring(mouseY, { stiffness: 800, damping: 60 });
 
-    const dotX = useSpring(mouseX, { stiffness: 2000, damping: 90 });
-    const dotY = useSpring(mouseY, { stiffness: 2000, damping: 90 });
+    const dotX = useSpring(mouseX, { stiffness: 1500, damping: 70 });
+    const dotY = useSpring(mouseY, { stiffness: 1500, damping: 70 });
 
     const updateMousePosition = useCallback((e: MouseEvent) => {
         mouseX.set(e.clientX);
@@ -43,6 +54,10 @@ export default function CustomCursor() {
 
     useEffect(() => {
         setMounted(true);
+        
+        // Skip cursor setup on mobile
+        if (isMobile) return;
+
         const handleMouseDown = () => setIsClicked(true);
         const handleMouseUp = () => setIsClicked(false);
         const handleMouseEnter = () => setIsVisible(true);
@@ -105,23 +120,23 @@ export default function CustomCursor() {
             observer.disconnect();
             document.body.style.cursor = "auto";
         };
-    }, [updateMousePosition]);
+    }, [updateMousePosition, isMobile]);
 
-    if (!mounted) return null;
+    // Return nothing on mobile
+    if (!mounted || isMobile) return null;
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-[999999] overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none z-[99999] overflow-hidden">
             <AnimatePresence>
                 {isVisible && (
                     <>
-                        {/* 1. LIQUID TRAIL / OUTER RING */}
+                        {/* OUTER RING - Dark visible ring */}
                         <motion.div
                             style={{
                                 x: smoothMouseX,
                                 y: smoothMouseY,
                                 translateX: "-50%",
                                 translateY: "-50%",
-                                rotate: angle,
                                 scaleX,
                                 scaleY,
                             }}
@@ -129,12 +144,10 @@ export default function CustomCursor() {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{
                                 opacity: 1,
-                                width: isHovered ? (isTextHovered ? 52 : 42) : 32,
-                                height: isHovered ? (isTextHovered ? 52 : 42) : 32,
-                                backgroundColor: isHovered ? "rgba(192, 132, 252, 0.08)" : "rgba(192, 132, 252, 0.15)",
-                                border: isHovered ? "1px solid rgba(192, 132, 252, 0.6)" : "1px solid rgba(192, 132, 252, 0.3)",
-                                backdropFilter: isHovered ? "blur(4px)" : "blur(2px)",
-                                scale: isClicked ? 0.85 : 1,
+                                width: isHovered ? (isTextHovered ? 48 : 40) : 28,
+                                height: isHovered ? (isTextHovered ? 48 : 40) : 28,
+                                backgroundColor: isHovered ? "rgba(30, 30, 30, 0.9)" : "rgba(30, 30, 30, 0.7)",
+                                border: isHovered ? "2px solid rgba(255, 255, 255, 0.9)" : "2px solid rgba(255, 255, 255, 0.5)",
                             }}
                             exit={{ opacity: 0, scale: 0 }}
                         >
@@ -142,14 +155,14 @@ export default function CustomCursor() {
                                 <motion.span
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className="text-[12px] font-black uppercase tracking-[0.2em] text-[#c084fc] text-center w-full"
+                                    className="text-[10px] font-bold uppercase tracking-[0.15em] text-white text-center w-full"
                                 >
                                     {cursorText}
                                 </motion.span>
                             )}
                         </motion.div>
 
-                        {/* 2. CORE DOT - Dynamic size and blend mode */}
+                        {/* CORE DOT - Bright white dot */}
                         <motion.div
                             style={{
                                 x: dotX,
@@ -157,24 +170,19 @@ export default function CustomCursor() {
                                 translateX: "-50%",
                                 translateY: "-50%",
                             }}
-                            className="fixed top-0 left-0 bg-[var(--cursor-core)] rounded-full mix-blend-difference"
+                            className="fixed top-0 left-0 rounded-full"
                             initial={{ scale: 0 }}
                             animate={{
                                 scale: isVisible ? 1 : 0,
-                                width: isClicked ? 6 : (isTextHovered ? 14 : (isHovered ? 12 : 10)),
-                                height: isClicked ? 6 : (isTextHovered ? 14 : (isHovered ? 12 : 10)),
-                                backgroundColor: isTextHovered ? "#c084fc" : "#ffffff",
-                                opacity: isTextHovered ? 1 : 1,
+                                width: isClicked ? 4 : (isTextHovered ? 12 : (isHovered ? 10 : 8)),
+                                height: isClicked ? 4 : (isTextHovered ? 12 : (isHovered ? 10 : 8)),
+                                backgroundColor: "#ffffff",
+                                boxShadow: isHovered ? "0 0 10px rgba(255,255,255,0.8)" : "none",
                             }}
-                            transition={{ type: "spring", damping: 35, stiffness: 400 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 600 }}
                         />
 
-                        {/* 3. FLUID PARTICLES (Ambient trail) */}
-                        {[...Array(3)].map((_, i) => (
-                            <ParticleTrail key={i} index={i} mouseX={mouseX} mouseY={mouseY} />
-                        ))}
-
-                        {/* 4. CLICK RIPPLE */}
+                        {/* CLICK RIPPLE */}
                         <AnimatePresence>
                             {isClicked && <Ripple key="ripple" x={mouseX} y={mouseY} />}
                         </AnimatePresence>
@@ -185,34 +193,19 @@ export default function CustomCursor() {
     );
 }
 
-function ParticleTrail({ index, mouseX, mouseY }: { index: number; mouseX: any; mouseY: any }) {
-    const x = useSpring(mouseX, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
-    const y = useSpring(mouseY, { stiffness: 100 - index * 20, damping: 25 + index * 5 });
-    const colors = ["rgba(192, 132, 252, 0.25)", "rgba(129, 140, 248, 0.2)", "rgba(192, 132, 252, 0.15)"];
-    const sizes = ["w-2 h-2", "w-1.5 h-1.5", "w-1 h-1"];
-
-    return (
-        <motion.div
-            style={{ x, y, translateX: "-50%", translateY: "-50%" }}
-            className={`fixed top-0 left-0 rounded-full blur-[2px] ${sizes[index]}`}
-            animate={{ backgroundColor: colors[index] }}
-        />
-    );
-}
-
 function Ripple({ x, y }: { x: any; y: any }) {
     return (
         <motion.div
-            initial={{ opacity: 0.5, scale: 0 }}
-            animate={{ opacity: 0, scale: 2 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            initial={{ opacity: 0.8, scale: 0 }}
+            animate={{ opacity: 0, scale: 2.5 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             style={{
                 left: x.get(),
                 top: y.get(),
                 translateX: "-50%",
                 translateY: "-50%",
             }}
-            className="fixed top-0 left-0 w-[52px] h-[52px] rounded-full border border-[#c084fc] opacity-40 blur-[2px]"
+            className="fixed top-0 left-0 rounded-full border-2 border-white"
         />
     );
 }
