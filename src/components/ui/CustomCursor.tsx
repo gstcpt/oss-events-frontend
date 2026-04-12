@@ -130,7 +130,7 @@ export default function CustomCursor() {
             <AnimatePresence>
                 {isVisible && (
                     <>
-                        {/* OUTER RING - Dark visible ring */}
+                        {/* OUTER RING - Bold black ring with white border for max visibility */}
                         <motion.div
                             style={{
                                 x: smoothMouseX,
@@ -140,14 +140,15 @@ export default function CustomCursor() {
                                 scaleX,
                                 scaleY,
                             }}
-                            className="fixed top-0 left-0 flex items-center justify-center rounded-full"
+                            className="fixed top-0 left-0 flex items-center justify-center rounded-full border-2"
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{
                                 opacity: 1,
-                                width: isHovered ? (isTextHovered ? 48 : 40) : 28,
-                                height: isHovered ? (isTextHovered ? 48 : 40) : 28,
-                                backgroundColor: isHovered ? "rgba(30, 30, 30, 0.9)" : "rgba(30, 30, 30, 0.7)",
-                                border: isHovered ? "2px solid rgba(255, 255, 255, 0.9)" : "2px solid rgba(255, 255, 255, 0.5)",
+                                width: isHovered ? (isTextHovered ? 56 : 48) : 32,
+                                height: isHovered ? (isTextHovered ? 56 : 48) : 32,
+                                backgroundColor: "#000000",
+                                borderColor: "#ffffff",
+                                boxShadow: isHovered ? "0 4px 20px rgba(0,0,0,0.4)" : "0 2px 10px rgba(0,0,0,0.3)",
                             }}
                             exit={{ opacity: 0, scale: 0 }}
                         >
@@ -162,7 +163,7 @@ export default function CustomCursor() {
                             )}
                         </motion.div>
 
-                        {/* CORE DOT - Bright white dot */}
+                        {/* CORE DOT - Now hidden for cleaner look, or small dark dot */}
                         <motion.div
                             style={{
                                 x: dotX,
@@ -170,14 +171,14 @@ export default function CustomCursor() {
                                 translateX: "-50%",
                                 translateY: "-50%",
                             }}
-                            className="fixed top-0 left-0 rounded-full"
+                            className="fixed top-0 left-0 rounded-full border-2 border-white"
                             initial={{ scale: 0 }}
                             animate={{
                                 scale: isVisible ? 1 : 0,
-                                width: isClicked ? 4 : (isTextHovered ? 12 : (isHovered ? 10 : 8)),
-                                height: isClicked ? 4 : (isTextHovered ? 12 : (isHovered ? 10 : 8)),
-                                backgroundColor: "#ffffff",
-                                boxShadow: isHovered ? "0 0 10px rgba(255,255,255,0.8)" : "none",
+                                width: isClicked ? 6 : (isTextHovered ? 14 : (isHovered ? 12 : 10)),
+                                height: isClicked ? 6 : (isTextHovered ? 14 : (isHovered ? 12 : 10)),
+                                backgroundColor: "#000000",
+                                boxShadow: "0 0 0 2px #ffffff",
                             }}
                             transition={{ type: "spring", damping: 25, stiffness: 600 }}
                         />
@@ -205,7 +206,7 @@ function Ripple({ x, y }: { x: any; y: any }) {
                 translateX: "-50%",
                 translateY: "-50%",
             }}
-            className="fixed top-0 left-0 rounded-full border-2 border-white"
+            className="fixed top-0 left-0 rounded-full border-2 border-white bg-transparent"
         />
     );
 }
