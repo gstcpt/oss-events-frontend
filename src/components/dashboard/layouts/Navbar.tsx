@@ -126,7 +126,7 @@ export default function Navbar({ sidebarCollapsed, setSidebarCollapsed }: Navbar
                             {companyOpen && (
                                 <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-20 border border-slate-100">
                                     <ul className="py-1 text-slate-700">
-                                        {companies.map((company) => (<li key={company.id}><Button onClick={() => handleCompanySelect(company)} className="w-full bg-transparent text-left px-4 py-2 text-sm hover:bg-slate-50 text-slate-700">{company.title}</Button></li>))}
+                                        {(companies && companies.map((company) => (<li key={company.id}><Button onClick={() => handleCompanySelect(company)} className="w-full bg-transparent text-left px-4 py-2 text-sm hover:bg-slate-50 text-slate-700">{company.title}</Button></li>)))}
                                     </ul>
                                 </div>
                             )}
@@ -143,7 +143,7 @@ export default function Navbar({ sidebarCollapsed, setSidebarCollapsed }: Navbar
                                         {unreadNotifications > 0 && (<Button onClick={handleMarkAllNotificationsAsRead} className="text-xs text-primary hover:underline bg-transparent hover:bg-tranparent cursor-pointer">{t('markAllAsRead')}</Button>)}
                                     </div>
                                     <ul className="py-1">
-                                        {notifications.map((notification) => (
+                                        {(notifications && notifications.map((notification) => (
                                             <li key={notification.id} className={`px-4 py-2 text-sm hover:bg-slate-50 text-slate-700 ${notification.status === 0 ? "font-bold" : ""}`}>
                                                 <Link href={`/dashboard/notifications`} className="text-sm">{notification.notification}</Link>
                                             </li>
@@ -165,7 +165,7 @@ export default function Navbar({ sidebarCollapsed, setSidebarCollapsed }: Navbar
                                         {unreadMessages > 0 && (<Button onClick={handleMarkAllInboxMessagesAsRead} className="text-xs text-primary hover:underline bg-transparent hover:bg-tranparent cursor-pointer">{t('markAllAsRead')}</Button>)}
                                     </div>
                                     <ul className="py-1">
-                                        {unreadMessages > 0 && messages.map((message) => (
+                                        {(unreadMessages > 0 && messages && messages.map((message) => (
                                             <li key={message.id} className={`px-4 py-2 text-sm hover:bg-slate-50 text-slate-700 ${message.status_for_receiver === 0 ? "bg-slate-50 font-bold hover:bg-slate-100" : ""}`}>
                                                 <Link href={`/dashboard/messages/inbox/${message.id}`} className="text-sm">
                                                     {message.subject}<p className="text-xs text-slate-500">{message.created_at ? moment(message.created_at).fromNow() : "-"}</p>

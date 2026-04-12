@@ -105,9 +105,9 @@ export default function Dashboard() {
         };
         fetchData();
     }, [user]);
-    const revenueChartData = useMemo(() => { return revenueTrend.map(r => ({ x: r.month, y: r.revenue })); }, [revenueTrend]);
-    const eventChartData = useMemo(() => { return eventsByMonth.map(m => ({ x: m.month, y: m.count })); }, [eventsByMonth]);
-    const categoryChartData = useMemo(() => { return eventsPerCategory.map(c => ({ name: c.name, value: c.events })); }, [eventsPerCategory]);
+    const revenueChartData = useMemo(() => { return (revenueTrend || []).map(r => ({ x: r.month, y: r.revenue })); }, [revenueTrend]);
+    const eventChartData = useMemo(() => { return (eventsByMonth || []).map(m => ({ x: m.month, y: m.count })); }, [eventsByMonth]);
+    const categoryChartData = useMemo(() => { return (eventsPerCategory || []).map(c => ({ name: c.name, value: c.events })); }, [eventsPerCategory]);
     const stats = data.stats || {};
     const isAdmin = user?.role === "Root" || user?.role === "Admin";
     if (loading) {
