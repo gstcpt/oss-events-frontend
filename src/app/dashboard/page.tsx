@@ -159,9 +159,9 @@ export default function Dashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Package className="h-5 w-5 text-purple-600" />{t('topItems')}</h3>
-                            {data.topItems?.length > 0 ? (
+                            {(data.topItems && data.topItems?.length > 0) ? (
                                 <ul className="space-y-3">
-                                    {data.topItems.map((item: any, idx: number) => (
+                                    {data.topItems?.map((item: any, idx: number) => (
                                         <li key={idx} className="flex justify-between items-center group">
                                             <span className="text-sm font-medium group-hover:text-primary transition-colors">{item.title}</span>
                                             <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">{item.count} {t('events_count')}</span>
@@ -172,9 +172,9 @@ export default function Dashboard() {
                         </div>
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><BarChartIcon className="h-5 w-5 text-pink-600" />{t('topCategories')}</h3>
-                            {data.topCategories?.length > 0 ? (
+                            {(data.topCategories && data.topCategories?.length > 0) ? (
                                 <ul className="space-y-3">
-                                    {data.topCategories.map((cat: any, idx: number) => (
+                                    {data.topCategories?.map((cat: any, idx: number) => (
                                         <li key={idx} className="flex justify-between items-center group">
                                             <span className="text-sm font-medium group-hover:text-primary transition-colors">{cat.title}</span>
                                             <span className="text-xs bg-pink-100 text-pink-700 px-2 py-1 rounded">{cat.count} {t('uses')}</span>
@@ -185,9 +185,9 @@ export default function Dashboard() {
                         </div>
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Tag className="h-5 w-5 text-primary" />{t('topTags')}</h3>
-                            {data.topTags?.length > 0 ? (
+                            {(data.topTags && data.topTags?.length > 0) ? (
                                 <ul className="space-y-3">
-                                    {data.topTags.map((tag: any, idx: number) => (
+                                    {data.topTags?.map((tag: any, idx: number) => (
                                         <li key={idx} className="flex justify-between items-center group">
                                             <span className="text-sm font-medium group-hover:text-primary transition-colors">{tag.title}</span>
                                             <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">{tag.count} {t('uses')}</span>
@@ -202,9 +202,9 @@ export default function Dashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 text-slate-800">{t('last5ItemsAdded')}</h3>
-                            {data.lastItems?.length > 0 ? (
+                            {(data.lastItems && data.lastItems?.length > 0) ? (
                                 <ul className="space-y-3">
-                                    {data.lastItems.map((item: any, idx: number) => (
+                                    {data.lastItems?.map((item: any, idx: number) => (
                                         <li key={idx} className="text-sm border-b border-slate-50 pb-2 last:border-0 last:pb-0">
                                             <div className="font-medium text-slate-700">{item.title}</div>
                                             <div className="text-xs text-gray-500">{item.created_at || t('recently')}</div>
@@ -215,9 +215,9 @@ export default function Dashboard() {
                         </div>
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 text-slate-800">{t('last5Providers')}</h3>
-                            {data.lastProviders?.length > 0 ? (
+                            {(data.lastProviders && data.lastProviders?.length > 0) ? (
                                 <ul className="space-y-3">
-                                    {data.lastProviders.map((prov: any, idx: number) => (
+                                    {data.lastProviders?.map((prov: any, idx: number) => (
                                         <li key={idx} className="text-sm border-b border-slate-50 pb-2 last:border-0 last:pb-0">
                                             <div className="font-medium text-slate-700">{prov.name}</div>
                                             <div className="text-xs text-gray-500">{prov.created_at || t('recently')}</div>
@@ -228,9 +228,9 @@ export default function Dashboard() {
                         </div>
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 text-slate-800">{t('last5Clients')}</h3>
-                            {data.lastClients?.length > 0 ? (
+                            {(data.lastClients && data.lastClients?.length > 0) ? (
                                 <ul className="space-y-3">
-                                    {data.lastClients.map((cli: any, idx: number) => (
+                                    {data.lastClients?.map((cli: any, idx: number) => (
                                         <li key={idx} className="text-sm border-b border-slate-50 pb-2 last:border-0 last:pb-0">
                                             <div className="font-medium text-slate-700">{cli.name}</div>
                                             <div className="text-xs text-gray-500">{cli.created_at || t('recently')}</div>
@@ -260,9 +260,9 @@ export default function Dashboard() {
                     <div className="grid grid-cols-1 gap-6">
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-800"><Activity className="h-5 w-5 text-indigo-600" />{t('liveActivityStream')}</h3>
-                            {data.liveActivity?.length > 0 ? (
+                            {(data.liveActivity && data.liveActivity?.length > 0) ? (
                                 <ul className="space-y-3 divide-y divide-slate-50">
-                                    {data.liveActivity.slice(0, 5).map((activity: any, idx: number) => {
+                                    {data.liveActivity?.slice(0, 5).map((activity: any, idx: number) => {
                                         const tLive = useTranslations('Dashboard.page.liveActivity');
                                         const userName = activity.user || 'User';
                                         const targetType = activity.targetType || '';
@@ -302,9 +302,9 @@ export default function Dashboard() {
                     <div className="grid grid-cols-1 gap-6">
                         <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-800"><Activity className="h-5 w-5 text-indigo-600" />{t('liveActivityStream')}</h3>
-                            {data.liveActivity?.length > 0 ? (
+                            {(data.liveActivity && data.liveActivity?.length > 0) ? (
                                 <ul className="space-y-3 divide-y divide-slate-50">
-                                    {data.liveActivity.slice(0, 5).map((activity: any, idx: number) => {
+                                    {data.liveActivity?.slice(0, 5).map((activity: any, idx: number) => {
                                         const tLive = useTranslations('Dashboard.page.liveActivity');
                                         const userName = activity.user || 'User';
                                         const targetType = activity.targetType || '';
