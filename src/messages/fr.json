@@ -1803,6 +1803,8 @@
             "username": "Nom d'utilisateur",
             "email": "Email",
             "phone": "Téléphone",
+            "phone_number": "Numéro de téléphone",
+            "confirmNewPassword": "Confirmer le nouveau mot de passe",
             "avatar": "Avatar",
             "company": "Entreprise",
             "role": "Rôle",
@@ -2257,7 +2259,16 @@
         "no_categories_found": "Aucune catégorie trouvée",
         "no_results_for": "Nous n'avons trouvé aucun résultat pour \"{query}\". Essayez d'autres mots-clés.",
         "catalog_update": "Notre catalogue de catégories est en cours de mise à jour. Veuillez revenir bientôt.",
-        "clear_search": "Effacer la Recherche"
+        "clear_search": "Effacer la Recherche",
+        "breadcrumb_home": "Catégories"
+    },
+    "CategoryDetail": {
+        "not_found": "Catégorie non trouvée",
+        "back_to_categories": "Retour aux catégories",
+        "subcategories": "Sous-catégories",
+        "items": "éléments",
+        "items_in_category": "Éléments dans {name}",
+        "no_items": "Aucun élément dans cette catégorie pour le moment"
     },
     "BlogPostPage": {
         "loading": "Chargement de l'article de blog...",
@@ -2718,6 +2729,7 @@
         }
     },
     "ErrorPage": {
+        "tryAgain": "Réessayer",
         "400": {
             "title": "Mauvaise requête",
             "description": "Le serveur ne peut pas traiter la demande en raison d'une erreur client."

@@ -1803,6 +1803,8 @@
             "username": "Username",
             "email": "Email",
             "phone": "Phone",
+            "phone_number": "Phone Number",
+            "confirmNewPassword": "Confirm New Password",
             "avatar": "Avatar",
             "company": "Company",
             "role": "Role",
@@ -2257,7 +2259,16 @@
         "no_categories_found": "No categories found",
         "no_results_for": "We couldn't find any results for \"{query}\". Try different keywords.",
         "catalog_update": "Our category catalog is currently being updated. Please check back soon.",
-        "clear_search": "Clear Search"
+        "clear_search": "Clear Search",
+        "breadcrumb_home": "Categories"
+    },
+    "CategoryDetail": {
+        "not_found": "Category not found",
+        "back_to_categories": "Back to Categories",
+        "subcategories": "Subcategories",
+        "items": "items",
+        "items_in_category": "Items in {name}",
+        "no_items": "No items in this category yet"
     },
     "BlogPostPage": {
         "loading": "Loading blog post...",
@@ -2718,6 +2729,7 @@
         }
     },
     "ErrorPage": {
+        "tryAgain": "Try Again",
         "400": {
             "title": "Bad Request",
             "description": "The server cannot process the request due to a client error."

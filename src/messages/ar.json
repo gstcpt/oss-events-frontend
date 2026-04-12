@@ -1803,6 +1803,8 @@
             "username": "اسم المستخدم",
             "email": "البريد الإلكتروني",
             "phone": "الهاتف",
+            "phone_number": "رقم الهاتف",
+            "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
             "avatar": "الصورة الشخصية",
             "company": "الشركة",
             "role": "الدور",
@@ -2257,7 +2259,16 @@
         "no_categories_found": "لم يتم العثور على فئات",
         "no_results_for": "لم نتمكن من العثور على أي نتائج لـ \"{query}\". جرب كلمات رئيسية مختلفة.",
         "catalog_update": "يجري تحديث كتالوج الفئات لدينا حالياً. يرجى العودة قريباً.",
-        "clear_search": "مسح البحث"
+        "clear_search": "مسح البحث",
+        "breadcrumb_home": "الفئات"
+    },
+    "CategoryDetail": {
+        "not_found": "الفئة غير موجودة",
+        "back_to_categories": "العودة إلى الفئات",
+        "subcategories": "الفئات الفرعية",
+        "items": "عناصر",
+        "items_in_category": "عناصر في {name}",
+        "no_items": "لا توجد عناصر في هذه الفئة بعد"
     },
     "BlogPostPage": {
         "loading": "جاري تحميل المقال...",
@@ -2718,6 +2729,7 @@
         }
     },
     "ErrorPage": {
+        "tryAgain": "حاول مرة أخرى",
         "400": {
             "title": "طلب غير صالح",
             "description": "لا يمكن للخادم معالجة الطلب بسبب خطأ من العميل."
