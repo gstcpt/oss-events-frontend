@@ -147,7 +147,7 @@ export default function Navbar({ sidebarCollapsed, setSidebarCollapsed }: Navbar
                                             <li key={notification.id} className={`px-4 py-2 text-sm hover:bg-slate-50 text-slate-700 ${notification.status === 0 ? "font-bold" : ""}`}>
                                                 <Link href={`/dashboard/notifications`} className="text-sm">{notification.notification}</Link>
                                             </li>
-                                        ))}
+                                        )))}
                                     </ul>
                                     <div className="p-2 text-center border-t border-slate-100"><Link href="/dashboard/notifications" className="text-sm text-primary hover:underline">{t('viewAllNotifications')}</Link></div>
                                 </div>
@@ -171,7 +171,7 @@ export default function Navbar({ sidebarCollapsed, setSidebarCollapsed }: Navbar
                                                     {message.subject}<p className="text-xs text-slate-500">{message.created_at ? moment(message.created_at).fromNow() : "-"}</p>
                                                 </Link>
                                             </li>
-                                        ))}
+                                        )))}
                                         {unreadMessages === 0 && (<li key="no-messages" className="px-4 py-2 text-sm text-slate-500">{t('noNewMessages')}</li>)}
                                     </ul>
                                     <div className="p-2 text-center border-t border-slate-100"><Link href="/dashboard/messages/inbox" className="text-sm text-primary hover:underline">{t('viewAllMessages')}</Link></div>
