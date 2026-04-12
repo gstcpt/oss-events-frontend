@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -13,7 +14,8 @@ import Hero from "@/components/public/layouts/Hero";
 import ItemCard from "@/components/public/items/ItemCard";
 import { ScrollProgressBar, Reveal, Stagger, StaggerItem, Floating, ParticleField } from "@/components/ui/Motion3D";
 
-export default function CategoryDetail({ params }: { params: { id: string } }) {
+export default function CategoryDetail() {
+    const params = useParams();
     const t = useTranslations("CategoriesPage");
     const tDetail = useTranslations("CategoryDetail");
     const tCommon = useTranslations("Common");
@@ -23,11 +25,7 @@ export default function CategoryDetail({ params }: { params: { id: string } }) {
     const [loadingItems, setLoadingItems] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const categoryId = parseInt(params.id);
-
-    useEffect(() => { fetchCategory(); }, [categoryId]);
-
-    useEffect(() => { if (category) fetchItems(); }, [category, page]);
+    const categoryId = parseInt(params?.id as string);
 
     const fetchCategory = async () => {
         try {
@@ -45,6 +43,10 @@ export default function CategoryDetail({ params }: { params: { id: string } }) {
             setTotalPages(data.totalPages);
         } catch { toast.error(tCommon("loading_failed")); } finally { setLoadingItems(false); }
     };
+
+    useEffect(() => { if (categoryId) fetchCategory(); }, [categoryId]);
+
+    useEffect(() => { if (category) fetchItems(); }, [category, page]);
 
     if (loading) {
         return (
