@@ -20,14 +20,14 @@ export default function CategoryDetail() {
     const tDetail = useTranslations("CategoryDetail");
     const tCommon = useTranslations("Common");
     const [category, setCategory] = useState<PublicCategory | null>(null);
-    const [items, setItems] = useState<PublicItem[]>([]);
+    const [items, setItems] = useState<PublicItem[] | null>(null);
     const [loading, setLoading] = useState(true);
-    const [loadingItems, setLoadingItems] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const categoryId = parseInt(params?.id as string);
+    const categoryId = params?.id ? parseInt(params.id as string) : NaN;
 
     const fetchCategory = async () => {
+        if (!categoryId || isNaN(categoryId)) return;
         try {
             setLoading(true);
             const data = await getPublicCategoryById(categoryId);
@@ -36,19 +36,20 @@ export default function CategoryDetail() {
     };
 
     const fetchItems = async () => {
+        if (!categoryId || isNaN(categoryId)) return;
         try {
-            setLoadingItems(true);
+            setLoading(true);
             const data = await getPublicCategoryItems(categoryId, page, 12);
             setItems(data.items);
             setTotalPages(data.totalPages);
-        } catch { toast.error(tCommon("loading_failed")); } finally { setLoadingItems(false); }
+        } catch { toast.error(tCommon("loading_failed")); } finally { setItems([]); }
     };
 
     useEffect(() => { if (categoryId) fetchCategory(); }, [categoryId]);
 
     useEffect(() => { if (category) fetchItems(); }, [category, page]);
 
-    if (loading) {
+    if (!categoryId || isNaN(categoryId) || loading) {
         return (
             <div className="min-h-screen bg-[var(--background)]">
                 <ScrollProgressBar />
@@ -123,11 +124,11 @@ export default function CategoryDetail() {
                 <Reveal>
                     <section>
                         <h2 className="text-2xl font-bold text-[var(--footer)] mb-8">{tDetail("items_in_category", { name: category.title })}</h2>
-                        {loadingItems ? (
+                        {(!items) ? (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                 {Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-80 bg-slate-200 rounded-xl animate-pulse" />)}
                             </div>
-                        ) : items.length > 0 ? (
+                        ) : items && items.length > 0 ? (
                             <>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                     <Stagger>
@@ -152,6 +153,10 @@ export default function CategoryDetail() {
                                     </div>
                                 )}
                             </>
+                        ) : items === null ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-80 bg-slate-200 rounded-xl animate-pulse" />)}
+                            </div>
                         ) : (
                             <p className="text-center text-gray-500 py-12">{tDetail("no_items")}</p>
                         )}
