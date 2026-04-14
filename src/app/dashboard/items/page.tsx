@@ -129,7 +129,7 @@ export default function Items() {
                     else if (user?.role === "Provider") {
                         try {
                             const providerInfo = await getProviderByUserId(user.id, user);
-                            if (providerInfo) {
+                            if (providerInfo && providerInfo.category_id) {
                                 const categoryData = await getCategoryById(providerInfo.category_id);
                                 const allForms = await getForms();
                                 const categoryForms = allForms.filter((form: any) => form.category_id === providerInfo.category_id);
@@ -138,6 +138,8 @@ export default function Items() {
                                 setNewItemData((prev: any) => ({ ...prev, company_id: user.company_id, category_id: providerInfo.category_id, provider_id: user.id, }));
                                 setProviderInfo(providerInfo);
                                 if (categoryForms.length === 1) { setNewItemData((prev: any) => ({ ...prev, form_id: categoryForms[0].id })); }
+                            } else {
+                                toast.error("Provider has no category assigned. Please contact admin.");
                             }
                         } catch (error) { toast.error(t('toastErrorProviderData')); }
                     }
