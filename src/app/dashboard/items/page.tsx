@@ -132,9 +132,12 @@ export default function Items() {
                             if (providerInfo && providerInfo.category_id) {
                                 const categoryData = await getCategoryById(providerInfo.category_id);
                                 const allForms = await getForms();
-                                const categoryForms = allForms.filter((form: any) => form.category_id === providerInfo.category_id);
+                                const categoryForms = allForms.filter((form: any) => String(form.category_id) === String(providerInfo.category_id));
                                 setCategories([categoryData]);
                                 setForms(categoryForms);
+                                if (categoryForms.length === 0) {
+                                    toast.warning("No forms found for your category. Please contact admin.");
+                                }
                                 setNewItemData((prev: any) => ({ ...prev, company_id: user.company_id, category_id: providerInfo.category_id, provider_id: user.id, }));
                                 setProviderInfo(providerInfo);
                                 if (categoryForms.length === 1) { setNewItemData((prev: any) => ({ ...prev, form_id: categoryForms[0].id })); }
@@ -1408,17 +1411,29 @@ export default function Items() {
                                                 Please select a category in Step 1 to view available forms
                                             </div>
                                         </>
-                                    ) : forms.filter((form: any) => form.category_id === newItemData.category_id).length > 1 ? (
-                                        <Select
-                                            onValueChange={(value) => handleWizardChange("form_id", value)}
-                                            value={newItemData.form_id ? newItemData.form_id.toString() : ""}
-                                            required
-                                            key={`form-select-${newItemData.form_id || 'empty'}-${isEditing ? 'edit' : 'new'}`}
-                                        >
-                                            <SelectTrigger><SelectValue placeholder="Select Form" /></SelectTrigger>
-                                            <SelectContent>{forms.filter((form: any) => form.category_id === newItemData.category_id).map((form) => (<SelectItem key={form.id} value={form.id.toString()}>{form.title}</SelectItem>))}</SelectContent>
-                                        </Select>
-                                    ) : ''}
+                                    ) : forms.filter((form: any) => form.category_id === newItemData.category_id).length > 0 ? (
+                                        forms.filter((form: any) => form.category_id === newItemData.category_id).length > 1 ? (
+                                            <Select
+                                                onValueChange={(value) => handleWizardChange("form_id", value)}
+                                                value={newItemData.form_id ? newItemData.form_id.toString() : ""}
+                                                required
+                                                key={`form-select-${newItemData.form_id || 'empty'}-${isEditing ? 'edit' : 'new'}`}
+                                            >
+                                                <SelectTrigger><SelectValue placeholder="Select Form" /></SelectTrigger>
+                                                <SelectContent>{forms.filter((form: any) => form.category_id === newItemData.category_id).map((form) => (<SelectItem key={form.id} value={form.id.toString()}>{form.title}</SelectItem>))}</SelectContent>
+                                            </Select>
+                                        ) : (
+                                            <div className="p-3 bg-blue-50 rounded-md text-blue-700 text-sm">
+                                                <i className="fa fa-info-circle mr-2"></i>
+                                                Using form: {forms.find((f: any) => f.category_id === newItemData.category_id)?.title || "default"}
+                                            </div>
+                                        )
+                                    ) : (
+                                        <div className="p-3 bg-yellow-50 rounded-md text-yellow-700">
+                                            <i className="fa fa-exclamation-triangle mr-2"></i>
+                                            No forms configured for this category. Please contact admin.
+                                        </div>
+                                    )}
                                     {(() => {
                                         const groupedByPositionV: Record<number, any[]> = {};
                                         formLines.forEach((line) => {
