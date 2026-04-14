@@ -17,7 +17,8 @@ import { getAllCategories, getMainCategories } from "@/lib/api/categories";
 import { Country, Governorate, Municipality } from "@/types/locations";
 import { Category } from "@/types/categories";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import LeafletMapPicker from "@/components/ui/LeafletMapPicker";
+import dynamic from "next/dynamic";
+const LeafletMapPicker = dynamic(() => import("@/components/ui/LeafletMapPicker"), { ssr: false, loading: () => <div className="h-64 bg-slate-100 animate-pulse rounded-lg" /> });
 import { useTranslations } from "next-intl";
 
 const TabButton = ({ tabName, label, icon, activeTab, setActiveTab }: {
