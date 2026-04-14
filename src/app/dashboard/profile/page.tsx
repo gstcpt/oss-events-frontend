@@ -193,8 +193,9 @@ const Profile = () => {
             const response = await uploadUserAvatar(avatarFormData, user);
             if (formData) {
                 const updatedFormData = { ...formData, avatar: response.url };
+                const mergedUser = { ...updatedFormData, role: user.role, role_id: user.role_id, company_id: user.company_id };
                 setFormData(updatedFormData);
-                setUser(updatedFormData);
+                setUser(mergedUser);
             }
             toast.success(t("toastAvatarSuccess"));
         } catch (error) { toast.error(t("toastErrorSaveGeneric")); }
@@ -229,8 +230,9 @@ const Profile = () => {
             personalFields.forEach(field => { if (formData[field] !== undefined) { personalData[field] = formData[field]; } });
             if (formData.avatar && formData.avatar.startsWith('/images/users/')) { personalData.avatar = formData.avatar; }
             const updatedUser = await updateMyProfile(user, personalData);
-            setUser(updatedUser);
-            setFormData(updatedUser);
+            const mergedUser = { ...updatedUser, role: user.role, role_id: user.role_id, company_id: user.company_id };
+            setUser(mergedUser);
+            setFormData(mergedUser);
             setIsEditing(false);
             toast.success(t("toastPersonalSuccess"));
         } catch (error) { toast.error(t("toastErrorSaveGeneric")); }
