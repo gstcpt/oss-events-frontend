@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useAuth } from "@/context/AuthContext";
 import { JSX, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -214,6 +214,30 @@ export default function Items() {
                             setNewItemData((prev: any) => ({ ...prev, form_id: categoryForms[0].id }));
                         } else { setFormLines([]); }
                     } else { setFormLines([]); }
+                }
+            } else if (newItemData.category_id) {
+                // If form_id is null but category_id is present, try to load lines for the first form of that category
+                try {
+                    const categoryIdStr = String(newItemData.category_id);
+                    const categoryForms = forms.filter((form: any) => String(form.category_id) === categoryIdStr);
+                    if (categoryForms.length > 0) {
+                        const formToLoad = categoryForms[0];
+                        const form = await getForm(formToLoad.id);
+                        const patchedLines = (form.form_lines || []).map((line: any) => {
+                            const formLineOptions = line.form_line_options || [];
+                            const tagInfo = line.tags || (line.tag_id ? { id: line.tag_id, icon: line.icon } : undefined);
+                            return { ...line, tag_options: formLineOptions, tag: tagInfo };
+                        });
+                        setFormLines(patchedLines);
+                        // Automatically set the form_id if not already set
+                        if (!newItemData.form_id) {
+                            setNewItemData((prev: any) => ({ ...prev, form_id: formToLoad.id }));
+                        }
+                    } else {
+                        setFormLines([]);
+                    }
+                } catch (error) {
+                    setFormLines([]);
                 }
             } else { setFormLines([]); }
         }
@@ -617,7 +641,6 @@ export default function Items() {
             // Track which required fields are missing
             const missingFields: string[] = [];
             if (!newItemData.title) missingFields.push("Title");
-            if (!newItemData.company_id) missingFields.push("Company");
             if (!newItemData.provider_id) missingFields.push("Provider");
             if (!newItemData.category_id) missingFields.push("Category");
             // Only require form_id if there are multiple forms for the category
@@ -630,7 +653,6 @@ export default function Items() {
                 // Set required fields to show red borders and inline errors
                 const requiredFieldIds: string[] = [];
                 if (!newItemData.title) requiredFieldIds.push("title");
-                if (!newItemData.company_id) requiredFieldIds.push("company_id");
                 if (!newItemData.provider_id) requiredFieldIds.push("provider_id");
                 if (!newItemData.category_id) requiredFieldIds.push("category_id");
                 if (newItemData.category_id && forms.filter((form: any) => form.category_id === newItemData.category_id).length > 1 && !newItemData.form_id) {
@@ -1056,7 +1078,7 @@ export default function Items() {
                                                     <div><div className="text-sm text-gray-500">Street: {providerInfo.street || "N/A"}</div></div>
                                                     <div className="pt-2">
                                                         <div className="text-sm text-gray-500 mb-2">Map Location</div>
-                                                        <div className="rounded overflow-hidden border border-gray-300">
+                                                        <div className="rounded overflow-hidden border border-gray-300 h-48">
                                                             <LeafletMapPicker
                                                                 initial={(() => {
                                                                     if (providerInfo.map_location) {

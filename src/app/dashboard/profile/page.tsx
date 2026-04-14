@@ -537,7 +537,7 @@ const Profile = () => {
                                         <div className="p-4 border rounded-lg">
                                             <h4 className="font-semibold text-gray-700 mb-4">{t('address')}</h4>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="md:col-span-2 relative z-0"><LeafletMapPicker onPick={handleMapLocationSelect} initial={providerData.map_coordinates || undefined} /></div>
+                                                <div className="md:col-span-2 relative z-0 h-64"><LeafletMapPicker onPick={handleMapLocationSelect} initial={providerData.map_coordinates || undefined} /></div>
                                                 {providerData?.map_location && !isEditing && (
                                                     <div className="md:col-span-2">
                                                         <div className="flex items-center text-sm font-semibold text-gray-600 mb-2">
