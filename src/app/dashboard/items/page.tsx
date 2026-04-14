@@ -691,7 +691,7 @@ export default function Items() {
         const itemPayload: any = {
             title: newItemData.title,
             description: newItemData.description,
-            price: newItemData.price_ht,
+            price: newItemData.price_ht && Number(newItemData.price_ht) > 0 ? Number(newItemData.price_ht) : 0.001,
             company_id: newItemData.company_id ? Number(newItemData.company_id) : undefined,
             provider_id: newItemData.provider_id ? Number(newItemData.provider_id) : undefined,
         };
