@@ -22,7 +22,8 @@ import { Label } from "@/components/ui/label";
 import Textarea from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import LeafletMapPicker from "@/components/ui/LeafletMapPicker";
+import dynamic from "next/dynamic";
+const LeafletMapPicker = dynamic(() => import("@/components/ui/LeafletMapPicker"), { ssr: false, loading: () => <div className="h-64 bg-slate-100 animate-pulse rounded-lg" /> });
 import { Camera, File, FileText, Star, Text, Eye, Share2, ThumbsUp, ThumbsDown, MessageCircle, Trash2, Clock, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -129,6 +130,7 @@ export default function Items() {
                     else if (user?.role === "Provider") {
                         try {
                             const providerInfo = await getProviderByUserId(user.id, user);
+                            console.log(providerInfo);
                             if (providerInfo && providerInfo.category_id) {
                                 const categoryData = await getCategoryById(providerInfo.category_id);
                                 const allForms = await getForms();
@@ -199,7 +201,8 @@ export default function Items() {
                     setFormLines(patchedLines);
                 } catch (error) {
                     if (newItemData.category_id) {
-                        const categoryForms = forms.filter((form: any) => form.category_id === newItemData.category_id);
+                        const categoryIdStr = String(newItemData.category_id);
+                        const categoryForms = forms.filter((form: any) => String(form.category_id) === categoryIdStr);
                         if (categoryForms.length > 0) {
                             const form = await getForm(categoryForms[0].id);
                             const patchedLines = (form.form_lines || []).map((line: any) => {
@@ -1411,8 +1414,18 @@ export default function Items() {
                                                 Please select a category in Step 1 to view available forms
                                             </div>
                                         </>
-                                    ) : forms.filter((form: any) => form.category_id === newItemData.category_id).length > 0 ? (
-                                        forms.filter((form: any) => form.category_id === newItemData.category_id).length > 1 ? (
+                                    ) : (() => {
+                                        const categoryIdStr = String(newItemData.category_id);
+                                        const categoryForms = forms.filter((form: any) => String(form.category_id) === categoryIdStr);
+                                        if (categoryForms.length === 0) {
+                                            return (
+                                                <div className="p-3 bg-yellow-50 rounded-md text-yellow-700">
+                                                    <i className="fa fa-exclamation-triangle mr-2"></i>
+                                                    No forms configured for this category ({categoryIdStr}). Please contact admin.
+                                                </div>
+                                            );
+                                        }
+                                        return categoryForms.length > 1 ? (
                                             <Select
                                                 onValueChange={(value) => handleWizardChange("form_id", value)}
                                                 value={newItemData.form_id ? newItemData.form_id.toString() : ""}
@@ -1420,20 +1433,15 @@ export default function Items() {
                                                 key={`form-select-${newItemData.form_id || 'empty'}-${isEditing ? 'edit' : 'new'}`}
                                             >
                                                 <SelectTrigger><SelectValue placeholder="Select Form" /></SelectTrigger>
-                                                <SelectContent>{forms.filter((form: any) => form.category_id === newItemData.category_id).map((form) => (<SelectItem key={form.id} value={form.id.toString()}>{form.title}</SelectItem>))}</SelectContent>
+                                                <SelectContent>{categoryForms.map((form) => (<SelectItem key={form.id} value={form.id.toString()}>{form.title}</SelectItem>))}</SelectContent>
                                             </Select>
                                         ) : (
                                             <div className="p-3 bg-blue-50 rounded-md text-blue-700 text-sm">
                                                 <i className="fa fa-info-circle mr-2"></i>
-                                                Using form: {forms.find((f: any) => f.category_id === newItemData.category_id)?.title || "default"}
+                                                Using form: {categoryForms[0]?.title || "default"}
                                             </div>
-                                        )
-                                    ) : (
-                                        <div className="p-3 bg-yellow-50 rounded-md text-yellow-700">
-                                            <i className="fa fa-exclamation-triangle mr-2"></i>
-                                            No forms configured for this category. Please contact admin.
-                                        </div>
-                                    )}
+                                        );
+                                    })()}
                                     {(() => {
                                         const groupedByPositionV: Record<number, any[]> = {};
                                         formLines.forEach((line) => {
